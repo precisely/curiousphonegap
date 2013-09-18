@@ -2,6 +2,7 @@
 /noos/sts-workspace/curious-app/platforms/android/bin/classes/us/wearecurio/mobile/R$attr.class \
 /noos/sts-workspace/curious-app/platforms/android/bin/classes/us/wearecurio/mobile/R$drawable.class \
 /noos/sts-workspace/curious-app/platforms/android/bin/classes/us/wearecurio/mobile/R.class \
+/noos/sts-workspace/curious-app/platforms/android/bin/classes/us/wearecurio/mobile/R$id.class \
 /noos/sts-workspace/curious-app/platforms/android/bin/classes/us/wearecurio/mobile/BuildConfig.class \
 /noos/sts-workspace/curious-app/platforms/android/bin/classes/us/wearecurio/mobile/R$xml.class \
 /noos/sts-workspace/curious-app/platforms/android/bin/classes/us/wearecurio/mobile/R$string.class \
