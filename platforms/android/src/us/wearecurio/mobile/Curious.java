@@ -22,9 +22,76 @@ package us.wearecurio.mobile;
 import android.os.Bundle;
 import org.apache.cordova.*;
 
-public class Curious extends DroidGap
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import org.apache.cordova.CordovaInterface;
+import org.apache.cordova.CordovaPlugin;
+import org.apache.cordova.LOG;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.res.Configuration;
+import android.graphics.Color;
+import android.media.AudioManager;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
+import android.view.Display;
+import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.ImageView;
+import android.webkit.ValueCallback;
+import android.webkit.WebViewClient;
+import android.widget.LinearLayout;
+
+public class Curious extends Activity implements CordovaInterface
 {
     CordovaWebView cwv;
+    private final ExecutorService threadPool = Executors.newCachedThreadPool();
+private int activityState = 0;  // 0=starting, 1=running (after 1st resume), 2=shutting down
+
+    // Plugin to call when activity result is received
+    protected CordovaPlugin activityResultCallback = null;
+    protected boolean activityResultKeepRunning;
+
+    // Default background color for activity
+    // (this is not the color for the webview, which is set in HTML)
+    private int backgroundColor = Color.BLACK;
+
+    /*
+     * The variables below are used to cache some of the activity properties.
+     */
+
+    // Draw a splash screen using an image located in the drawable resource directory.
+    // This is not the same as calling super.loadSplashscreen(url)
+    protected int splashscreen = 0;
+    protected int splashscreenTime = 3000;
+
+    // LoadUrl timeout value in msec (default of 20 sec)
+    protected int loadUrlTimeoutValue = 20000;
+
+    // Keep app running when pause is received. (default = true)
+    // If true, then the JavaScript and native code continue to run in the background
+    // when another application (activity) is started.
+    protected boolean keepRunning = true;
+
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -34,5 +101,57 @@ public class Curious extends DroidGap
         Config.init(this);
         cwv.loadUrl("http://apple.com");
     }
+
+    /**
+     * Launch an activity for which you would like a result when it finished. When this activity exits,
+     * your onActivityResult() method will be called.
+     *
+     * @param command           The command object
+     * @param intent            The intent to start
+     * @param requestCode       The request code that is passed to callback to identify the activity
+     */
+    public void startActivityForResult(CordovaPlugin command, Intent intent, int requestCode) {
+        this.activityResultCallback = command;
+        this.activityResultKeepRunning = this.keepRunning;
+
+        // If multitasking turned on, then disable it for activities that return results
+        if (command != null) {
+            this.keepRunning = false;
+        }
+
+        // Start activity
+        super.startActivityForResult(intent, requestCode);
+    }
+
+    public void setActivityResultCallback(CordovaPlugin plugin) {
+        this.activityResultCallback = plugin;
+    }
+
+    /**
+     * Get the Android activity.
+     *
+     * @return
+     */
+    public Activity getActivity() {
+        return this;
+    }
+
+/**
+     * Called when a message is sent to plugin.
+     *
+     * @param id            The message id
+     * @param data          The message data
+     * @return              Object or null
+     */
+    public Object onMessage(String id, Object data) {
+        
+        return null;
+    }
+
+    public ExecutorService getThreadPool() {
+        return threadPool;
+    }
+
+
 }
 
