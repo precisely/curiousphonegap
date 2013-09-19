@@ -60,6 +60,7 @@ import android.widget.ImageView;
 import android.webkit.ValueCallback;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
+import android.util.Log;
 
 public class Curious extends Activity implements CordovaInterface
 {
@@ -74,7 +75,7 @@ private int activityState = 0;  // 0=starting, 1=running (after 1st resume), 2=s
     // Default background color for activity
     // (this is not the color for the webview, which is set in HTML)
     private int backgroundColor = Color.BLACK;
-
+    private static final String TAG = "Curious";
     /*
      * The variables below are used to cache some of the activity properties.
      */
@@ -95,11 +96,12 @@ private int activityState = 0;  // 0=starting, 1=running (after 1st resume), 2=s
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
-	super.onCreate(savedInstanceState);
+	super.onCreate(savedInstanceState); 
         setContentView(R.layout.main);
         cwv = (CordovaWebView) this.findViewById(R.id.mainView);
         Config.init(this);
-        cwv.loadUrl("http://apple.com");
+	Log.v(TAG, "Trying to load https://dev.wearecurio.us/mobile/index");
+        cwv.loadUrl("https://dev.wearecurio.us/mobile/index",180000);
     }
 
     /**
