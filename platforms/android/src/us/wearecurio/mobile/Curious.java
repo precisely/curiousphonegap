@@ -22,8 +22,6 @@ package us.wearecurio.mobile;
 import android.os.Bundle;
 import org.apache.cordova.*;
 
-import java.util.HashMap;
-import java.util.Locale;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -34,33 +32,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.DialogInterface;
+import android.app.*;
+import android.util.Log;
+import android.view.*;
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.graphics.Color;
-import android.media.AudioManager;
-import android.net.Uri;
-import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
-import android.view.Display;
-import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.ImageView;
-import android.webkit.ValueCallback;
-import android.webkit.WebViewClient;
-import android.widget.LinearLayout;
-import android.util.Log;
 
 public class Curious extends Activity implements CordovaInterface
 {
@@ -72,9 +47,7 @@ private int activityState = 0;  // 0=starting, 1=running (after 1st resume), 2=s
     protected CordovaPlugin activityResultCallback = null;
     protected boolean activityResultKeepRunning;
 
-    // Default background color for activity
     // (this is not the color for the webview, which is set in HTML)
-    private int backgroundColor = Color.BLACK;
     private static final String TAG = "Curious";
     /*
      * The variables below are used to cache some of the activity properties.
@@ -138,7 +111,7 @@ private int activityState = 0;  // 0=starting, 1=running (after 1st resume), 2=s
         return this;
     }
 
-/**
+     /**
      * Called when a message is sent to plugin.
      *
      * @param id            The message id
