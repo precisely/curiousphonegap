@@ -39,7 +39,11 @@ import android.content.Intent;
 
 public class Curious extends Activity implements CordovaInterface
 {
-    CordovaWebView cwv;
+    private boolean mAlternateTitle = false;
+    private boolean bound;
+    private boolean volumeupBound;
+    private boolean volumedownBound;
+    CordovaWebView mainView;
     private final ExecutorService threadPool = Executors.newCachedThreadPool();
 private int activityState = 0;  // 0=starting, 1=running (after 1st resume), 2=shutting down
 
@@ -71,10 +75,10 @@ private int activityState = 0;  // 0=starting, 1=running (after 1st resume), 2=s
     {
 	super.onCreate(savedInstanceState); 
         setContentView(R.layout.main);
-        cwv = (CordovaWebView) this.findViewById(R.id.mainView);
+        mainView = (CordovaWebView) this.findViewById(R.id.mainView);
         Config.init(this);
 	Log.v(TAG, "Trying to load https://dev.wearecurio.us/mobile/index");
-        cwv.loadUrl("https://dev.wearecurio.us/mobile/index",180000);
+        mainView.loadUrl(Config.getStartUrl(),180000);
     }
 
     /**
@@ -119,14 +123,90 @@ private int activityState = 0;  // 0=starting, 1=running (after 1st resume), 2=s
      * @return              Object or null
      */
     public Object onMessage(String id, Object data) {
-        
-        return null;
+	LOG.d(TAG, "onMessage(" + id + "," + data + ")");
+	if ("exit".equals(id)) {
+	    super.finish();
+	}
+	return null;    
     }
 
     public ExecutorService getThreadPool() {
         return threadPool;
     }
 
+    public void cancelLoadUrl() {
+        // This is a no-op.
+    }
+    
+
+    @Override
+    /**
+     * Called when the system is about to start resuming a previous activity.
+     */
+    protected void onPause() {
+        super.onPause();
+ 
+         // Send pause event to JavaScript
+        this.mainView.loadUrl("javascript:try{cordova.fireDocumentEvent('pause');}catch(e){console.log('exception firing pause event from native');};");
+ 
+        // Forward to plugins
+        if (this.mainView.pluginManager != null) {
+            this.mainView.pluginManager.onPause(true);
+        }
+    }
+ 
+    @Override
+    /**
+     * Called when the activity will start interacting with the user.
+     */
+    protected void onResume() {
+        super.onResume();
+ 
+        if (this.mainView == null) {
+            return;
+        }
+ 
+        // Send resume event to JavaScript
+        this.mainView.loadUrl("javascript:try{cordova.fireDocumentEvent('resume');}catch(e){console.log('exception firing resume event from native');};");
+ 
+        // Forward to plugins
+        if (this.mainView.pluginManager != null) {
+            this.mainView.pluginManager.onResume(true);
+        }
+ 
+    }
+ 
+    @Override
+    /**
+     * The final call you receive before your activity is destroyed.
+     */
+    public void onDestroy() {
+        LOG.d(TAG, "onDestroy()");
+        super.onDestroy();
+ 
+        if (this.mainView != null) {
+ 
+            // Send destroy event to JavaScript
+            this.mainView.loadUrl("javascript:try{cordova.require('cordova/channel').onDestroy.fire();}catch(e){console.log('exception firing destroy event from native');};");
+ 
+            // Load blank page so that JavaScript onunload is called
+            this.mainView.loadUrl("about:blank");
+            mainView.handleDestroy();
+        }
+    }
+
+    @Override
+    /**
+     * Called when the activity receives a new intent
+     **/
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+ 
+        //Forward to plugins
+        if ((this.mainView != null) && (this.mainView.pluginManager != null)) {
+            this.mainView.pluginManager.onNewIntent(intent);
+        }
+    }
 
 }
 

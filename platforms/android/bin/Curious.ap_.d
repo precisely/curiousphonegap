@@ -30,7 +30,9 @@
 /noos/sts-workspace/curious-app/platforms/android/assets/www/icon.png \
 /noos/sts-workspace/curious-app/platforms/android/assets/www/index.html \
 /noos/sts-workspace/curious-app/platforms/android/assets/www/css \
+/noos/sts-workspace/curious-app/platforms/android/assets/www/plugins \
 /noos/sts-workspace/curious-app/platforms/android/assets/www/phonegap.js \
+/noos/sts-workspace/curious-app/platforms/android/assets/www/PushNotification.js \
 /noos/sts-workspace/curious-app/platforms/android/assets/www/spec \
 /noos/sts-workspace/curious-app/platforms/android/assets/www/spec.html \
 /noos/sts-workspace/curious-app/platforms/android/assets/www/res/icon \
@@ -95,6 +97,8 @@
 /noos/sts-workspace/curious-app/platforms/android/assets/www/res/screen/webos/screen-64.png \
 /noos/sts-workspace/curious-app/platforms/android/assets/www/res/screen/blackberry/screen-225.png \
 /noos/sts-workspace/curious-app/platforms/android/assets/www/js/index.js \
+/noos/sts-workspace/curious-app/platforms/android/assets/www/js/notify.js \
+/noos/sts-workspace/curious-app/platforms/android/assets/www/js/PushNotification.js \
 /noos/sts-workspace/curious-app/platforms/android/assets/www/img/logo.png \
 /noos/sts-workspace/curious-app/platforms/android/assets/www/css/index.css \
 /noos/sts-workspace/curious-app/platforms/android/assets/www/spec/index.js \
