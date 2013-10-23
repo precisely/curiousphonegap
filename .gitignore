@@ -2,3 +2,7 @@ platforms/android/bin/dexedLibs
 platforms/android/bin/classes
 platforms/android/bin/*.apk
 platforms/android/bin/*.ap_
+platforms/android/bin/Curious.ap_.d
+platforms/android/bin/build.prop
+platforms/android/assets/*
+.project

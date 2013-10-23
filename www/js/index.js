@@ -50,6 +50,8 @@ var app = {
 // result contains any message sent from the plugin call
     successHandler: function(result) {
         alert('Callback Success! Result = '+result)
+	window.location = "http://visheshd.servebeer.com:8080/mobile/index"
+
     },
     errorHandler:function(error) {
         alert(error);
