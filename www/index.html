@@ -185,6 +185,7 @@ App.baseURL = "http://visheshd.servebeer.com/";
 						$.getJSON(makeGetUrl('dologinData'), makeGetArgs({ username:username, password:password }), function(data) {
 							if (data['success']) {
 								localStorage['mobileSessionId'] = data['mobileSessionId'];
+								eval(data['csrfTokens']);
 								dataReady=true;
 								launchTrack();
 							} else {
@@ -592,7 +593,8 @@ App.baseURL = "http://visheshd.servebeer.com/";
 		 */
 		function selected(selectee) {
 			var state = selectee.data('entryIsSelected');
-			selectee.siblings().data('entryIsSelected', 0);
+			if ($("input#tagTextInput").size() == 1) return;
+            selectee.siblings().removeClass("ui-selected").data('entryIsSelected', 0);
 			var $contentWrapper = selectee.find(".content-wrapper");
 	
 			if (state == 0 || state == undefined) {
