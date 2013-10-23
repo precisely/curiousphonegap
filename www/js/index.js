@@ -50,8 +50,6 @@ var app = {
 // result contains any message sent from the plugin call
     successHandler: function(result) {
         alert('Callback Success! Result = '+result)
-	window.location = "http://visheshd.servebeer.com:8080/mobile/index"
-
     },
     errorHandler:function(error) {
         alert(error);
@@ -69,7 +67,8 @@ var app = {
 
             case 'message':
                 // this is the actual push notification. its format depends on the data model from the push server
-                alert('message = '+e.message+' msgcnt = '+e.msgcnt);
+            	console.log("Push notification received ..")
+                showAlert('message = '+e.message+' msgcnt = '+e.msgcnt);
                 break;
 
             case 'error':
