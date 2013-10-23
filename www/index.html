@@ -560,7 +560,7 @@ App.baseURL = "http://visheshd.servebeer.com/";
 			refreshPage();
 		}
 	
-		function refreshPage() {
+		function refreshPage(callback) {
 			cacheDate();
 			
 			var cachedObj = getAppCacheData(cachedDateUTC);
@@ -570,15 +570,27 @@ App.baseURL = "http://visheshd.servebeer.com/";
 				refreshEntries(data, false);
 			}
 			
-			var argsToSend = getCSRFPreventionObjectMobile('getListDataCSRF', { date:cachedDateUTC, userId:currentUserId });
-			$.getJSON(makeGetUrl("getListData"), makeGetArgs(argsToSend),
-				function(data){
-					if (checkData(data)) {
-						console.log("refresh entries from get list");
-						refreshEntries(data, true);
-						dataReady = true;
-					}
-				});
+			$.getJSON(makeGetUrl("refreshCSRFTokens"),"",
+					function(data){
+						if (checkData(data)) {
+							console.log("refresh entries from get list");
+							eval(data['csrfTokens']);
+							var argsToSend = getCSRFPreventionObjectMobile('getListDataCSRF', { date:cachedDateUTC, userId:currentUserId });
+							$.getJSON(makeGetUrl("getListData"), makeGetArgs(argsToSend),
+								function(data){
+									if (checkData(data)) {
+										console.log("refresh entries from get list");
+										refreshEntries(data, true);
+										dataReady = true;
+										if (typeof callback != 'undefined') {
+											callback();
+										}
+									}
+								});
+						}
+			});
+			
+			
 		}
 	
 		var currentEntryId = undefined;
@@ -1024,9 +1036,8 @@ App.baseURL = "http://visheshd.servebeer.com/";
 					setPeopleData(data);
 	
 					// wait to init autocomplete until after login		
-					initAutocomplete();
-			
-					refreshPage();
+					
+					refreshPage(function() {initAutocomplete();});
 				});
 		}
 	</script>
