@@ -177,7 +177,7 @@ registerLogoutCallback(function() {
 });
 
 var initAutocomplete = function() {
-	$.retrieveJSON(makeGetUrl("autocompleteData"), getCSRFPreventionObject("autocompleteDataCSRF", {all: 'info'}),
+	$.retrieveJSON(makeGetUrl("autocompleteData"), getCSRFPreventionObjectMobile("autocompleteDataCSRF", {all: 'info'}),
 			function(data, status) {
 		if (checkData(data, status)) {
 			tagStatsMap.import(data['all']);

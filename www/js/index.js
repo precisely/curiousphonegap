@@ -16,6 +16,9 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+var IOS_DEVICE = 1;
+var ANDROID_DEVICE = 2;
+
 var app = {
     // Application Constructor
     initialize: function() {
@@ -33,25 +36,26 @@ var app = {
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function() {
+    },
+    registerGCM: function() {
         app.receivedEvent('deviceready');
 	var pushNotification = window.plugins.pushNotification;
 	pushNotification.register(app.successHandler, app.errorHandler,{"senderID":"852521907580","ecb":"app.onNotificationGCM"});
+	console.log("Trying to register");
+	//pushNotification.unregister(app.successHandler, app.errorHandler);
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
-        var parentElement = document.getElementById(id);
-        var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
-
-        listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');
         console.log('Received Event: ' + id);
     },
 // result contains any message sent from the plugin call
     successHandler: function(result) {
-        alert('Callback Success! Result = '+result)
+    	console.log("Success unregister");
+        console.log(result);
+        $("#console").html(result);
     },
     errorHandler:function(error) {
+    	console.log("Error trying to unregister");
         alert(error);
     },
     onNotificationGCM: function(e) {
@@ -61,14 +65,24 @@ var app = {
                 if ( e.regid.length > 0 )
                 {
                     console.log("Regid " + e.regid);
-                    alert('registration id = '+e.regid);
+                    var argsToSend = getCSRFPreventionObjectMobile('registerForPushNotificationCSRF', 
+                    		{ date:cachedDateUTC, userId:currentUserId, token:e.regid,deviceType:ANDROID_DEVICE});
+        			$.getJSON(makeGetUrl("registerForPushNotification"), makeGetArgs(argsToSend),
+        				function(data){
+        					if (checkData(data)) {
+        						console.log("Registered for push notification")
+        					}
+        				});
+                    //alert('registration id = '+e.regid);
                 }
                 break;
 
             case 'message':
                 // this is the actual push notification. its format depends on the data model from the push server
             	console.log("Push notification received ..")
-                showAlert('message = '+e.message+' msgcnt = '+e.msgcnt);
+                showAlert(e.message);
+            	//var pushNotification = window.plugins.pushNotification;
+            	//pushNotification.unregister(app.successHandler, app.errorHandler);
                 break;
 
             case 'error':

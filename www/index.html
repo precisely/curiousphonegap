@@ -1,4 +1,3 @@
-
 <html manifest="/mobile/cache.manifest">
 <head>
 <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
@@ -134,7 +133,7 @@ function getCSRFPreventionObjectMobile(key, data) {
 
 <script type="text/javascript">$(function() {
 var App = window.App;
-App.baseURL = "http://visheshd.servebeer.com/";
+App.baseURL = "http://192.168.0.11:8080/";
 });</script>
 
 
@@ -177,7 +176,7 @@ App.baseURL = "http://visheshd.servebeer.com/";
 						$.getJSON(makeGetUrl('dologinData'), makeGetArgs({ username:username, password:password }), function(data) {
 							if (data['success']) {
 								localStorage['mobileSessionId'] = data['mobileSessionId'];
-								eval(data['csrfTokens']);
+								app.registerGCM();
 								dataReady=true;
 								launchTrack();
 							} else {
@@ -327,6 +326,8 @@ App.baseURL = "http://visheshd.servebeer.com/";
 						<ol id="entry0" style="width: 100%; height: 100%;">
 						</ol>
 					</div>
+				</div>
+				<div id="console">
 				</div>
 			</div>
 
@@ -562,27 +563,15 @@ App.baseURL = "http://visheshd.servebeer.com/";
 				refreshEntries(data, false);
 			}
 			
-			$.getJSON(makeGetUrl("refreshCSRFTokens"),"",
-					function(data){
-						if (checkData(data)) {
-							console.log("refresh entries from get list");
-							eval(data['csrfTokens']);
-							var argsToSend = getCSRFPreventionObjectMobile('getListDataCSRF', { date:cachedDateUTC, userId:currentUserId });
-							$.getJSON(makeGetUrl("getListData"), makeGetArgs(argsToSend),
-								function(data){
-									if (checkData(data)) {
-										console.log("refresh entries from get list");
-										refreshEntries(data, true);
-										dataReady = true;
-										if (typeof callback != 'undefined') {
-											callback();
-										}
-									}
-								});
-						}
-			});
-			
-			
+			var argsToSend = getCSRFPreventionObjectMobile('getListDataCSRF', { date:cachedDateUTC, userId:currentUserId });
+			$.getJSON(makeGetUrl("getListData"), makeGetArgs(argsToSend),
+				function(data){
+					if (checkData(data)) {
+						console.log("refresh entries from get list");
+						refreshEntries(data, true);
+						dataReady = true;
+					}
+				});
 		}
 	
 		var currentEntryId = undefined;
@@ -1028,8 +1017,9 @@ App.baseURL = "http://visheshd.servebeer.com/";
 					setPeopleData(data);
 	
 					// wait to init autocomplete until after login		
-					
-					refreshPage(function() {initAutocomplete();});
+					initAutocomplete();
+			
+					refreshPage();
 				});
 		}
 	</script>
