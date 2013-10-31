@@ -1,0 +1,50 @@
+/* FRAME */
+.bugs a {	
+	display:block;
+	background:url(../images/bugs.gif) no-repeat;
+	width:19px;
+	height:20px;
+	position:absolute;
+	top:24px;
+	right:-20px;	
+}
+#headerlogo {
+	background:url(../images/logo_lhp_alpha.png) no-repeat;
+	width:285px;
+	height:30px;
+	display:inline-block;
+	padding:0px 0px 10px 0px;
+	vertical-align:middle;
+}
+#headerbutton {
+	background:url(../images/lhpdonate.gif) no-repeat;
+	width:135px;
+	height:50px;
+	display:inline-block;
+	vertical-align:middle;
+}
+.mainLinks {
+	display:inline-block;
+	padding:0px;
+	text-align:right;
+	width:300px;
+}
+#headerlinks {
+	padding:0px 0px 0px 0px;
+	vertical-align:middle;
+}
+.mainLinks li {
+	display:inline;
+	text-transform:uppercase;
+	font-size:.8em;
+	color:#999999;
+	padding: 0px 0px 0px 3em;
+}	
+.signin {
+	display:block;
+	padding:17px 20px 0px 0px;
+	float:right;
+	font-size:.8em;
+	color:#999999;
+}
+
