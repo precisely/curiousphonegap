@@ -1,4 +1,6 @@
 *.DS_Store
+log.txt
+platforms/*
 platforms/android/bin/dexedLibs
 platforms/android/bin/classes
 platforms/android/bin/*.apk
