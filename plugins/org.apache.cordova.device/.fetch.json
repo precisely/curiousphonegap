@@ -1,1 +1,1 @@
-{"source":{"type":"local","path":"/var/folders/q7/8kkjzqjd4bdcn92t_2808j500000gn/T/org.apache.cordova.device/package"}}
+{"source":{"type":"git","url":"https://github.com/apache/cordova-plugin-device.git","subdir":"."}}
