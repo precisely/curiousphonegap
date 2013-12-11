@@ -164,11 +164,11 @@
 
         if (isInline)
         {
-            [jsonStr appendFormat:@"foreground:'%d',", 1];
+            [jsonStr appendFormat:@"foreground:\"%d\"", 1];
             isInline = NO;
         }
 		else
-            [jsonStr appendFormat:@"foreground:'%d',", 0];
+            [jsonStr appendFormat:@"foreground:\"%d\"", 0];
         
         [jsonStr appendString:@"}"];
 
@@ -193,22 +193,30 @@
     
         if ([thisObject isKindOfClass:[NSDictionary class]])
             [self parseDictionary:thisObject intoJSON:jsonString];
-        else
-            [jsonString appendFormat:@"%@:'%@',", key, [inDictionary objectForKey:key]];
+        else if ([thisObject isKindOfClass:[NSString class]])
+             [jsonString appendFormat:@"\"%@\":\"%@\",",
+              key,
+              [[[[inDictionary objectForKey:key]
+                stringByReplacingOccurrencesOfString:@"\\" withString:@"\\\\"]
+                 stringByReplacingOccurrencesOfString:@"\"" withString:@"\\\""]
+                 stringByReplacingOccurrencesOfString:@"\n" withString:@"\\n"]];
+        else {
+            [jsonString appendFormat:@"\"%@\":\"%@\",", key, [inDictionary objectForKey:key]];
+        }
     }
 }
 
-- (void)setApplicationIconBadgeNumber:(NSMutableArray *)arguments withDict:(NSMutableDictionary *)options {
-	DLog(@"setApplicationIconBadgeNumber:%@\n withDict:%@", arguments, options);
-    
-	self.callbackId = [arguments pop];
-    
+- (void)setApplicationIconBadgeNumber:(CDVInvokedUrlCommand *)command {
+
+    self.callbackId = command.callbackId;
+
+    NSMutableDictionary* options = [command.arguments objectAtIndex:0];
     int badge = [[options objectForKey:@"badge"] intValue] ?: 0;
+
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:badge];
-    
+
     [self successWithMessage:[NSString stringWithFormat:@"app badge count set to %d", badge]];
 }
-
 -(void)successWithMessage:(NSString *)message
 {
     CDVPluginResult *commandResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:message];

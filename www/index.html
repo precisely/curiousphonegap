@@ -133,7 +133,7 @@ function getCSRFPreventionObjectMobile(key, data) {
 
 <script type="text/javascript">$(function() {
 var App = window.App;
-App.baseURL = "http://192.168.0.103:8080/";
+App.baseURL = "http://192.168.0.106:8080/";
 });</script>
 
 
@@ -177,7 +177,7 @@ App.baseURL = "http://192.168.0.103:8080/";
 							if (data['success']) {
 								console.log("Login successful "+ typeof device);
 								localStorage['mobileSessionId'] = data['mobileSessionId'];
-								app.registerGCM();
+								app.registerNotification();
 								dataReady=true;
 								launchTrack();
 							} else {
@@ -489,7 +489,7 @@ App.baseURL = "http://192.168.0.103:8080/";
 		
 		function launchTrack() {
 			localStorage['lastPage'] = 'track';
-			location.reload(true);
+			reloadPage();
 		}
 		
 		/*
@@ -1025,9 +1025,9 @@ App.baseURL = "http://192.168.0.103:8080/";
 		}
 	</script>
 	<script type="text/javascript" src="cordova.js"></script>
-	<script type="text/javascript" src="js/mobile/PushNotification.js"></script>
 	<script type="text/javascript" src="js/mobile/index.js"></script>
 	<script type="text/javascript">
+		console.log("App object: "+app);
     	app.initialize();
     </script>
 </body>

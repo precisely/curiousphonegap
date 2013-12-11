@@ -10,6 +10,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 
+import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
@@ -31,6 +32,7 @@ public class PushPlugin extends CordovaPlugin {
 	private static String gECB;
 	private static String gSenderID;
 	private static Bundle gCachedExtras = null;
+    private static boolean gForeground = false;
 
 	/**
 	 * Gets the application context from cordova's main activity.
@@ -64,9 +66,11 @@ public class PushPlugin extends CordovaPlugin {
 
 				GCMRegistrar.register(getApplicationContext(), gSenderID);
 				result = true;
+				callbackContext.success();
 			} catch (JSONException e) {
 				Log.e(TAG, "execute: Got JSON Exception " + e.getMessage());
 				result = false;
+				callbackContext.error(e.getMessage());
 			}
 
 			if ( gCachedExtras != null) {
@@ -81,9 +85,11 @@ public class PushPlugin extends CordovaPlugin {
 
 			Log.v(TAG, "UNREGISTER");
 			result = true;
+			callbackContext.success();
 		} else {
 			result = false;
 			Log.e(TAG, "Invalid action : " + action);
+			callbackContext.error("Invalid action : " + action);
 		}
 
 		return result;
@@ -117,9 +123,33 @@ public class PushPlugin extends CordovaPlugin {
 		}
 	}
 	
-	/*
-	 * serializes a bundle to JSON.
-	 */
+    @Override
+    public void initialize(CordovaInterface cordova, CordovaWebView webView) {
+        super.initialize(cordova, webView);
+        gForeground = true;
+    }
+	
+	@Override
+    public void onPause(boolean multitasking) {
+        super.onPause(multitasking);
+        gForeground = false;
+    }
+
+    @Override
+    public void onResume(boolean multitasking) {
+        super.onResume(multitasking);
+        gForeground = true;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        gForeground = false;
+    }
+
+    /*
+     * serializes a bundle to JSON.
+     */
     private static JSONObject convertBundleToJson(Bundle extras)
     {
 		try
@@ -200,17 +230,14 @@ public class PushPlugin extends CordovaPlugin {
 		}        	
 		return null;      	
     }
-    
+
+    public static boolean isInForeground()
+    {
+      return gForeground;
+    }
+
     public static boolean isActive()
     {
     	return gWebView != null;
     }
-    
-	public void onDestroy() 
-	{
-		GCMRegistrar.onDestroy(getApplicationContext());
-		gWebView = null;
-		gECB = null;
-		super.onDestroy();
-	}
 }

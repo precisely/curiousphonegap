@@ -18,7 +18,6 @@
  */
 var IOS_DEVICE = 1;
 var ANDROID_DEVICE = 2;
-
 var app = {
     // Application Constructor
     initialize: function() {
@@ -38,16 +37,16 @@ var app = {
     onDeviceReady: function() {
     	app.receivedEvent('deviceready');
     },
-    registerGCM: function() {
-        console.log("Registering GCM for"+device.platform);
+    registerNotification: function() {
+        console.log("Registering Notification for "+device.platform);
         var pushNotification = window.plugins.pushNotification;
-
-        if ( device.platform == 'android' || device.platform == 'Android' ) {
-        	pushNotification.register(app.successHandler, 
-				app.errorHandler,
-				{"senderID":"852521907580","ecb":"app.onNotificationGCM"});
+        console.log("Checking device type");
+        if (app.isAndroid()) {
+        	console.log("Device type = "+device.platform);
+        	pushNotification.register(app.tokenHandler, 
+				app.errorHandler, {"senderID":"852521907580","ecb":"window.app.onNotificationGCM"});
         } else {
-        	console.log("Trying to register APN");
+        	console.log("Device type = "+device.platform);
         	pushNotification.register(
 		        app.tokenHandler,
 		        app.errorHandler, {
@@ -57,22 +56,24 @@ var app = {
 		            "ecb":"onNotificationAPN"
 		    });
         }
-	
-        console.log("Trying to register");
-	//pushNotification.unregister(app.successHandler, app.errorHandler);
+
     },
-    // Update DOM on a Received Event
+    refreshNotificationRegistration: function() {
+    	console.log("Inside refresh notification");
+    	var pushNotification = window.plugins.pushNotification;
+    	pushNotification.unregister(function() { console.log("Unregistered Notification"); app.registerNotification(); }, 
+    			function() { console.log("Error trying to unregister: "+error); app.registerNotification(); });
+    },
     receivedEvent: function(id) {
         console.log('Received Event: ' + id);
     },
-// result contains any message sent from the plugin call
-    successHandler: function(result) {
-    	console.log("Success unregister");
-        console.log(result);
-        $("#console").html(result);
-    },
-    errorHandler:function(error) {
-    	console.log("Error trying to unregister");
+    errorHandler: function(error) {
+    	console.log("Error trying to register: "+error);
+    	var keys = [];
+    	for(var key in obj){
+    		console.log("Error property name "+key);
+    		console.log("Error property val "+error[key]);
+    	}
         alert(error);
     },
     onNotificationAPN: function(event) {
@@ -96,8 +97,15 @@ var app = {
             case 'registered':
                 if ( e.regid.length > 0 )
                 {
-                    this.tokenHandler(e.regid, ANDROID_DEVICE);
-                    //alert('registration id = '+e.regid);
+                	console.log("GCM Registered");
+                	var argsToSend = getCSRFPreventionObjectMobile('registerForPushNotificationCSRF', 
+                    		{ date:cachedDateUTC, userId:currentUserId, token:e.regid,deviceType:app.deviceType()});
+            		$.getJSON(makeGetUrl("registerForPushNotification"), makeGetArgs(argsToSend),
+            			function(data){
+            				if (checkData(data)) {
+            					console.log("Notification token saved on the server")
+            				}
+            		});
                 }
                 break;
 
@@ -118,19 +126,18 @@ var app = {
                 break;
         }
     },
-    tokenHandler: function(token,deviceType) {
+    tokenHandler: function(token) {
     	console.log("Regid " + token);
-    	if (typeof deviceType == 'undefined') {
-    		deviceType = IOS_DEVICE;
-    	}
-        var argsToSend = getCSRFPreventionObjectMobile('registerForPushNotificationCSRF', 
-        		{ date:cachedDateUTC, userId:currentUserId, token:token,deviceType:deviceType});
-		$.getJSON(makeGetUrl("registerForPushNotification"), makeGetArgs(argsToSend),
-			function(data){
-				if (checkData(data)) {
-					console.log("Registered for push notification")
-				}
-		});
+    	
+    },
+    deviceType: function() {
+    	return app.isAndroid()?ANDROID_DEVICE:IOS_DEVICE;
+    },
+    isAndroid: function() {
+    	return device.platform == 'android' || device.platform == 'Android';
+    },
+    isIOS: function() {
+    	return device.platform == 'ios' || device.platform == 'iOS';
     }
     
 };
