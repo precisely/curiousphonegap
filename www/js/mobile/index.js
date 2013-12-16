@@ -144,6 +144,8 @@ var app = {
 
 app.serverUrl = "http://192.168.0.106:8080";
 
+// Overriding url methods from index.gsp
+
 function makeGetUrl(url) {
 	console.log("makeGetUrl at index.js");
 	return app.serverUrl+"/mobiledata/" + url + '?callback=?';
@@ -158,4 +160,66 @@ function makePlainUrl(url) {
 	var url = app.serverUrl+"/mobile/" + url;
 	url = url;
 	return url;
+}
+
+// Overriding autocomplete from autocomplete.js
+
+initAutocomplete = function() {
+	$.retrieveJSON(makeGetUrl("autocompleteData"), getCSRFPreventionObjectMobile("autocompleteDataCSRF", {all: 'info'}),
+			function(data, status) {
+		if (checkData(data, status)) {
+			tagStatsMap.import(data['all']);
+			algTagList = data['alg'];
+			freqTagList = data['freq'];
+			
+			var inputField = $("#input0");
+			
+			inputField.autocomplete({
+				minLength: 1,
+				attachTo: "#autocomplete",
+				source: function(request, response) {
+					var term = request.term.toLowerCase();
+
+					var skipSet = {};
+					var result = [];
+					
+					var matches = findAutoMatches(tagStatsMap, algTagList, term, 3, skipSet, 1);
+					
+					addStatsTermToSet(matches, skipSet);
+					appendStatsTextToList(result, matches);
+					
+					var remaining = 6 - matches.length;
+					
+					if (term.length == 1) {
+						var nextRemaining = remaining > 3 ? 3 : remaining;
+						matches = findAutoMatches(tagStatsMap, algTagList, term, nextRemaining, skipSet, 0);
+						addStatsTermToSet(matches, skipSet);
+						appendStatsTextToList(result, matches);
+						remaining -= nextRemaining;
+					}
+					
+					if (remaining > 0) {
+						matches = findAutoMatches(tagStatsMap, freqTagList, term, remaining, skipSet, 0);
+						appendStatsTextToList(result, matches);
+					}
+
+					var obj = new Object();
+					obj.data = result;
+					response(result);
+				},
+				selectcomplete: function(event, ui) {
+					var tagStats = tagStatsMap.getFromText(ui.item.value);
+					if (tagStats) {
+						var range = tagStats.getAmountSelectionRange();
+						inputField.selectRange(range[0], range[1]);
+						inputField.focus();
+					}
+				}
+			});
+			// open autocomplete on focus
+			inputField.focus(function(){
+				inputField.autocomplete("search",$("#input0").val());
+			});
+		}
+	});
 }
