@@ -141,3 +141,21 @@ var app = {
     }
     
 };
+
+app.serverUrl = "http://192.168.0.106:8080";
+
+function makeGetUrl(url) {
+	console.log("makeGetUrl at index.js");
+	return app.serverUrl+"/mobiledata/" + url + '?callback=?';
+}
+
+function makePostUrl(url) {
+	console.log("makePostUrl at index.js");
+	return app.serverUrl+"/mobiledata/" + url;
+}
+
+function makePlainUrl(url) {
+	var url = app.serverUrl+"/mobile/" + url;
+	url = url;
+	return url;
+}
