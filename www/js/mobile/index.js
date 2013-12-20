@@ -43,17 +43,17 @@ var app = {
         console.log("Checking device type");
         if (app.isAndroid()) {
         	console.log("Device type = "+device.platform);
-        	pushNotification.register(app.tokenHandler, 
+        	pushNotification.register(app.successHandler, 
 				app.errorHandler, {"senderID":"852521907580","ecb":"window.app.onNotificationGCM"});
         } else {
         	console.log("Device type = "+device.platform);
         	pushNotification.register(
-		        app.tokenHandler,
+		        app.successHandler,
 		        app.errorHandler, {
 		            "badge":"true",
 		            "sound":"true",
 		            "alert":"true",
-		            "ecb":"onNotificationAPN"
+		            "ecb":"app.onNotificationAPN"
 		    });
         }
 
@@ -70,13 +70,27 @@ var app = {
     errorHandler: function(error) {
     	console.log("Error trying to register: "+error);
     	var keys = [];
-    	for(var key in obj){
+    	for(var key in error){
     		console.log("Error property name "+key);
     		console.log("Error property val "+error[key]);
     	}
-        alert(error);
+        
     },
+    successHandler: function(result) {
+    	if (app.isIOS()) {
+    		app.tokenHandler(result);
+    	}
+        console.log("Push notification registration successful. Result: "+result);
+    },
+    
     onNotificationAPN: function(event) {
+    	
+    	var keys = [];
+    	for(var key in event){
+    		console.log("APN Event property name "+key);
+    		console.log("APN Event property val "+event[key]);
+    	}
+    	
     	if ( event.alert ) {
             navigator.notification.alert(event.alert);
         }
@@ -98,14 +112,7 @@ var app = {
                 if ( e.regid.length > 0 )
                 {
                 	console.log("GCM Registered");
-                	var argsToSend = getCSRFPreventionObjectMobile('registerForPushNotificationCSRF', 
-                    		{ date:cachedDateUTC, userId:currentUserId, token:e.regid,deviceType:app.deviceType()});
-            		$.getJSON(makeGetUrl("registerForPushNotification"), makeGetArgs(argsToSend),
-            			function(data){
-            				if (checkData(data)) {
-            					console.log("Notification token saved on the server")
-            				}
-            		});
+                	app.tokenHandler(e.regid);
                 }
                 break;
 
@@ -127,9 +134,18 @@ var app = {
         }
     },
     tokenHandler: function(token) {
+    	var argsToSend = getCSRFPreventionObjectMobile('registerForPushNotificationCSRF', 
+        		{ date:cachedDateUTC, userId:currentUserId, token:token,deviceType:app.deviceType()});
+		$.getJSON(makeGetUrl("registerForPushNotification"), makeGetArgs(argsToSend),
+			function(data){
+				if (checkData(data)) {
+					console.log("Notification token saved on the server")
+				}
+		});    	
     	console.log("Regid " + token);
     	
     },
+    
     deviceType: function() {
     	return app.isAndroid()?ANDROID_DEVICE:IOS_DEVICE;
     },
@@ -142,7 +158,7 @@ var app = {
     
 };
 
-app.serverUrl = "http://192.168.0.106:8080";
+app.serverUrl = "http://192.168.0.103:8080";
 
 // Overriding url methods from index.gsp
 
