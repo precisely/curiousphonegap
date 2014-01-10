@@ -1,6 +1,6 @@
-<html>
+<html manifest="/mobile/cache.manifest">
 <head>
-<link rel="shortcut icon" href="images/favicon.ico"
+<link rel="shortcut icon" href="..../images/favicon.ico"
 	type="image/x-icon" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="layout" content="main" />
@@ -57,17 +57,16 @@ setInterval(function(){cache.update()}, 10000);
 <meta name="viewport"
 	content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
-
 <script type="text/javascript"
-	src="js/jquery/jquery-1.7.2.min.js"></script>
-<script type="text/javascript" src="js/jquery/jquery.offline.js"></script>
+	src="../js/jquery/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="../js/jquery/jquery.offline.js"></script>
 <script type="text/javascript"
-	src="js/jquery/jquery.json-2.2.js"></script>
+	src="../js/jquery/jquery.json-2.2.js"></script>
 <script type="text/javascript"
-	src="js/jquery/jquery-ui-1.8.18.custom.js"></script>
+	src="../js/jquery/jquery-ui-1.8.18.custom.js"></script>
 <script type="text/javascript"
-	src="js/jquery/jquery.selectable.custom.js?ver=7"></script>
-<script type="text/javascript" src="js/jstz-1.0.4.min.js"></script>
+	src="../js/jquery/jquery.selectable.custom.js?ver=7"></script>
+<script type="text/javascript" src="../js/jstz-1.0.4.min.js"></script>
 
 <script type="text/javascript">
 
@@ -140,13 +139,14 @@ function getCSRFPreventionObjectMobile(key, data) {
 }
 </script>
 
-<script type="text/javascript" src="js/curious/base.js?ver=9"></script>
-<script type="text/javascript" src="js/curious/curious.js?ver=9"></script>
-<script type="text/javascript" src="js/curious/autocomplete.js?ver=9"></script>
-
+<script type="text/javascript" src="../js/curious/base.js?ver=9"></script>
+<script type="text/javascript" src="../js/curious/curious.js?ver=9"></script>
+<script type="text/javascript" src="../js/curious/autocomplete.js?ver=9"></script>
+<script type="text/javascript"
+	src="../js/jquery/jquery.mobile.touch.min.js?ver=9"></script>
 <link rel="apple-touch-icon"
-	href="images/apple-touch-icon-precomposed.png" />
-<link rel="shortcut icon" href="images/favicon.ico"
+	href="../images/apple-touch-icon-precomposed.png" />
+<link rel="shortcut icon" href="../images/favicon.ico"
 	type="image/x-icon" />
 <link rel="stylesheet" href="css/mobile.css?ver=1" />
 <link type="text/css"
@@ -257,7 +257,7 @@ function getCSRFPreventionObjectMobile(key, data) {
 			<div class="login">
 
 				<a href="javascript:startLogin(0)"><img border="0"
-					id="loginlogo" src="images/logo.gif" width="205"
+					id="loginlogo" src="../images/logo.gif" width="205"
 					height="230" alt="Curious" /></a>
 
 
@@ -283,18 +283,18 @@ function getCSRFPreventionObjectMobile(key, data) {
 						</div>
 						<div id="loginButtonDiv" class="okCancelDiv">
 							<button class="loginButton">
-								<img src="images/login.png" width="76" height="24"
+								<img src="../images/login.png" width="76" height="24"
 									alt="Login" onclick="submitForm()" />
 							</button>
 							<br />
 						</div>
 						<div id="cancelButtonDiv" class="okCancelDiv">
 							<button class="cancelButton">
-								<img src="images/cancel.png" width="76" height="24"
+								<img src="../images/cancel.png" width="76" height="24"
 									alt="Cancel" onclick="javascript:startLogin(0)" />
 							</button>
 							<button class="loginButton">
-								<img src="images/submit.png" width="76" height="24"
+								<img src="../images/submit.png" width="76" height="24"
 									alt="Submit" onclick="submitForm()" />
 							</button>
 							<br />
@@ -326,13 +326,13 @@ function getCSRFPreventionObjectMobile(key, data) {
 						<input type="text" id="input0" name="data"
 							style="width: calc(100% - 110px); margin-right: 5px;"
 							class="textField" /> <a href="#" onclick="modifyInput('repeat')"><img
-							src="images/repeat.png"
+							src="../images/repeat.png"
 							style="width: 20px; height: 20px; padding-top: 5px;"></a> <a
 							href="#" onclick="modifyInput('remind')"><img
-							src="images/remind.png"
+							src="../images/remind.png"
 							style="width: 20px; height: 20px; padding-top: 5px;"></a> <a
 							href="#" onclick="modifyInput('pinned')"><img
-							src="images/pin.png"
+							src="../images/pin.png"
 							style="width: 20px; height: 20px; padding-top: 5px;"></a>
 					</form>
 					<hr />
@@ -452,9 +452,9 @@ function startLogin(mode) {
 		}
 		$('#trackPage').hide();
 		
-		resetDefaultText($("#emailField"),'url(images/email.png)');
-		resetDefaultText($("#passwordField"),'url(images/password.png)');
-		resetDefaultText($("#usernameField"),'url(images/username.png)');
+		resetDefaultText($("#emailField"),'url(../images/email.png)');
+		resetDefaultText($("#passwordField"),'url(../images/password.png)');
+		resetDefaultText($("#usernameField"),'url(../images/username.png)');
 		if (mode == 0) { // login
 			$("#loginlogo").css('margin-bottom','50px');
 			$("#emailDiv").hide();
@@ -626,9 +626,9 @@ $(function(){
 			
 			$contentWrapper.hide();
 			$selectee.append('<span id="tagTextEdit" style="display:inline"><input type="text" id="tagTextInput" style="margin: 2px; width: calc(100% - 110px);"></input>'
-				+ '<img src="images/repeat.png" id="tagEditRepeat" style="width:14px;height:14px;padding-left:1px;padding-top:2px;">'
-				+ '<img src="images/remind.png" id="tagEditRemind" style="width:14px;height:14px;padding-left:1px;padding-top:2px;">'
-				+ '<img src="images/pin.png" id="tagEditPinned" style="width:14px;height:14px;padding-left:1px;padding-top:2px;"></span>');
+				+ '<img src="../images/repeat.png" id="tagEditRepeat" style="width:14px;height:14px;padding-left:1px;padding-top:2px;">'
+				+ '<img src="../images/remind.png" id="tagEditRemind" style="width:14px;height:14px;padding-left:1px;padding-top:2px;">'
+				+ '<img src="../images/pin.png" id="tagEditPinned" style="width:14px;height:14px;padding-left:1px;padding-top:2px;"></span>');
 
 			$("#tagEditRepeat").off("mousedown");
 			$("#tagEditRemind").off("mousedown");
@@ -649,9 +649,10 @@ $(function(){
 			
 			$textInput.on("blur", function(e) {
 				if ($(this).data('cancelBlur')) return;
-				var $unselectee = $(this).parent("li");
+				var $unselectee = $(this).parents("li");
 				checkAndUpdateEntry($unselectee);
-				$unselectee.data('entryIsSelected', 0);
+				$unselectee.data('entryIsSelected', 1);
+				unselecting($unselectee);
 			})
 			$textInput.keyup(function(e) {
 				var $selectee = $(this).parents("li");
@@ -691,6 +692,7 @@ $(function(){
 				{entryId:entryId, date:cachedDateUTC, currentTime:currentTimeUTC, timeZoneName:timeZoneName})),
 				function(newEntry) {
 					if (checkData(newEntry)) {
+						//newEntry.glow = true;
 						var newEntryId = newEntry.id;
 						if (isContinuous) {
 							var $lastContinuousGhostEntry = $("#entry0 li.entry.ghost.continuous:last");
@@ -735,7 +737,10 @@ $(function(){
 			units = entry.units,
 			comment = entry.comment,
 			classes = "entry",
+			glowEntry = entry.glow,
 			$entryToReplace, $appendAfterEntry;
+
+		entry.glow = false;
 			
 		if (args && args instanceof Object) {
 			if (args.replaceEntry) {
@@ -744,6 +749,9 @@ $(function(){
 			if (args.appendAfterEntry) {
 				$appendAfterEntry = $(args.appendAfterEntry);
 			}
+		}
+		if (glowEntry) {
+			classes += " glow";
 		}
 
 		var isGhost = false, isConcreteGhost = false, isAnyGhost = false, isContinuous = false, isTimed = false, isRepeat = false, isRemind = false;
@@ -797,7 +805,7 @@ $(function(){
 		}
 
 		var innerHTMLContent = '<span class="content-wrapper">' + (timeAfterTag ? '' : escapehtml(dateStr)) + escapehtml(description) + escapehtml(formattedAmount) + escapehtml(formatUnits(units)) + (timeAfterTag ? escapehtml(dateStr) : '') + (comment != '' ? ' ' + escapehtml(comment) : '')
-			+ '</span><a class="entryDelete" id="entrydelid' + id + '" href="#" onclick="deleteEntryId(' + id + ')"><img style="width="12" height="12" src="images/x.gif"></a>';
+			+ '</span><a class="entryDelete" id="entrydelid' + id + '" href="#" onclick="deleteEntryId(' + id + ')"><img style="width="12" height="12" src="../images/x.gif"></a>';
 	
 		if(isUpdating) {
 			$("#entry0 li#entryid" + id).html(innerHTMLContent);
@@ -810,6 +818,9 @@ $(function(){
 			} else {
 				$("#entry0").append(newEntryContent);
 			}
+			setTimeout(function() {
+				$("li#entryid" + id).removeClass("glow");
+			}, 500)
 		}
 		var data = {entry: entry, entryId:id, isGhost:isGhost, isConcreteGhost:isConcreteGhost, isAnyGhost:isAnyGhost, isContinuous:isContinuous,
 				isTimed:isTimed, isRepeat:isRepeat, isRemind:isRemind};
@@ -882,19 +893,19 @@ $(function(){
 	function modifyEdit(suffix) {
 		var $control = $('#tagTextInput');
 		$control.data('cancelBlur', true);
-		toggleSuffix($control, suffix);
-		/*if (toggleSuffix($control, suffix)) {
+		//toggleSuffix($control, suffix);
+		if (toggleSuffix($control, suffix)) {
 			var $selectee = $control.parents("li");
 			unselecting($selectee);
 			selected($selectee, false);
-		}*/
+		}
 	}
 	
 	function modifyInput(suffix) {
 		initInput();
-		toggleSuffix($('#input0'), suffix);
-		//if (toggleSuffix($('#input0'), suffix))
-		//	processInput();
+		//toggleSuffix($('#input0'), suffix);
+		if (toggleSuffix($('#input0'), suffix))
+			processInput();
 	}
 	
 	function deleteGhost($entryToDelete, entryId, allFuture) {
@@ -968,10 +979,16 @@ $(function(){
 		var newText = $("input#tagTextInput").val();
 
 		$contentWrapper.show();
+		$unselectee.addClass("glow");
+
 		if (oldText != newText || $unselectee.data('forceUpdate')) {
 			$unselectee.data('forceUpdate', 0);
-			$contentWrapper.append("&nbsp;&nbsp;<img src='images/spinner.gif' />");
+			$contentWrapper.append("&nbsp;&nbsp;<img src='../images/spinner.gif' />");
 			updateEntry(currentEntryId, newText, defaultToNow);
+		} else {
+			setTimeout(function() {
+				$unselectee.removeClass("glow");
+			}, 500)
 		}
 
 		$("#tagTextEdit").remove();
@@ -991,16 +1008,13 @@ $(function(){
 		$.getJSON(makeGetUrl("updateEntrySData"), makeGetArgs(argsToSend),
 		function(entries){
 			if (checkData(entries)) {
-				refreshEntries(entries[0]);
-				// $.each(entries[0], function(index, entry) {
-					/**
-					 * Finding only that entry which is recently updated, and
-					 * refreshing only that entry in UI.
-					 */
-				/*	if(entry.id == entryId) {
-						displayEntry(entry, true);
+				$.each(entries[0], function(index, entry) {
+					// Finding entry which is recently updated.
+					if (entry.id == entryId) {
+						entry.glow = true;
 					}
-				}) */
+				})
+				refreshEntries(entries[0]);
 				updateAutocomplete(entries[1][0], entries[1][1], entries[1][2], entries[1][3]);
 				if (entries[2] != null)
 					updateAutocomplete(entries[2][0], entries[2][1], entries[2][2], entries[2][3]);
@@ -1021,6 +1035,7 @@ $(function(){
 			return;
 		}
 		var $oldEntry = getEntryElement(entryId);
+		$oldEntry.addClass("glow");
 		$(".content-wrapper", $oldEntry).html(text);
 		if ($oldEntry.data('originalText') == text) {
 			var $contentWrapper = $oldEntry.find(".content-wrapper");
@@ -1059,6 +1074,12 @@ $(function(){
 				if (entries[1] != null) {
 					showAlert(entries[1]);
 				}
+				$.each(entries[0], function(index, entry) {
+					// Finding entry which is recently added.
+					if (entry.id == entries[3].id) {
+						entry.glow = true;
+					}
+				})
 				refreshEntries(entries[0], false);
 				updateAutocomplete(entries[2][0], entries[2][1], entries[2][2], entries[2][3]);
 			} else {
@@ -1198,9 +1219,14 @@ $(function(){
 				refreshPage();
 			});
 	}
+	$("body").on("swiperight", function() {
+		changeDate(-1);
+	}).on("swipeleft", function() {
+		changeDate(1);
+	})
 </script>
 	<script type="text/javascript" src="cordova.js"></script>
-	<script type="text/javascript" src="js/mobile/index.js"></script>
+	<script type="text/javascript" src="../js/mobile/index.js"></script>
 	<script type="text/javascript">
 		console.log("App object: "+app);
     	app.initialize();
