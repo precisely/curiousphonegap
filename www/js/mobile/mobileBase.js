@@ -399,13 +399,20 @@ var REMIND_BIT = 0x4;
 var cachedDate, cachedDateUTC;
 var $datepickerField;
 
-$(document).ready(function(){ 
+$(window).load(function(){ 
 	$datepickerField = $("input#datepicker");
 	if (window.location.href.indexOf("lamhealth") > -1) {
 		$("#loginlogo").attr("src","images/logo_mobile_lhp.gif");
 	}
 	
 	$("#loginlogo").show();
+	$("body").on("swiperight", function() {
+		console.log("Swipe event right");
+		changeDate(-1);
+	}).on("swipeleft", function() {
+		console.log("Swipe event left");
+		changeDate(1);
+	});
 	
 });
 
@@ -1174,11 +1181,7 @@ var initTrackPage = function() {
 							refreshPage();
 						});
 }
-$("body").on("swiperight", function() {
-	changeDate(-1);
-}).on("swipeleft", function() {
-	changeDate(1);
-});
+
 
 //Overriding autocomplete from autocomplete.js
 
