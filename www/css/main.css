@@ -1,5 +1,11 @@
 /* FRAME */
 
+.content-size, .content-size:after, .content-size:before {
+	-webkit-box-sizing: content-box;
+	-moz-box-sizing: content-box;
+	box-sizing: content-box;
+}
+
 * {
 	vertical-align: baseline;
 	font-weight: inherit;
@@ -13,9 +19,16 @@
 }
 h1 {
 	font-weight:bold;
+	margin: 0;
 }
 body {
+	font-size: 16px;
 	text-align:left;
+	line-height: normal;
+	color: rgb(0, 0, 0);
+}
+input {
+	line-height: normal;
 }
 .postcomment textarea {
 	border: 1px solid;
@@ -25,19 +38,14 @@ a,a:link,a:hover,a:visited {
 	text-decoration:none;
 }
 .body1 {
-	margin-left: auto;
-	margin-right: auto;
-	width: 1000px;
 	text-align: left;	
 	border:1px solid #cccccc;
 	border-width:0px 1px 1px 1px;
 }
 .body2 {
-	padding:0px 20px;
+	padding: 0px 10px;
 }
 .main {
-	margin:0px 10px 0px 0px; 
-	float:left;
 	border:1px solid #cccccc;
 	-moz-box-shadow: 3px 3px 3px #dddddd;
 	-webkit-box-shadow: 3px 3px 3px #dddddd;
@@ -69,16 +77,27 @@ a,a:link,a:hover,a:visited {
 .bugs a span {	
 	display:none;
 }
+.ui-dialog-titlebar {
+	height: auto !important;
+}
+#alert-message-text {
+	font-size: 12pt;
+}
 .header {
-	padding:10px 0px 0px 0px;
+	padding:10px 0px 10px 0px;
 }
 #headerlogo {
 	background:url(../images/logo_alpha.png) no-repeat;
-	width:420px;
+	width: 420px;
 	height:30px;
 	display:inline-block;
 	padding:0px 0px 15px 0px;
 	vertical-align:middle;
+}
+@media (max-width: 992px) {
+	#headerlogo {
+		width: 180px;
+	}
 }
 #headerbutton {
 	background:url(../images/lhpdonate.gif) no-repeat;
@@ -88,9 +107,7 @@ a,a:link,a:hover,a:visited {
 }
 .mainLinks {
 	display:inline-block;
-	padding:0px 0px 20px 0px;
-	text-align:right;
-	width:350px;
+	padding: 12px 0px 0px 0px;
 }
 .mainLinks li {
 	display:inline;
@@ -110,9 +127,7 @@ a,a:link,a:hover,a:visited {
 	color:#999999;
 }	
 .signin {
-	display:block;
 	padding:14px 20px 0px 0px;
-	float:right;
 	font-size:.8em;
 	color:#999999;
 	vertical-align:middle;
@@ -124,6 +139,15 @@ a,a:link,a:hover,a:visited {
 	padding-left:10px;
 	text-decoration:none;
 }
+@media (max-width: 768px) {
+	.mainLinks {
+		padding: 0;
+		display: block;
+	}
+	.mainLinks li:first-child {
+		padding-left: 0;
+	}
+}
 #datepicker {
 	width:250px;
 	font-size:15px;
@@ -132,41 +156,32 @@ a,a:link,a:hover,a:visited {
 	padding-left:2px;
 }
 #trackmain {
-	width:722px;
 	height:610px;
+}
+/**
+ * Styles for graph page starts here.
+ */
+body.graph-page .querymain {
 	margin:0px;
 }
-.querymain {
-	width:540px;
-	margin:0px;
-}
-.querymain #plotArea {
-	width:530px;
+body.graph-page .querymain #plotArea {
 	height:500px;
-	float:right;
 }
-.querymain .cycletag {
-	margin-left:2px;
+body.graph-page #plotArea canvas {
+	width: 100%;
+	height: 100%;
 }
-.querycontrols {
-	width:540px;
+body.graph-page .querycontrols {
 	margin:0px;
 }
-.discussmain {
-	width:750px;
-	margin:0px;
-}
+/**
+ * Styles for graph page ends here.
+ */
 .discussmain .cycleTagInput {
 	margin-left:58px;
 }
 .discussmain .discussPlotArea {
-	width:750px;
 	height:550px;
-	float:right;
-}
-.discusscontrols {
-	width:750px;
-	margin:0px;
 }
 #dashmain {
 	width:800px;
@@ -174,18 +189,20 @@ a,a:link,a:hover,a:visited {
 #recordList {
 	padding: 4px;
 	overflow: auto;
-	height: 500px;
+	height: 509px;
 }
+/**
+ * @Deprecated. Use `.red-header` instead.
+ */
 .tagNav {
-	float:left;
-	width:225px;
-	margin-left:10px;
 	-moz-box-shadow: 3px 3px 3px #dddddd;
 	-webkit-box-shadow: 3px 3px 3px #dddddd;
 	box-shadow: 3px 3px 3px #dddddd;
 	background-color:#ffffff;
 }
-
+/**
+ * @Deprecated. Use `.red-header` instead.
+ */
 .tagNav h1 {
 	background-color: #EF4B3A;
     padding: 7px 10px;
@@ -215,6 +232,11 @@ a,a:link,a:hover,a:visited {
 	display:block;
 	line-height:1.4em
 }
+@media (max-width: 992px) {
+	.footer ul {
+		width: 20%;
+	}
+}
 input.textInput {
 	color:#cccccc;
 	background-color:#ffffff;
@@ -222,17 +244,19 @@ input.textInput {
 	padding-left:5px;
 	float:left;
 	border:1px solid #cccccc;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
 }
 .cycleTag {
 	color:#cccccc;
 	background-color:#ffffff;
 	margin:0px;
 	border:0px;
-	margin-left:8px;
 	display:inline-block;
 	padding-top:7px;
-	height:23px;
-	width:175px;
+	height:29px;
+	width:100%;
 }
 .startdatepicker, .enddatepicker {
 	height:30px;
@@ -242,7 +266,6 @@ input.textInput {
 }
 .startDate {
 	display:inline-block;
-	float:left;
 }
 .endDate {
 	display:inline-block;
@@ -260,7 +283,7 @@ input.buttonInput {
 
 /* RIGHT NAV */
 	
-#addData {
+#addData, .panel-wrapper {
 	background-color:#EBEBEB;
 	padding:9px;
 	border-bottom:9px solid #CCCCCC;
@@ -413,17 +436,14 @@ ul#tagList {
 	overflow-y: scroll;
 }
 .leftNav {
-	width:170px;
 	height:600px;
-	float:left;
-	margin:0px 10px 0px 0px;
+	margin: 0;
 	border:1px solid #cccccc;
 	-moz-box-shadow: 3px 3px 3px #dddddd;
 	-webkit-box-shadow: 3px 3px 3px #dddddd;
 	box-shadow: 3px 3px 3px #dddddd;
 }
 #plotLeftNav {
-	width:172x;
 	height:600px;
 }
 #plotLinesplotArea {
@@ -532,10 +552,6 @@ ul#tagList {
 	border: 2px solid #D5D879;
 }
 
-.ui-accordion {
-	width: 97%;
-}
-
 .ui-accordion-header {
 	border:none;
 	background: none;
@@ -563,20 +579,26 @@ h3.ui-accordion-header.ui-state-active { background-color: #ffffff !important; }
 .ui-dialog .ui-resizable-se { width: 14px; height: 14px; right: 3px; bottom: 3px; }
 .ui-draggable .ui-dialog-titlebar { cursor: move; }
 
+#tagListWrapper {
+	-moz-box-shadow: 3px 3px 3px #dddddd;
+	-webkit-box-shadow: 3px 3px 3px #dddddd;
+	box-shadow: 3px 3px 3px #dddddd;
+	margin-bottom: 5px;
+	min-height: 608px;
+}
+
 /* FIRST PAGE */
 
-#records {
-}
-#records h1 span.date {
+body.track-page .date-controls h1 span.date {
 	display:block;
 	float:left;
 	padding:0px 15px;
 }
-#records h1 a {
+body.track-page .date-controls h1 a {
 	display:block;
 	float:left;
 }
-#records h1 .gear {
+body.track-page .date-controls h1 .gear {
 	background:url(../images/records_gear.gif);
 	width:15px;
 	height:15px;
@@ -584,26 +606,10 @@ h3.ui-accordion-header.ui-state-active { background-color: #ffffff !important; }
 	float:right;
 	margin:2px 12px 0px 0px;
 }
-#records #datePicker {
+body.track-page .date-controls #datePicker {
 	background-color:#EF4B3A;
 	color:#ffffff;
 	text-transform:uppercase;
-}
-#records h1 a.back {
-  border-color: #EF4B3A #ffffff #EF4B3A #EF4B3A;
-  border-style:solid;
-  border-width:7px;
-  width:0;
-  height:0;
-  margin-top:3px;
-}
-#records h1 a.next {
-  border-color: #EF4B3A #EF4B3A #EF4B3A #ffffff;
-  border-style:solid;
-  border-width:7px;
-  width:0;
-  height:0;
-  margin-top:3px;
 }
 a.calendar {
 	background:url(../images/calendar.gif) no-repeat;
@@ -611,9 +617,6 @@ a.calendar {
 	height:14px;
 	margin:7px 0px 0px 10px;
 	display:inline-block;
-}
-#records h1 a span {
-	display:none;
 }
 
 /* GRAPH PAGE */
@@ -711,8 +714,16 @@ div.plotLine:hover span {
 	-webkit-box-shadow: 3px 3px 3px #ffffff;
 	box-shadow: 3px 3px 3px #ffffff;
 }
-#tagNav {
-	height:610px;
+.fixed-column {
+	width: 225px;
+	-webkit-box-sizing: content-box;
+	-moz-box-sizing: content-box;
+	box-sizing: content-box;
+}
+.floating-column {
+	overflow: hidden;
+	float: none;
+	width: auto;
 }
 #preFooter .tagNav img {
 	vertical-align:middle;
@@ -739,13 +750,11 @@ div.plotLine:hover span {
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
-	width: 60%;
 }
 #entry0 li {
 	margin: 0px;
 	padding: 1px;
 	font-size: 12pt;
-	width: 700px;
 }
 .swatch {
 	padding-left:20px;	
@@ -770,7 +779,6 @@ div.plotLine:hover span {
 	color:#ffffff;
 	font-size:24px;	
 	padding:10px;
-	height:28px;
 }
 
 .sharePage h1 .bittext {
@@ -955,10 +963,95 @@ div.plotLine:hover span {
 	padding-left:8px;
 	color:#999999;
 }
+.custom-row {
+	margin-left: -10px;
+	margin-right: -10px;
+}
 
 /**
  * Generic & common stuff, useful for every where. Starts here.
  */
+.red-header {
+	-moz-box-shadow: 3px 3px 3px #dddddd;
+	-webkit-box-shadow: 3px 3px 3px #dddddd;
+	box-shadow: 3px 3px 3px #dddddd;
+	background-color: #EF4B3A;
+	padding: 7px 10px;
+	vertical-align: middle;
+	color: #ffffff;
+	text-transform: uppercase;
+	min-height: 34px;
+}
+.red-header h1 {
+	font-weight: normal;
+	font-size: .8em;
+	line-height: 20px;
+}
+.icon-triangle {
+	border-style: solid;
+	border-width: 7px;
+	width: 0;
+	height: 0;
+	float: left;
+}
+.icon-triangle-down {
+	border-color: #ffffff #EF4B3A #EF4B3A #EF4B3A;
+	margin-top: 5px;
+}
+.icon-triangle-left {
+	margin-top: 3px;
+	border-color: #EF4B3A #ffffff #EF4B3A #EF4B3A;
+}
+.icon-triangle-right {
+	border-color: #EF4B3A #EF4B3A #EF4B3A #ffffff;
+	margin-top: 3px;
+}
+.icon-triangle-up {
+	border-color: #EF4B3A #EF4B3A #ffffff #EF4B3A;
+}
+.close {
+ 	float: right;
+	font-size: 18px;
+	font-weight: bold;
+	line-height: 1;
+	color: #000000;
+	text-shadow: 0 1px 0 #ffffff;
+	opacity: 0.2;
+	filter: alpha(opacity = 20);
+	background: transparent;
+	cursor: pointer;
+}
+.alert {
+	font-size: 13px;
+	padding: 10px;
+	margin-bottom: 20px;
+	border: 1px solid #EF4B3A;
+	border-radius: 4px;
+	font-weight: bold;
+}
+.alert.alert-danger {
+	background-color: #f2dede;
+	border-color: #ebccd1;
+	color: #CF1E0C;
+}
+.alert.alert-info {
+	background-color: #d9edf7;
+	border-color: #bce8f1;
+	color: #3a87ad;
+}
+.alert.alert-success {
+	background-color: #dff0d8;
+	border-color: #d6e9c6;
+	color: #468847;
+}
+.alert.alert-warning {
+	background-color: #fcf8e3;
+	border-color: #faebcc;
+	color: #c09853;
+}
+.pointer {
+	cursor: pointer;
+}
 .text-center {
 	text-align: center;
 }
@@ -971,17 +1064,18 @@ div.plotLine:hover span {
 	height: 3px;
 	margin-bottom: 20px;
 }
-
-.row {
-	margin-left: -15px;
-	margin-right: -15px;
-}
-.row:before, .row:after {
-	content: " ";
+.table {
 	display: table;
 }
-.row:after {
-	clear: both;
+.table-cell {
+	display: table-cell;
+}
+.full-width {
+	width: 100%
+}
+.align-middle {
+	text-align: center;
+	vertical-align: middle;
 }
 [class*="span"] {
 	position: relative;
@@ -1007,12 +1101,26 @@ div.plotLine:hover span {
 /**
  * Styles for track page for web application.
  */
-
 body.track-page #datepicker {
 	width: 260px;
 }
+body.track-page #area0 .panel-wrapper {
+	border-bottom: 0;
+}
 body.track-page ol#entry0 li.entry.ghost {
-	color: #A9A9A9;
+	color: #D9D9D9;
+	background-color: #FFFFFF;
+}
+li.entry.continuousghost {
+}
+li.entry.anyghost {
+}
+li.entry.concreteghost {
+}
+li.entry.timedrepeat {
+}
+body.track-page ol#entry0 li.entry.ghost span {
+	color: #D9D9D9;
 }
 body.track-page ol#entry0 li.entry.ghost a.entryDelete {
 	display: inline;
@@ -1021,3 +1129,15 @@ body.track-page ol#entry0 li.entry.ghost a.entryDelete {
 /**
  * Styles for track page for web application. Ends here.
  */
+
+.tags-collapsed-right {
+	padding-left: 2px;
+}
+.tags-collapsed-left {
+	padding-right: 0px;
+}
+.tags-collapsed-left .red-header {
+	box-shadow: none;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+}

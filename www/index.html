@@ -1,6 +1,6 @@
 <html manifest="/mobile/cache.manifest">
 <head>
-<link rel="shortcut icon" href="..../images/favicon.ico"
+<link rel="shortcut icon" href="images/favicon.ico"
 	type="image/x-icon" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="layout" content="main" />
@@ -54,99 +54,30 @@ setInterval(function(){cache.update()}, 10000);
 <meta name="description" content="A platform for health hackers" />
 <meta names="apple-mobile-web-app-status-bar-style"
 	content="black-translucent" />
-<meta name="viewport"
-	content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
+<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, target-densityDpi=device-dpi" />
+
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <script type="text/javascript"
-	src="../js/jquery/jquery-1.7.2.min.js"></script>
-<script type="text/javascript" src="../js/jquery/jquery.offline.js"></script>
+	src="js/jquery/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="js/jquery/jquery.offline.js"></script>
 <script type="text/javascript"
-	src="../js/jquery/jquery.json-2.2.js"></script>
+	src="js/jquery/jquery.json-2.2.js"></script>
 <script type="text/javascript"
-	src="../js/jquery/jquery-ui-1.8.18.custom.js"></script>
+	src="js/jquery/jquery-ui-1.8.18.custom.js"></script>
 <script type="text/javascript"
-	src="../js/jquery/jquery.selectable.custom.js?ver=7"></script>
-<script type="text/javascript" src="../js/jstz-1.0.4.min.js"></script>
+	src="js/jquery/jquery.selectable.custom.js?ver=7"></script>
+<script type="text/javascript" src="js/jstz-1.0.4.min.js"></script>
 
-<script type="text/javascript">
+<script type="text/javascript" src="js/curious/base.js?ver=9"></script>
+<script type="text/javascript" src="js/curious/curious.js?ver=9"></script>
+<script type="text/javascript" src="js/curious/autocomplete.js?ver=9"></script>
+<script type="text/javascript" src="js/mobile/mobileBase.js"></script>
 
-
-var localStorageSupported = function() {
-	try {
-		localStorage.setItem("test", "test");
-		localStorage.removeItem("test");
-		return 'localStorage' in window && window['localStorage'] !== null;
-	} catch (e) {
-		return false;
-	}
-}
-
-if (!localStorageSupported()) {
-	console.log("HTML5 local storage error");
-}
-
-$.datepicker._gotoToday = function(id) {
-    var target = $(id);
-    var inst = this._getInst(target[0]);
-    if (this._get(inst, 'gotoCurrent') && inst.currentDay) {
-            inst.selectedDay = inst.currentDay;
-            inst.drawMonth = inst.selectedMonth = inst.currentMonth;
-            inst.drawYear = inst.selectedYear = inst.currentYear;
-    }
-    else {
-            var date = new Date();
-            inst.selectedDay = date.getDate();
-            inst.drawMonth = inst.selectedMonth = date.getMonth();
-            inst.drawYear = inst.selectedYear = date.getFullYear();
-            // the below two lines are new
-            this._setDateDatepicker(target, date);
-            this._selectDate(id, this._getDateDatepicker(target));
-    }
-    this._notifyChange(inst);
-    this._adjustDate(target);
-}
-
-
-var activateEntryId = -1;
-
-
-function doLogout() {
-	console.log("Logging out...");
-	callLogoutCallbacks();
-	localStorage['mobileSessionId'] = null;
-	localStorage['appCache'] = null;
-	localStorage['lastPage'] = 'login';
-	startLogin(0);
-}
-
-function getCSRFPreventionURIMobile(key) {
-	if (localStorage['mobileSessionId'] == undefined || localStorage['mobileSessionId'] == null) {
-		console.error("Missing mobileSessionId for CSRF protection");
-	}
-	var preventionURI = "mobileSessionId=" + localStorage['mobileSessionId'];
-	return preventionURI;
-}
-
-function getCSRFPreventionObjectMobile(key, data) {
-	var CSRFPreventionObject = new Object();
-	if(localStorage['mobileSessionId']) {
-		CSRFPreventionObject['mobileSessionId'] = localStorage['mobileSessionId'];
-	} else {
-		console.error("Missing mobileSessionId for CSRF protection");
-	}
-
-	return $.extend(CSRFPreventionObject, data);
-}
-</script>
-
-<script type="text/javascript" src="../js/curious/base.js?ver=9"></script>
-<script type="text/javascript" src="../js/curious/curious.js?ver=9"></script>
-<script type="text/javascript" src="../js/curious/autocomplete.js?ver=9"></script>
 <script type="text/javascript"
-	src="../js/jquery/jquery.mobile.touch.min.js?ver=9"></script>
+	src="js/jquery/jquery.mobile.touch.min.js?ver=9"></script>
 <link rel="apple-touch-icon"
-	href="../images/apple-touch-icon-precomposed.png" />
-<link rel="shortcut icon" href="../images/favicon.ico"
+	href="images/apple-touch-icon-precomposed.png" />
+<link rel="shortcut icon" href="images/favicon.ico"
 	type="image/x-icon" />
 <link rel="stylesheet" href="css/mobile.css?ver=1" />
 <link type="text/css"
@@ -166,1067 +97,98 @@ function getCSRFPreventionObjectMobile(key, data) {
 	<div id="body">
 		<div id="loginPage"
 			style="display: none; width: 350px; margin-left: auto; margin-right: auto;">
-			<script type="text/javascript">
-		function addPerson(name, username, userId, sex) {
-			if (sex == 'F') sex = 'Female';
-			if (sex == 'M') sex = 'Male';
-			$('#displayUser').html(username);
-		}
-	
-		function resetDefaultText($element, backImage) {
-			$element.data('defaultTextCleared', false);
-			$element.val('');
-			$element.css('background-image', backImage);
-		}
-		
-		function submitForm() {
-			if (!isOnline()) {
-				showAlert("Please wait until online");
-				return;
-			}
-			var email = $("#emailField").val();
-			var username = $("#usernameField").val();
-			var password = $("#passwordField").val();
 
-			if (loginMode == 0) { // login
-				$.getJSON(makeGetUrl('dologinData'), makeGetArgs({ username:username, password:password }), function(data) {
-					if (data['success']) {
-						localStorage['mobileSessionId'] = data['mobileSessionId'];
-						dataReady=true;
-						launchTrack();
-						app.registerNotification();
-					} else {
-						showAlert('Username or password not correct, please try again');
-						startLogin(0);
-					}
-				});
-			} else if (loginMode == 10) { // forgot password
-				$.getJSON(makeGetUrl('doforgotData'), makeGetArgs({ username:username }), function(data) {
-					if (data['success']) {
-						showAlert('Look for instructions on recovering your account information in your email.');
-						startLogin(0);
-					} else {
-						showAlert(data['message'] + " Please try again or hit Cancel to return to the login screen.");
-					}
-				});
-			} else if (loginMode == 20) { // create an account
-
-				$.postJSON(makePostUrl('doregisterData'), makePostArgs({ email:email, username:username, password:password, groups:"['announce','curious','curious announce']" }),
-
-					function(data) {
-						if (data['success']) {
-							localStorage['mobileSessionId'] = data['mobileSessionId'];
-							dataReady=true;
-							launchTrack();
-						} else {
-							showAlert(data['message'] + ' Please try again or hit Cancel to return to the login screen.');
-						}
-					});
-			}
-		}
-	
-		var submitLogin = function(e) {
-			if (!$(this).data('defaultTextCleared')) {
-				$(this).data('defaultTextCleared', true);
-				$(this).val('');
-				$(this).css('background-image', 'none');
-				$(this).css('color','#000000');
-			}
-			if (e.keyCode == 13)
-				submitForm();
-		}
-		
-		// Main page logic after full page load
-		var initLoginPage = function() {
-			localStorage['lastPage'] = 'login';
-	
-			$("input:text:visible:first").focus();
-	
-			$("#emailField").val('');
-			$("#usernameField").val('');
-			$("#passwordField").val('');
-			$("#emailField").off("keydown");
-			$("#usernameField").off("keydown");
-			$("#passwordField").off("keydown");
-			$("#emailField").on("keydown", submitLogin);
-			$("#usernameField").on("keydown", submitLogin);
-			$("#passwordField").on("keydown", submitLogin);
-		}
-
-	</script>
 			<div class="login">
 
 				<a href="javascript:startLogin(0)"><img border="0"
-					id="loginlogo" src="../images/logo.gif" width="205"
-					height="230" alt="Curious" /></a>
-
-
-				<form id="loginform" onsubmit="return false;" action="#">
-					<input type="hidden" name="precontroller" value="" /> <input
-						type="hidden" name="preaction" value="" />
-					<div id="createaccountDiv" class="loginlabel" style="display: none">
-						Create an account:</div>
-					<div id="recoverinfoDiv" class="loginlabel" style="display: none">
-						Request your info by entering your username.</div>
-					<div style="width: 205px">
-						<div id="emailDiv" class="logininput" style="display: none">
-							<input class="textField" type="text" id="emailField" name="email"
-								value="" />
-						</div>
-						<div id="usernameDiv" class="logininput">
-							<input class="textField" type="text" id="usernameField"
-								name="username" value="" />
-						</div>
-						<div id="passwordDiv" class="logininput">
-							<input class="textField" type="password" id="passwordField"
-								name="password" />
-						</div>
-						<div id="loginButtonDiv" class="okCancelDiv">
-							<button class="loginButton">
-								<img src="../images/login.png" width="76" height="24"
-									alt="Login" onclick="submitForm()" />
-							</button>
-							<br />
-						</div>
-						<div id="cancelButtonDiv" class="okCancelDiv">
-							<button class="cancelButton">
-								<img src="../images/cancel.png" width="76" height="24"
-									alt="Cancel" onclick="javascript:startLogin(0)" />
-							</button>
-							<button class="loginButton">
-								<img src="../images/submit.png" width="76" height="24"
-									alt="Submit" onclick="submitForm()" />
-							</button>
-							<br />
-						</div>
-					</div>
-				</form>
-				<div id="loginoptionsDiv" class="loginoptions">
-					<a href="javascript:createAccount()">Create an account</a> | <a
-						href="javascript:recoverPassword()">Forget your info?</a>
-				</div>
+					id="loginlogo" src="images/logo.gif" width="205"
+					height="230" alt="Curious" style="display:none;" /></a>
+	
+		<form id="loginform" onsubmit="return false;" action="#">
+			<input type="hidden" name="precontroller" value="" />
+			<input type="hidden" name="preaction" value="" />
+			<div id="createaccountDiv" class="loginlabel" style="display:none">
+			Create an account:
 			</div>
-			<div class="info"></div>
+			<div id="recoverinfoDiv" class="loginlabel" style="display:none">
+			Request your info by entering your username.
+			</div>
+			<div style="width:205px">
+			<div id="emailDiv" class="logininput" style="display:none">
+				<input class="textField" type="text" id="emailField"
+					name="email" value="" />
+			</div>
+			<div id="usernameDiv" class="logininput">
+				<input class="textField" type="text" id="usernameField"
+					name="username" value="" />
+			</div>
+			<div id="passwordDiv" class="logininput">
+				<input class="textField" type="password" id="passwordField"
+					name="password" />
+			</div>
+			<div id="loginButtonDiv" class="okCancelDiv">
+				<img class="loginButton" src="images/login.png" width="76" height="24" alt="Login" onclick="submitForm()" /><br />
+			</div>
+			<div id="cancelButtonDiv" class="okCancelDiv">
+				<img class="cancelButton" src="images/cancel.png" width="76" height="24" alt="Cancel" onclick="javascript:startLogin(0)"/>
+				<img class="loginButton" src="images/submit.png" width="76" height="24" alt="Submit" onclick="submitForm()" /><br />
+			</div>
+			</div>
+		</form>
+		<div id="loginoptionsDiv" class="loginoptions">
+			<a href="javascript:createAccount()">Create an account</a> |
+			<a href="javascript:recoverPassword()">Forget your info?</a>
 		</div>
-		<div id="trackPage" style="display: none;">
+	</div>
+	<div class="info">
+		
+	</div>
+</div>
+<div id="trackPage" style="display: none;">
 
-			<div id="header">
-				<div class="dateBar">
-					<a class="back" href="#" onclick="changeDate(-1);"><span>back</span></a>
-					<span class="date"><input id="datepicker" type="text"
-						value="" /></span> <a class="next" href="#" onclick="changeDate(1);"><span>next</span></a>
-					<div style="clear: both"></div>
-				</div>
+	<div id="header">
+		<div class="dateBar">
+		<a class="back" href="#" onclick="changeDate(-1);"><span>back</span></a>
+		<span class="date"><input id="datepicker" type="text" value=""/></span>
+		<a class="next" href="#" onclick="changeDate(1);"><span>next</span></a>
+		<div style="clear:both"></div>
+	</div>
 
-				<div id="autocomplete"
-					style="position: absolute; top: 10px; right: 10px;"></div>
+	<div id="autocomplete" style="position: absolute; top: 10px; right: 10px;"></div>
 
-				<div class="dataEntry">
-					<form id="taginput" onsubmit="return false;" action="#">
-						<input type="text" id="input0" name="data"
-							style="width: calc(100% - 110px); margin-right: 5px;"
-							class="textField" /> <a href="#" onclick="modifyInput('repeat')"><img
-							src="../images/repeat.png"
-							style="width: 20px; height: 20px; padding-top: 5px;"></a> <a
-							href="#" onclick="modifyInput('remind')"><img
-							src="../images/remind.png"
-							style="width: 20px; height: 20px; padding-top: 5px;"></a> <a
-							href="#" onclick="modifyInput('pinned')"><img
-							src="../images/pin.png"
-							style="width: 20px; height: 20px; padding-top: 5px;"></a>
-					</form>
-					<hr />
-				</div>
+	<div class="dataEntry">
+		<form id="taginput" onsubmit="return false;" action="#" style="padding-top: 0.7em; padding-bottom: 0.7em;">
+			<input type="text" id="input0" name="data" style="width:calc(100% - 110px);margin-right:5px;" class="textField" />
+			<div style="display: inline-block;vertical-align: middle;">
+				<a href="#" onclick="modifyInput('repeat')"><img src="images/repeat.png" style="width:20px;height:20px;"></a>
+				<a href="#" onclick="modifyInput('remind')"><img src="images/remind.png" style="width:20px;height:20px;"></a>
+				<a href="#" onclick="modifyInput('pinned')"><img src="images/pin.png" style="width:20px;height:20px;"></a>
 			</div>
-
-			<div id="content">
-				<div class="dataTags">
-					<div id="recordList"
-						style="overflow: auto; height: 100%; -webkit-overflow-scrolling: touch;">
-						<ol id="entry0" style="width: 100%; height: 100%;">
-						</ol>
-					</div>
-				</div>
-			</div>
-
-			<div id="footer">
-				<div class="userInfo">
-					<div id="displayUser" class="username">Username</div>
-					<div class="online">
-						<a href="#" onclick="askLogout()" class="indicator">Log Out</a>
-					</div>
-					<div style="clear: both"></div>
-				</div>
-			</div>
+		</form>
+		<hr />
 		</div>
 	</div>
 
-	<script type="text/javascript">
-function askLogout() {
-	showYesNo("Log out?", function() {
-		doLogout();
-	});
-}
+	<div id="content">
+		<div class="dataTags">
+		<div id="recordList" style="overflow:auto;height:100%;-webkit-overflow-scrolling:touch;">
+		<ol id="entry0" style="width:100%;height:100%;">
+		</ol>
+		</div>
+		</div>
+	</div>
 
-// flag to determine whether the system is ready to submit data
-var dataReady = false;
-
-if (!localStorage['mobileSessionId'] || localStorage['mobileSessionId'] == undefined) {
-	console.log("error: local session is cleared");
-	doLogout(); // clear JSON cache and start over
-}
-
-function isLoggedIn() {
-	return localStorage['mobileSessionId'] != null;
-}
-
-function makeGetUrl(url) {
-	return "/mobiledata/" + url + '?callback=?';
-}
-
-function makeGetArgs(args) {
-	args['mobileSessionId'] = localStorage['mobileSessionId'];
-
-	return args;
-}
-
-function makePostUrl(url) {
-	return "/mobiledata/" + url;
-}
-
-function makePostArgs(args) {
-	args['mobileSessionId'] = localStorage['mobileSessionId'];
-
-	return args;
-}
-
-function makePlainUrl(url) {
-	var url = "/mobile/" + url;
-	url = url;
-	return url;
-}
-
-function initAppCache() {
-	if (supportsLocalStorage()) {
-		if (localStorage['appCache'] == null) {
-			localStorage['appCache'] = {};
-			localStorage['lastPage'] = null;
-			return;
-		}
-	}
-}
-
-function getAppCacheData(key) {
-	if (supportsLocalStorage()) {
-		var cache = localStorage['appCache'];
-		if (cache != null) {
-			var data = cache[key];
-			if (data != null)
-				return data;
-			else {
-				data = {};
-				cache[key] = data;
-				return data;
-			}
-		}
-	}
-}
-
-var pageLoaded = false;
-
-// mode:
-// 0:login
-// 10:forgot password
-// 20:create account
-
-var loginMode = 0;
-
-function startLogin(mode) {
-	if (pageLoaded) {
-		loginMode = mode;
-		
-		if (supportsLocalStorage()) {
-			localStorage['mobileSessionId'] = null;
-			localStorage['appCache'] = null;
-			localStorage['lastPage'] = 'login';
-		}
-		$('#trackPage').hide();
-		
-		resetDefaultText($("#emailField"),'url(../images/email.png)');
-		resetDefaultText($("#passwordField"),'url(../images/password.png)');
-		resetDefaultText($("#usernameField"),'url(../images/username.png)');
-		if (mode == 0) { // login
-			$("#loginlogo").css('margin-bottom','50px');
-			$("#emailDiv").hide();
-			$("#usernameDiv").show();
-			$("#passwordDiv").show();
-			$("#recoverinfoDiv").hide();
-			$("#createaccountDiv").hide();
-			$("#loginButtonDiv").show();
-			$("#cancelButtonDiv").hide();
-			$("#loginoptionsDiv").show();
-		} else if (mode == 10) { // forgot password
-			$("#loginlogo").css('margin-bottom','10px');
-			$("#emailDiv").hide();
-			$("#usernameDiv").show();
-			$("#passwordDiv").hide();
-			$("#recoverinfoDiv").show();
-			$("#createaccountDiv").hide();
-			$("#loginButtonDiv").hide();
-			$("#cancelButtonDiv").show();
-			$("#loginoptionsDiv").hide();
-		} else if (mode == 20) { // create account
-			$("#loginlogo").css('margin-bottom','10px');
-			$("#emailDiv").show();
-			$("#usernameDiv").show();
-			$("#passwordDiv").show();
-			$("#recoverinfoDiv").hide();
-			$("#createaccountDiv").show();
-			$("#loginButtonDiv").hide();
-			$("#cancelButtonDiv").show();
-			$("#loginoptionsDiv").hide();
-		}
-		$('#loginPage').show(0, initLoginPage);
-	}
-}
-
-function recoverPassword() {
-	startLogin(10);
-}
-
-function createAccount() {
-	startLogin(20);
-}
-
-function startTrack() {
-	localStorage['lastPage'] = 'track';
-	$('#loginPage').hide();
-	$('#trackPage').show(0, initTrackPage);
-}
-
-function launchTrack() {
-	localStorage['lastPage'] = 'track';
-	reloadPage();
-}
-
-/*
-	If no local storage mobile session, show login page
-		If login submit and offline, show alert saying must be online
-		If login submit and online, attempt to log in
-			If success, clear cache show track page and load track page
-	If local storage mobile session
-		If last page is track page
-			Show track page and retrieve track info
-			Until fully online don't allow entry submission
-			If submit entry and not yet fully online put up error dialog (in future cache entry for future sync)
-		If last page is login page
-			Show login page
-*/
-function reloadPage() {
-	var mobileSessionId = localStorage['mobileSessionId'];
-	if (!mobileSessionId) {
-		console.log("mobileSessionId not found!");
-		doLogout();
-	} else { // mobile session exists
-		if (localStorage['lastPage'] == 'track' || localStorage['lastPage'] == null) {
-			startTrack();
-		} else {
-			console.log("lastPage isn't track or cleared")
-			doLogout();
-		}
-	}
-}
-
-$(function(){
-	pageLoaded = true;
-	reloadPage();
-});
-
-	var defaultToNow = true;
-	var timeAfterTag = true;
-	var CONTINUOUS_BIT = 0x100;
-	var GHOST_BIT = 0x200;
-	var CONCRETEGHOST_BIT = 0x400;
-	var TIMED_BIT = 0x1 | 0x2 | 0x4;
-	var REPEAT_BIT = 0x1 | 0x2;
-	var REMIND_BIT = 0x4;
-
-	var cachedDate, cachedDateUTC;
-	var $datepickerField = $("input#datepicker");
-
-	function cacheDate() {
-		cachedDate = $datepickerField.datepicker('getDate');
-		cachedDateUTC = cachedDate.toUTCString();
-	}
-
-	var currentTimeUTC;
-	var timeZoneName;
-	
-	function cacheNow() {
-		cacheDate();
-		var now = new Date();
-		currentTimeUTC = now.toUTCString();
-		timeZoneName = jstz.determine().name();
-	}
-	
-	function changeDate(amount) {
-		var $datepicker = $("#datepicker");
-		var currentDate = $datepicker.datepicker('getDate');
-		$datepicker.datepicker('setDate', new Date(currentDate.getTime() + amount * 86400000));
-		refreshPage();
-	}
-
-	function refreshPage() {
-		cacheNow();
-		
-		var cachedObj = getAppCacheData(cachedDateUTC);
-		
-		if (cachedObj['data'] != null) {
-			console.log("refresh entries from cache");
-			refreshEntries(data, false);
-		}
-		
-		var argsToSend = getCSRFPreventionObjectMobile('getListDataCSRF', { date:cachedDateUTC, userId:currentUserId, timeZoneName:timeZoneName });
-		$.getJSON(makeGetUrl("getListData"), makeGetArgs(argsToSend),
-			function(data) {
-				if (checkData(data)) {
-					console.log("refresh entries from get list");
-					refreshEntries(data, true);
-					dataReady = true;
-				}
-			});
-	}
-
-	var currentEntryId = undefined;
-
-	function clearEntries() {
-		currentEntryId = undefined;
-		$("#entry0").html('');
-	}
-
-	/*
-	 * Gets called on selection of the entry, or used to select an entry.
-	 */
-	function selected($selectee, forceUpdate) {
-		var state = $selectee.data('entryIsSelected');
-		$selectee.data('forceUpdate', forceUpdate);
-		var $contentWrapper = $selectee.find(".content-wrapper");
-		if ($("#tagTextInput").size() == 1) return;
-		$selectee.siblings().removeClass("ui-selected").data('entryIsSelected', 0);
-
-		if (state == undefined || state == 0) {
-			$selectee.addClass('ui-selected');
-			$selectee.data('entryIsSelected', 1);
-			$selectee.data('contentHTML', $contentWrapper.html()); // store original HTML for later
-			currentEntryId = $selectee.data("entry-id");
-			$("#entrydelid" + currentEntryId).css('display', 'inline');
-			var entryText = $selectee.text();
-			$selectee.data('originalText', entryText); // store entry text for comparison
-			var selectRange = entrySelectData[currentEntryId];
-			
-			$contentWrapper.hide();
-			$selectee.append('<span id="tagTextEdit" style="display:inline"><input type="text" id="tagTextInput" style="margin: 2px; width: calc(100% - 110px);"></input>'
-				+ '<img src="../images/repeat.png" id="tagEditRepeat" style="width:14px;height:14px;padding-left:1px;padding-top:2px;">'
-				+ '<img src="../images/remind.png" id="tagEditRemind" style="width:14px;height:14px;padding-left:1px;padding-top:2px;">'
-				+ '<img src="../images/pin.png" id="tagEditPinned" style="width:14px;height:14px;padding-left:1px;padding-top:2px;"></span>');
-
-			$("#tagEditRepeat").off("mousedown");
-			$("#tagEditRemind").off("mousedown");
-			$("#tagEditPinned").off("mousedown");
-			
-			$("#tagEditRepeat").on("mousedown", function(e) {
-				modifyEdit('repeat');
-			});
-			$("#tagEditRemind").on("mousedown", function(e) {
-				modifyEdit('remind');
-			});
-			$("#tagEditPinned").on("mousedown", function(e) {
-				modifyEdit('pinned');
-			});
-			
-			// Binding blur event on element instead of globally to prevent concurrent exception.
-			var $textInput = $("#tagTextInput").val(entryText).focus();
-			
-			$textInput.on("blur", function(e) {
-				if ($(this).data('cancelBlur')) return;
-				var $unselectee = $(this).parents("li");
-				checkAndUpdateEntry($unselectee);
-				$unselectee.data('entryIsSelected', 1);
-				unselecting($unselectee);
-			})
-			$textInput.keyup(function(e) {
-				var $selectee = $(this).parents("li");
-				if (e.keyCode == 13) {	// Enter pressed
-					unselecting($selectee);
-				} else if(e.keyCode == 27) {	// Esc pressed
-					unselecting($selectee, true);
-				}
-				/*if (e.keyCode == 13) {
-					var $unselectee = $(this).parent("li");
-					checkAndUpdateEntry($unselectee);
-					$unselectee.data('entryIsSelected', 0);
-					//$("a.entryDelete", $unselectee).hide();
-				}*/
-			});
-			
-			if (selectRange) {
-				$("#tagTextInput").selectRange(selectRange[0], selectRange[1]);
-			}
-		} else if (state == 2) {
-			$selectee.data('entryIsSelected', 0);
-		}
-	}
-	
-	function activateEntry($entry, doNotSelectEntry) {
-		var gEntry = $entry;
-		var entryId = $entry.data("entry-id");
-		var isContinuous = $entry.data("isContinuous");
-		var isGhost = $entry.data("isGhost");
-		
-		if (!isGhost) {
-			selected($entry, false);
-			return;
-		}
-		cacheNow();
-		$.getJSON(makeGetUrl("activateGhostEntry"), makeGetArgs(getCSRFPreventionObjectMobile("activateGhostEntryCSRF",
-				{entryId:entryId, date:cachedDateUTC, currentTime:currentTimeUTC, timeZoneName:timeZoneName})),
-				function(newEntry) {
-					if (checkData(newEntry)) {
-						//newEntry.glow = true;
-						var newEntryId = newEntry.id;
-						if (isContinuous) {
-							var $lastContinuousGhostEntry = $("#entry0 li.entry.ghost.continuous:last");
-							displayEntry(newEntry, false, {appendAfterEntry: $lastContinuousGhostEntry});
-						} else {
-							activateEntryId = newEntry.id;
-							displayEntry(newEntry, false, {replaceEntry:gEntry});
-						}
-						var $newEntry = $("li#entryid" + newEntryId);
-						if (!doNotSelectEntry) {
-							selected($newEntry, true);
-						}
-					}
-				});
-	}
-
-	var dayDuration = 86400000;
-	var entrySelectData;
-	
-	function unselecting($unselectee) {
-		if ($unselectee.data('entryIsSelected') == 1) {
-			var $textInput = $("#tagTextInput");
-			if ($textInput.data('cancelBlur')) {
-				$textInput.data('cancelBlur', false);
-				return;
-			}
-			$unselectee.data('entryIsSelected', 0);
-			$unselectee.removeClass('ui-selected');
-			$("a.entryDelete", $unselectee).hide();
-			checkAndUpdateEntry($unselectee);
-			currentEntryId = null;
-		}
-	}
-	
-	function displayEntry(entry, isUpdating, args) {
-		var id = entry.id,
-			date = entry.date,
-			datePrecisionSecs = entry.datePrecisionSecs,
-			description = entry.description,
-			amount = entry.amount,
-			amountPrecision = entry.amountPrecision,
-			units = entry.units,
-			comment = entry.comment,
-			classes = "entry",
-			glowEntry = entry.glow,
-			$entryToReplace, $appendAfterEntry;
-
-		entry.glow = false;
-			
-		if (args && args instanceof Object) {
-			if (args.replaceEntry) {
-				$entryToReplace = $(args.replaceEntry);
-			}
-			if (args.appendAfterEntry) {
-				$appendAfterEntry = $(args.appendAfterEntry);
-			}
-		}
-		if (glowEntry) {
-			classes += " glow";
-		}
-
-		var isGhost = false, isConcreteGhost = false, isAnyGhost = false, isContinuous = false, isTimed = false, isRepeat = false, isRemind = false;
-		if (entry.repeatType) {
-			if ((entry.repeatType & GHOST_BIT) != 0) {
-				isGhost = true;
-				isAnyGhost = true;
-				classes += " ghost anyghost";
-			}
-			if ((entry.repeatType & CONCRETEGHOST_BIT) != 0) {
-				isConcreteGhost = true;
-				isAnyGhost = true;
-				classes += " concreteghost anyghost";
-			}
-			if ((entry.repeatType & CONTINUOUS_BIT) != 0) {
-				isContinuous = true;
-				classes += " continuous"
-			}
-			if ((entry.repeatType & TIMED_BIT) != 0) {
-				isTimed = true;
-				classes += " timedrepeat"
-			}
-			if ((entry.repeatType & REPEAT_BIT) != 0) {
-				isRepeat = true;
-			}
-			if ((entry.repeatType & REMIND_BIT) != 0) {
-				isRemind = true;
-			}
-		}
-
-		var diff = dateToTime(date) - cachedDate.getTime();
-		if (diff < 0 ||  diff >= dayDuration) {
-			return null; // skip items outside display
-		}
-		var dateStr = '';
-		if (datePrecisionSecs < 43200) {
-			dateStr = dateToTimeStr(date, false);
-			if (timeAfterTag) {
-				dateStr = ' ' + dateStr;
-			} else {
-				dateStr = dateStr + ' ';
-			}
-		}
-		// store amount for post-selection highlighting
-		
-		var formattedAmount = formatAmount(amount, amountPrecision);
-		if (formattedAmount.length > 0) {
-			var selectStart = (timeAfterTag ? 0 : dateStr.length) + description.length + 1;
-			var selectEnd = selectStart + formattedAmount.length - 1;
-			entrySelectData[id] = [selectStart, selectEnd];
-		}
-
-		var innerHTMLContent = '<span class="content-wrapper">' + (timeAfterTag ? '' : escapehtml(dateStr)) + escapehtml(description) + escapehtml(formattedAmount) + escapehtml(formatUnits(units)) + (timeAfterTag ? escapehtml(dateStr) : '') + (comment != '' ? ' ' + escapehtml(comment) : '')
-			+ '</span><a class="entryDelete" id="entrydelid' + id + '" href="#" onclick="deleteEntryId(' + id + ')"><img style="width="12" height="12" src="../images/x.gif"></a>';
-	
-		if(isUpdating) {
-			$("#entry0 li#entryid" + id).html(innerHTMLContent);
-		} else {
-			var newEntryContent = '<li id="entryid' + id + '" class="' + classes + '">' + innerHTMLContent + '</li>';
-			if($entryToReplace) {
-				$entryToReplace.replaceWith(newEntryContent);
-			} else if($appendAfterEntry) {
-				$appendAfterEntry.after(newEntryContent);
-			} else {
-				$("#entry0").append(newEntryContent);
-			}
-			setTimeout(function() {
-				$("li#entryid" + id).removeClass("glow");
-			}, 500)
-		}
-		var data = {entry: entry, entryId:id, isGhost:isGhost, isConcreteGhost:isConcreteGhost, isAnyGhost:isAnyGhost, isContinuous:isContinuous,
-				isTimed:isTimed, isRepeat:isRepeat, isRemind:isRemind};
-		var $entryItem = $("#entry0 li#entryid" + id);
-		$entryItem.data(data);
-		if (id == activateEntryId) {
-			return $entryItem;
-		}
-		
-		return null;
-	}
-
-	function displayEntries(entries) {
-		entrySelectData = {};
-		var $entryToActivate = null;
-		jQuery.each(entries, function() {
-			var args = {};
-			var $retVal = displayEntry(this, false, args);
-			if ($retVal) {
-				$entryToActivate = $retVal;
-			}
-			return true;
-		});
-		
-		return $entryToActivate;
-	}
-
-	function refreshEntries(entries, activateGhost) {
-		clearEntries();
-		var $entryToActivate = displayEntries(entries);
-		var cache = getAppCacheData(cachedDateUTC);
-		cache['data'] = entries;
-		
-		if (activateGhost && $entryToActivate) {
-			activateEntry($entryToActivate);
-			activateEntryId = -1;
-		}
-	}
-	
-	function toggleSuffix($control, suffix) {
-		var text = $control.val();
-		
-		if (text.endsWith(" repeat")) {
-			text = text.substr(0, text.length - 7);
-			$control.val(text);
-			
-			if (suffix == "repeat")
-				return text.length > 0;
-		}
-		if (text.endsWith(" remind")) {
-			text = text.substr(0, text.length - 7);
-			$control.val(text);
-			
-			if (suffix == "remind")
-				return text.length > 0;
-		}
-		if (text.endsWith(" pinned")) {
-			text = text.substr(0, text.length - 7);
-			$control.val(text);
-			
-			if (suffix == "pinned")
-				return text.length > 0;
-		}
-		
-		$control.val(text + " " + suffix);
-		
-		return text.length > 0;
-	}
-	
-	function modifyEdit(suffix) {
-		var $control = $('#tagTextInput');
-		$control.data('cancelBlur', true);
-		//toggleSuffix($control, suffix);
-		if (toggleSuffix($control, suffix)) {
-			var $selectee = $control.parents("li");
-			unselecting($selectee);
-			selected($selectee, false);
-		}
-	}
-	
-	function modifyInput(suffix) {
-		initInput();
-		//toggleSuffix($('#input0'), suffix);
-		if (toggleSuffix($('#input0'), suffix))
-			processInput();
-	}
-	
-	function deleteGhost($entryToDelete, entryId, allFuture) {
-		$.getJSON(makeGetUrl("deleteGhostEntryData"), makeGetArgs(getCSRFPreventionObjectMobile("deleteGhostEntryDataCSRF", {entryId:entryId,
-				all:(allFuture ? "true" : "false"), date:cachedDateUTC})),
-			function(ret) {
-				if (checkData(ret, 'success', "Error deleting entry")) {
-					$entryToDelete.remove();
-				}
-			});
-	}
-	
-	function deleteEntryId(entryId) {
-		cacheNow();
-	
-		if (!dataReady) {
-			//alert("Please wait until syncing is done before deleting entries");
-			startLogin(0);
-			return;
-		}
-		if (!isOnline()) {
-			showAlert("Please wait until online to delete an entry");
-			return;
-		}
-		if (entryId == undefined) {
-			showAlert("Please select entry you wish to delete");
-		} else {
-			var $entryToDelete = getEntryElement(entryId);
-			if ($entryToDelete.data("isTimed") || $entryToDelete.data("isGhost")) {
-				if ($entryToDelete.data("isContinuous")) {
-					deleteGhost($entryToDelete, entryId, true);
-				} else {
-					showAB("Delete just this one event or also future events?", "One", "Future", function() {
-							deleteGhost($entryToDelete, entryId, false);
-						}, function() {
-							deleteGhost($entryToDelete, entryId, true);
-						});
-				}
-			} else {
-				var argsToSend = getCSRFPreventionObjectMobile("deleteEntryDataCSRF", { entryId:entryId,
-					currentTime:currentTimeUTC, baseDate:cachedDateUTC,
-					timeZoneName:timeZoneName, displayDate:cachedDateUTC });
-		
-				$.getJSON(makeGetUrl("deleteEntrySData"), makeGetArgs(argsToSend),
-					function(entries) {
-						if (checkData(entries)) {
-							refreshEntries(entries[0], false);
-							updateAutocomplete(entries[1][0], entries[1][1], entries[1][2], entries[1][3]);
-							if (entries[2] != null)
-								updateAutocomplete(entries[2][0], entries[2][1], entries[2][2], entries[2][3]);
-						} else {
-							showAlert("Error deleting entry");
-						}
-					});
-			}
-		}
-	}
-
-	function deleteCurrentEntry() {
-		deleteEntryId(currentEntryId);
-	}
-
-	/**
-	 * Sees to check if text is different from original text.
-	 * IF different than call updateEntry() method to notify
-	 * server and update in UI.
-	 */
-	function checkAndUpdateEntry($unselectee) {
-		var $contentWrapper = $unselectee.find(".content-wrapper"); // Original wrapper which containing previous text.
-		var oldText = $contentWrapper.text();
-		var newText = $("input#tagTextInput").val();
-
-		$contentWrapper.show();
-		$unselectee.addClass("glow");
-
-		if (oldText != newText || $unselectee.data('forceUpdate')) {
-			$unselectee.data('forceUpdate', 0);
-			$contentWrapper.append("&nbsp;&nbsp;<img src='../images/spinner.gif' />");
-			updateEntry(currentEntryId, newText, defaultToNow);
-		} else {
-			setTimeout(function() {
-				$unselectee.removeClass("glow");
-			}, 500)
-		}
-
-		$("#tagTextEdit").remove();
-	}
-	
-	function getEntryElement(entryId) {
-		return $("li#entryid" + entryId);
-	}
-	
-	function doUpdateEntry(entryId, text, defaultToNow, allFuture) {
-		cacheNow();
-		
-		var argsToSend = getCSRFPreventionObject("updateEntrySDataCSRF", { entryId:entryId,
-			currentTime:currentTimeUTC, text:text, baseDate:cachedDateUTC,
-			timeZoneName:timeZoneName, defaultToNow:defaultToNow ? '1':'0', allFuture:allFuture ? '1':'0' });
-
-		$.getJSON(makeGetUrl("updateEntrySData"), makeGetArgs(argsToSend),
-		function(entries){
-			if (checkData(entries)) {
-				$.each(entries[0], function(index, entry) {
-					// Finding entry which is recently updated.
-					if (entry.id == entryId) {
-						entry.glow = true;
-					}
-				})
-				refreshEntries(entries[0]);
-				updateAutocomplete(entries[1][0], entries[1][1], entries[1][2], entries[1][3]);
-				if (entries[2] != null)
-					updateAutocomplete(entries[2][0], entries[2][1], entries[2][2], entries[2][3]);
-			} else {
-				showAlert("Error updating entry");
-			}
-		});
-	}
-
-	function updateEntry(entryId, text, defaultToNow) {
-		if (!dataReady) {
-			//alert("Please wait until syncing is done before editing entries");
-			startLogin(0);
-			return;
-		}
-		if (!isOnline()) {
-			showAlert("Please wait until online to update an entry");
-			return;
-		}
-		var $oldEntry = getEntryElement(entryId);
-		$oldEntry.addClass("glow");
-		$(".content-wrapper", $oldEntry).html(text);
-		if ($oldEntry.data('originalText') == text) {
-			var $contentWrapper = $oldEntry.find(".content-wrapper");
-			$contentWrapper.html($oldEntry.data('contentHTML'));
-			return; // don't update unchanged entry
-		}
-		if (($oldEntry.data("isRepeat") && (!$oldEntry.data("isRemind"))) || $oldEntry.data("isGhost")) {
-			showAB("Update just this one event or also future events?", "One", "Future", function() {
-					doUpdateEntry(entryId, text, defaultToNow, false);
-				}, function() {
-					doUpdateEntry(entryId, text, defaultToNow, true);
-				});
-		} else
-			doUpdateEntry(entryId, text, defaultToNow, true);
-	}
-	
-	function addEntry(userId, text, defaultToNow) {
-		cacheNow();
-		
-		if (!dataReady) {
-			//alert("Please wait until syncing is done before adding entries");
-			startLogin(0);
-			return;
-		}
-		if (!isOnline()) {
-			showAlert("Please wait until online to add an entry");
-			return;
-		}
-		var argsToSend = getCSRFPreventionObjectMobile("addEntryCSRF", { currentTime:currentTimeUTC,
-			userId:userId, text:text, baseDate:cachedDateUTC,
-			timeZoneName:timeZoneName, defaultToNow:defaultToNow ? '1':'0' })
-
-		$.getJSON(makeGetUrl("addEntrySData"), makeGetArgs(argsToSend),
-		function(entries) {
-			if (checkData(entries)) {
-				if (entries[1] != null) {
-					showAlert(entries[1]);
-				}
-				$.each(entries[0], function(index, entry) {
-					// Finding entry which is recently added.
-					if (entry.id == entries[3].id) {
-						entry.glow = true;
-					}
-				})
-				refreshEntries(entries[0], false);
-				updateAutocomplete(entries[2][0], entries[2][1], entries[2][2], entries[2][3]);
-			} else {
-				showAlert("Error adding entry");
-			}
-		});
-	}
-	
-	function initInput() {
-		$("#input0").css('color','#000000');
-	}
-
-	function processInput(forceAdd) {
-		var $field = $("#input0");
-		$field.autocomplete("close");
-		var text = $field.val();
-		if (text == "") return; // no entry data
-		$field.val("");
-		if ((!forceAdd) && (currentEntryId != undefined))
-			updateEntry(currentEntryId, text, defaultToNow);
-		else {
-			addEntry(currentUserId, text, defaultToNow);
-		}
-		return true;
-	}
-
-	function setEntryText(text, startSelect, endSelect) {
-		var $inp = $("#input0");
-		$inp.autocomplete("close");
-		$inp.data('defaultTextCleared', true);
-		$inp.val(text);
-		$inp.css('color','#000000');
-		if (startSelect) {
-			$inp.selectRange(startSelect, endSelect);
-		}
-	}
-
-	var clearDefaultLoginText = function(e) {
-		if (!$(this).data('defaultTextCleared')) {
-			setEntryText('');
-		}
-	}
-	
-	function setPeopleData(data) {
-		if (data == null) return;
-		jQuery.each(data, function() {
-			// set first user id as the current
-			addPerson(this['first'] + ' ' + this['last'],
-					this['username'], this['id'], this['sex']);
-			setUserId(this['id']);
-			return true;
-		});
-	}
-
-	var initTrackPage = function() {
-		localStorage['lastPage'] = 'track';
-	
-		var $datepicker = $("#datepicker");
-		var now = new Date();
-		$datepicker
-			.datepicker({defaultDate: now, dateFormat: 'DD MM dd, yy', showButtonPanel: true})
-			.val($.datepicker.formatDate('DD MM dd, yy', now))
-			.datepicker("hide")
-			.change(function () {
-				refreshPage();
-			});
-
-		$(document).on("click", ".ui-datepicker-buttonpane button.ui-datepicker-current", function() {
-			$datepickerField.datepicker("setDate", new Date()).datepicker("hide").trigger("change").blur();
-		})
-		
-		var $entryInput = $("#input0");
-
-		$entryInput.off("focus");
-		$entryInput.off("click");
-		$entryInput.on("focus", clearDefaultLoginText);
-		$entryInput.on("click", clearDefaultLoginText);
-
-		$entryInput.keyup(function(e) {
-			if (e.keyCode == 13) {
-				processInput(false);
-			}
-		});
-		$("#taginput").submit(function() {
-			processInput(false);
-			return false;
-		});
-		
-		var $entryArea = $("#entry0");
-		$entryArea.listable({cancel: 'a, input, li.entry.ghost'});
-		$entryArea.off("listableselected");
-		$entryArea.off("listableunselecting");
-		$entryArea.on("listableunselecting", function(e, ui) {
-			var $unselectee = $("#" + ui.unselecting.id);
-			unselecting($unselectee);
-		});
-		$entryArea.on("listableselected", function(e, ui) {
-			var $selectee = $("#" + ui.selected.id);
-			selected($selectee, false);
-		});
-		
-		$(document).on("click", "li.entry.ghost", function(e) {
-			if(e.target.nodeName && $(e.target).closest("a,img").length) {
-				// Not doing anything when delete icon clicked like 'cancel' option in selectable.
-				return false;
-			}
-			activateEntry($(this));
-		})
-
-		var cache = getAppCacheData('users');
-		
-		if (cache != null) {
-			setPeopleData(cache['data']);
-		}
-
-		var cache = getAppCacheData('users');
-		
-		if (cache && cache['data'] && isLoggedIn()) {
-			setPeopleData(data);
-			initAutocomplete();
-			refreshPage();
-		}
-
-		if (isOnline()) $.getJSON(makeGetUrl("getPeopleData"), makeGetArgs(getCSRFPreventionObjectMobile("getPeopleDataCSRF")),
-			function(data){
-				if (!checkData(data))
-					return;
-		
-				var cache = getAppCacheData('users');
-				cache['data'] = data;
-
-				setPeopleData(data);
-
-				// wait to init autocomplete until after login		
-				initAutocomplete();
-		
-				refreshPage();
-			});
-	}
-	$("body").on("swiperight", function() {
-		changeDate(-1);
-	}).on("swipeleft", function() {
-		changeDate(1);
-	})
-</script>
-	<script type="text/javascript" src="cordova.js"></script>
-	<script type="text/javascript" src="../js/mobile/index.js"></script>
+	<div id="footer">
+		<div class="userInfo">
+		<div id="displayUser" class="username">Username</div>
+		<div class="online"><a href="#" onclick="askLogout()" class="indicator">Log Out</a></div>
+		<div style="clear:both"></div>
+		</div>
+	</div>
+</div>
+</div>
+<script type="text/javascript" src="cordova.js"></script>
+	<script type="text/javascript" src="js/mobile/index.js"></script>
 	<script type="text/javascript">
 		console.log("App object: "+app);
     	app.initialize();

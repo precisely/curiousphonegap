@@ -36,6 +36,10 @@ var app = {
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function() {
     	app.receivedEvent('deviceready');
+    	var body = document.getElementsByTagName('body')[0];
+        body.style.minHeight=window.innerHeight + 'px';
+        var content="width=device-width, height="+window.innerHeight+", initial-scale=1.0, maximum-scale=1.0,target-densityDpi=device-dpi";
+        document.getElementsByName('viewport')[0].content = content;
     },
     registerNotification: function() {
         console.log("Registering Notification for "+device.platform);
@@ -176,66 +180,4 @@ function makePlainUrl(url) {
 	var url = app.serverUrl+"/mobile/" + url;
 	url = url;
 	return url;
-}
-
-// Overriding autocomplete from autocomplete.js
-
-initAutocomplete = function() {
-	$.retrieveJSON(makeGetUrl("autocompleteData"), getCSRFPreventionObjectMobile("autocompleteDataCSRF", {all: 'info'}),
-			function(data, status) {
-		if (checkData(data, status)) {
-			tagStatsMap.import(data['all']);
-			algTagList = data['alg'];
-			freqTagList = data['freq'];
-			
-			var inputField = $("#input0");
-			
-			inputField.autocomplete({
-				minLength: 1,
-				attachTo: "#autocomplete",
-				source: function(request, response) {
-					var term = request.term.toLowerCase();
-
-					var skipSet = {};
-					var result = [];
-					
-					var matches = findAutoMatches(tagStatsMap, algTagList, term, 3, skipSet, 1);
-					
-					addStatsTermToSet(matches, skipSet);
-					appendStatsTextToList(result, matches);
-					
-					var remaining = 6 - matches.length;
-					
-					if (term.length == 1) {
-						var nextRemaining = remaining > 3 ? 3 : remaining;
-						matches = findAutoMatches(tagStatsMap, algTagList, term, nextRemaining, skipSet, 0);
-						addStatsTermToSet(matches, skipSet);
-						appendStatsTextToList(result, matches);
-						remaining -= nextRemaining;
-					}
-					
-					if (remaining > 0) {
-						matches = findAutoMatches(tagStatsMap, freqTagList, term, remaining, skipSet, 0);
-						appendStatsTextToList(result, matches);
-					}
-
-					var obj = new Object();
-					obj.data = result;
-					response(result);
-				},
-				selectcomplete: function(event, ui) {
-					var tagStats = tagStatsMap.getFromText(ui.item.value);
-					if (tagStats) {
-						var range = tagStats.getAmountSelectionRange();
-						inputField.selectRange(range[0], range[1]);
-						inputField.focus();
-					}
-				}
-			});
-			// open autocomplete on focus
-			inputField.focus(function(){
-				inputField.autocomplete("search",$("#input0").val());
-			});
-		}
-	});
 }
