@@ -133,6 +133,7 @@ function submitForm() {
 								localStorage['mobileSessionId'] = data['mobileSessionId'];
 								dataReady = true;
 								app.registerNotification();
+								$("#passwordField").blur();
 								launchTrack();
 							} else {
 								showAlert('Username or password not correct, please try again');
@@ -491,7 +492,7 @@ function selected($selectee, forceUpdate) {
 
 		$contentWrapper.hide();
 		$selectee
-				.append('<span id="tagTextEdit" style="display:inline"><input type="text" id="tagTextInput" autofocus style="margin: 2px; width: calc(100% - 110px);"></input>'
+				.append('<span id="tagTextEdit" style="display:inline"><input type="text" id="tagTextInput" style="margin: 2px; width: calc(100% - 110px);"></input>'
 						+ '<img src="images/repeat.png" id="tagEditRepeat" style="width:14px;height:14px;padding-left:1px;padding-top:2px;">'
 						+ '<img src="images/remind.png" id="tagEditRemind" style="width:14px;height:14px;padding-left:1px;padding-top:2px;">'
 						+ '<img src="images/pin.png" id="tagEditPinned" style="width:14px;height:14px;padding-left:1px;padding-top:2px;"></span>');
@@ -1103,7 +1104,7 @@ var initTrackPage = function() {
 	$entryInput.off("click");
 	$entryInput.on("focus", clearDefaultLoginText);
 	$entryInput.on("click", clearDefaultLoginText);
-
+	
 	$entryInput.keyup(function(e) {
 		if (e.keyCode == 13) {
 			processInput(false);
