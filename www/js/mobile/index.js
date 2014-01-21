@@ -36,10 +36,6 @@ var app = {
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function() {
     	app.receivedEvent('deviceready');
-    	var body = document.getElementsByTagName('body')[0];
-        body.style.minHeight=window.innerHeight + 'px';
-        var content="width=device-width, height="+window.innerHeight+", initial-scale=1.0, maximum-scale=1.0,target-densityDpi=device-dpi";
-        document.getElementsByName('viewport')[0].content = content;
     },
     registerNotification: function() {
         console.log("Registering Notification for "+device.platform);
@@ -94,6 +90,8 @@ var app = {
     		console.log("APN Event property name "+key);
     		console.log("APN Event property val "+event[key]);
     	}
+    	
+    	console.log("Entry ID: "+event.entryId);
     	
     	if ( event.alert ) {
             navigator.notification.alert(event.alert);
@@ -162,7 +160,7 @@ var app = {
     
 };
 
-app.serverUrl = "http://192.168.0.104";
+app.serverUrl = "http://192.168.0.104:8080";
 
 // Overriding url methods from index.gsp
 
