@@ -397,7 +397,7 @@ var REMIND_BIT = 0x4;
 var cachedDate, cachedDateUTC;
 var $datepickerField;
 
-$(window).load(function(){ 
+$(document).ready(function(){ 
 	$datepickerField = $("input#datepicker");
 	if (window.location.href.indexOf("lamhealth") > -1) {
 		$("#loginlogo").attr("src","../images/logo_mobile_lhp.gif");
@@ -625,6 +625,19 @@ function unselecting($unselectee) {
 	}
 }
 
+function glow(entryId) {
+	var $entry;
+	if (typeof entryId == "string") {
+		$entry = $("#"+entryId);
+	} else {
+		$entry = entryId;
+	}
+	$entry.addClass("glow");
+	setTimeout(function() {
+		$entry.removeClass("glow");
+	}, 2000);
+};
+
 function displayEntry(entry, isUpdating, args) {
 	var id = entry.id, date = entry.date, datePrecisionSecs = entry.datePrecisionSecs, description = entry.description, amount = entry.amount, amountPrecision = entry.amountPrecision, units = entry.units, comment = entry.comment, classes = "entry", glowEntry = entry.glow, $entryToReplace, $appendAfterEntry;
 
@@ -637,9 +650,6 @@ function displayEntry(entry, isUpdating, args) {
 		if (args.appendAfterEntry) {
 			$appendAfterEntry = $(args.appendAfterEntry);
 		}
-	}
-	if (glowEntry) {
-		classes += " glow";
 	}
 
 	var isGhost = false, isConcreteGhost = false, isAnyGhost = false, isContinuous = false, isTimed = false, isRepeat = false, isRemind = false;
@@ -718,10 +728,15 @@ function displayEntry(entry, isUpdating, args) {
 		} else {
 			$("#entry0").append(newEntryContent);
 		}
-		setTimeout(function() {
-			$("li#entryid" + id).removeClass("glow");
-		}, 500)
+		if (glowEntry) {
+			glow($("li#entryid" + id));
+		}
+
 	}
+	
+	var $entryItem = $("#entry0 li#entryid" + id);
+	
+	
 	var data = {
 		entry : entry,
 		entryId : id,
@@ -733,7 +748,7 @@ function displayEntry(entry, isUpdating, args) {
 		isRepeat : isRepeat,
 		isRemind : isRemind
 	};
-	var $entryItem = $("#entry0 li#entryid" + id);
+	
 	$entryItem.data(data);
 	if (id == activateEntryId) {
 		return $entryItem;
