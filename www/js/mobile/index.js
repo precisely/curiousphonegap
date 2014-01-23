@@ -94,7 +94,7 @@ var app = {
     	console.log("Entry ID: "+event.entryId);
     	window.entryId = "Testing";
     	window.entryId1 = event.entryId;
-    	glow(event.entryId);
+    	glow("entryid"+event.entryId);
     	
     	if ( event.alert ) {
             navigator.notification.alert(event.alert);
