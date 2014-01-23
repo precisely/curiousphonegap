@@ -494,6 +494,9 @@ function selected($selectee, forceUpdate) {
 		$selectee.data('originalText', entryText); // store entry text for
 		// comparison
 		var selectRange = entrySelectData[currentEntryId];
+		if (selectRange[2]) { // insert space at selectRange[0]
+			entryText = entryText.substr(0, selectRange[0] - 1) + " " + entryText.substr(selectRange[0] - 1);
+		}
 
 		$contentWrapper.hide();
 		$selectee
@@ -696,12 +699,9 @@ function displayEntry(entry, isUpdating, args) {
 	// store amount for post-selection highlighting
 
 	var formattedAmount = formatAmount(amount, amountPrecision);
-	if (formattedAmount.length > 0) {
-		var selectStart = (timeAfterTag ? 0 : dateStr.length)
-				+ description.length + 1;
-		var selectEnd = selectStart + formattedAmount.length - 1;
-		entrySelectData[id] = [ selectStart, selectEnd ];
-	}
+	var selectStart = (timeAfterTag ? 0 : dateStr.length) + description.length + 1 + (formattedAmount.length == 0 ? 1 : 0);
+	var selectEnd = selectStart + formattedAmount.length - 1;
+	entrySelectData[id] = [selectStart, selectEnd, formattedAmount == 0]; // if third item is true, insert extra space at cursor
 
 	var innerHTMLContent = '<span class="content-wrapper">'
 			+ (timeAfterTag ? '' : escapehtml(dateStr))
