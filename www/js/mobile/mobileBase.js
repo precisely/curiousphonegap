@@ -906,28 +906,27 @@ function deleteCurrentEntry() {
  * updateEntry() method to notify server and update in UI.
  */
 function checkAndUpdateEntry($unselectee) {
-	var $contentWrapper = $unselectee.find(".content-wrapper"); // Original
-	// wrapper which
-	// containing
-	// previous
-	// text.
-	var oldText = $contentWrapper.text();
+	var $contentWrapper = $unselectee.find(".content-wrapper");
+	
 	var newText = $("input#tagTextInput").val();
-
-	$contentWrapper.show();
-	$unselectee.addClass("glow");
-
-	if (oldText != newText || $unselectee.data('forceUpdate')) {
+	var $oldEntry = getEntryElement(currentEntryId);
+	$oldEntry.addClass("glow");
+	if (($oldEntry.data('originalText') == newText) && (!$unselectee.data('forceUpdate'))) {
+		setTimeout(function() {
+			$oldEntry.removeClass("glow");
+		}, 500)
+		var $contentWrapper = $oldEntry.find(".content-wrapper");
+		$contentWrapper.html($oldEntry.data('contentHTML'));
+		$contentWrapper.show();
+	} else {
+		$contentWrapper.show();
+		$unselectee.addClass("glow");
 		$unselectee.data('forceUpdate', 0);
 		$contentWrapper
 				.append("&nbsp;&nbsp;<img src='../images/spinner.gif' />");
 		updateEntry(currentEntryId, newText, defaultToNow);
-	} else {
-		setTimeout(function() {
-			$unselectee.removeClass("glow");
-		}, 500)
 	}
-
+	
 	$("#tagTextEdit").remove();
 }
 
@@ -986,11 +985,6 @@ function updateEntry(entryId, text, defaultToNow) {
 	var $oldEntry = getEntryElement(entryId);
 	$oldEntry.addClass("glow");
 	$(".content-wrapper", $oldEntry).html(text);
-	if ($oldEntry.data('originalText') == text) {
-		var $contentWrapper = $oldEntry.find(".content-wrapper");
-		$contentWrapper.html($oldEntry.data('contentHTML'));
-		return; // don't update unchanged entry
-	}
 	if (($oldEntry.data("isRepeat") && (!$oldEntry.data("isRemind")))
 			|| $oldEntry.data("isGhost")) {
 		showAB("Update just this one event or also future events?", "One",
