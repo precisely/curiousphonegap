@@ -494,16 +494,18 @@ function selected($selectee, forceUpdate) {
 		$selectee.data('originalText', entryText); // store entry text for
 		// comparison
 		var selectRange = entrySelectData[currentEntryId];
-		if (selectRange[2]) { // insert space at selectRange[0]
-			entryText = entryText.substr(0, selectRange[0] - 1) + " " + entryText.substr(selectRange[0] - 1);
+		if (selectRange != undefined) {
+			if (selectRange[2]) { // insert space at selectRange[0]
+				entryText = entryText.substr(0, selectRange[0] - 1) + " " + entryText.substr(selectRange[0] - 1);
+			}
 		}
 
 		$contentWrapper.hide();
 		$selectee
 				.append('<span id="tagTextEdit" style="display:inline"><input type="text" id="tagTextInput" style="margin: 2px; width: calc(100% - 110px);"></input>'
-						+ '<img src="../images/repeat.png" id="tagEditRepeat" style="width:14px;height:14px;padding-left:1px;padding-top:2px;">'
-						+ '<img src="../images/remind.png" id="tagEditRemind" style="width:14px;height:14px;padding-left:1px;padding-top:2px;">'
-						+ '<img src="../images/pin.png" id="tagEditPinned" style="width:14px;height:14px;padding-left:1px;padding-top:2px;"></span>');
+						+ '<img class="entryModify entryNoBlur" src="../images/repeat.png" id="tagEditRepeat" style="width:14px;height:14px;padding-left:1px;padding-top:2px;">'
+						+ '<img class="entryModify entryNoBlur" src="../images/remind.png" id="tagEditRemind" style="width:14px;height:14px;padding-left:1px;padding-top:2px;">'
+						+ '<img class="entryModify entryNoBlur" src="../images/pin.png" id="tagEditPinned" style="width:14px;height:14px;padding-left:1px;padding-top:2px;"></span>');
 
 		$("#tagEditRepeat").off("mousedown");
 		$("#tagEditRemind").off("mousedown");
@@ -522,23 +524,25 @@ function selected($selectee, forceUpdate) {
 		// Binding blur event on element instead of globally to prevent
 		// concurrent exception.
 		console.log("Trying to focus on the current entry");
+		// Adding logic to prevent blur from activating when clicking on certain controls
+		$("#tagTextInput").bind('focus', function() {
+			$(document).bind('mousedown', function(e) {
+				var $target = $(e.target);
+				if ($target.closest('#tagTextInput').length) return;
+				if (! $target.closest('.entryNoBlur').length) {
+					//if ($target.data('cancelBlur')) return;
+					$selectee.data('entryIsSelected', 0);
+					var $unselectee = $target.parents("li");
+					checkAndUpdateEntry($unselectee);
+					$unselectee.data('entryIsSelected', 1);
+					unselecting($unselectee);
+				}
+				$(document).unbind('mousedown', arguments.callee);
+			})
+		});
+
 		var $textInput = $("#tagTextInput").val(entryText).focus();
-		$(".entryDelete").mousedown(function(e) {
-			mouseDownOnDeleteEntry = true;
-		});
-		$textInput.on("blur", function(e) {
-			if ($(this).data('cancelBlur'))
-				return;
-			
-			if(mouseDownOnDeleteEntry) {
-				mouseDownOnDeleteEntry = false;
-				return;
-			}
-			var $unselectee = $(this).parents("li");
-			checkAndUpdateEntry($unselectee);
-			$unselectee.data('entryIsSelected', 1);
-			unselecting($unselectee);
-		});
+
 		$textInput.keyup(function(e) {
 			var $selectee = $(this).parents("li");
 			if (e.keyCode == 13) { // Enter pressed
@@ -546,12 +550,6 @@ function selected($selectee, forceUpdate) {
 			} else if (e.keyCode == 27) { // Esc pressed
 				unselecting($selectee, true);
 			}
-			/*
-			 * if (e.keyCode == 13) { var $unselectee = $(this).parent("li");
-			 * checkAndUpdateEntry($unselectee);
-			 * $unselectee.data('entryIsSelected', 0); //$("a.entryDelete",
-			 * $unselectee).hide(); }
-			 */
 		});
 
 		if (selectRange) {
@@ -616,10 +614,10 @@ var entrySelectData;
 function unselecting($unselectee) {
 	if ($unselectee.data('entryIsSelected') == 1) {
 		var $textInput = $("#tagTextInput");
-		if ($textInput.data('cancelBlur')) {
+		/*if ($textInput.data('cancelBlur')) {
 			$textInput.data('cancelBlur', false);
 			return;
-		}
+		}*/
 		$unselectee.data('entryIsSelected', 0);
 		$unselectee.removeClass('ui-selected');
 		$("a.entryDelete", $unselectee).hide();
@@ -710,7 +708,7 @@ function displayEntry(entry, isUpdating, args) {
 			+ escapehtml(formatUnits(units))
 			+ (timeAfterTag ? escapehtml(dateStr) : '')
 			+ (comment != '' ? ' ' + escapehtml(comment) : '')
-			+ '</span><a class="entryDelete" id="entrydelid'
+			+ '</span><a class="entryDelete entryNoBlur" id="entrydelid'
 			+ id
 			+ '" href="#" onMouseDown="deleteEntryId('
 			+ id
@@ -816,8 +814,7 @@ function toggleSuffix($control, suffix) {
 
 function modifyEdit(suffix) {
 	var $control = $('#tagTextInput');
-	$control.data('cancelBlur', true);
-	// toggleSuffix($control, suffix);
+	//$control.data('cancelBlur', true);
 	if (toggleSuffix($control, suffix)) {
 		var $selectee = $control.parents("li");
 		unselecting($selectee);
@@ -1140,11 +1137,11 @@ var initTrackPage = function() {
 		cancel : 'a, input, li.entry.ghost'
 	});
 	$entryArea.off("listableselected");
-	$entryArea.off("listableunselecting");
+	/*$entryArea.off("listableunselecting");
 	$entryArea.on("listableunselecting", function(e, ui) {
 		var $unselectee = $("#" + ui.unselecting.id);
 		unselecting($unselectee);
-	});
+	});*/
 	$entryArea.on("listableselected", function(e, ui) {
 		var $selectee = $("#" + ui.selected.id);
 		console.log("Select event triggered");
