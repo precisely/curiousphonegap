@@ -94,7 +94,10 @@ var app = {
     	console.log("Entry ID: "+event.entryId);
     	window.entryId = "Testing";
     	window.entryId1 = event.entryId;
-    	glow("entryid"+event.entryId);
+    	$('#datepicker').datepicker("setDate", new Date(event.entryDate));
+    	refreshPage(function () {
+    		glow("entryid"+event.entryId);
+    	});
     	
     	if ( event.alert ) {
             navigator.notification.alert(event.alert);
@@ -163,7 +166,7 @@ var app = {
     
 };
 
-app.serverUrl = "https://dev.wearecurio.us";
+app.serverUrl = "http://192.168.0.102:8080";
 
 // Overriding url methods from index.gsp
 

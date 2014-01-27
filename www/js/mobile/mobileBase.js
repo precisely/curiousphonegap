@@ -437,7 +437,7 @@ function changeDate(amount) {
 	refreshPage();
 }
 
-function refreshPage() {
+function refreshPage(callback) {
 	cacheNow();
 
 	var cachedObj = getAppCacheData(cachedDateUTC);
@@ -458,6 +458,9 @@ function refreshPage() {
 					console.log("refresh entries from get list");
 					refreshEntries(data, true);
 					dataReady = true;
+					if (typeof callback != 'undefined') {
+						callback();
+					}
 				}
 			});
 }
