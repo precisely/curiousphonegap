@@ -75,6 +75,7 @@ function doLogout() {
 	localStorage['appCache'] = null;
 	localStorage['lastPage'] = 'login';
 	startLogin(0);
+	$(document).trigger("ask-logout");
 }
 
 function getCSRFPreventionURIMobile(key) {
@@ -132,9 +133,9 @@ function submitForm() {
 							if (data['success']) {
 								localStorage['mobileSessionId'] = data['mobileSessionId'];
 								dataReady = true;
-								app.registerNotification();
 								$("#passwordField").blur();
 								launchTrack();
+								$(document).trigger("login-success");
 							} else {
 								showAlert('Username or password not correct, please try again');
 								startLogin(0);
@@ -157,7 +158,6 @@ function submitForm() {
 							}
 						});
 	} else if (loginMode == 20) { // create an account
-
 		$
 				.postJSON(
 						makePostUrl('doregisterData'),
@@ -397,12 +397,12 @@ var REMIND_BIT = 0x4;
 var cachedDate, cachedDateUTC;
 var $datepickerField;
 
-$(document).ready(function(){ 
+$(document).ready(function() {
 	$datepickerField = $("input#datepicker");
 	if (window.location.href.indexOf("lamhealth") > -1) {
-		$("#loginlogo").attr("src","../images/logo_mobile_lhp.gif");
+		$("#loginlogo").attr("src", "../images/logo_mobile_lhp.gif");
 	}
-	
+
 	$("#loginlogo").show();
 	$("body").on("swiperight", function() {
 		console.log("Swipe event right");
@@ -411,7 +411,7 @@ $(document).ready(function(){
 		console.log("Swipe event left");
 		changeDate(1);
 	});
-	
+
 });
 
 function cacheDate() {
@@ -494,14 +494,13 @@ function selected($selectee, forceUpdate) {
 		currentEntryId = $selectee.data("entry-id");
 		$("#entrydelid" + currentEntryId).css('display', 'inline');
 		var entryText = $selectee.text();
-		$selectee.data('originalText', entryText); // store entry text for
-		// comparison
 		var selectRange = entrySelectData[currentEntryId];
 		if (selectRange != undefined) {
 			if (selectRange[2]) { // insert space at selectRange[0]
 				entryText = entryText.substr(0, selectRange[0] - 1) + " " + entryText.substr(selectRange[0] - 1);
 			}
 		}
+		$selectee.data('originalText', entryText); // store entry text for comparison
 
 		$contentWrapper.hide();
 		$selectee
@@ -524,14 +523,11 @@ function selected($selectee, forceUpdate) {
 			modifyEdit('pinned');
 		});
 
-		// Binding blur event on element instead of globally to prevent
-		// concurrent exception.
-		console.log("Trying to focus on the current entry");
 		// Adding logic to prevent blur from activating when clicking on certain controls
 		$("#tagTextInput").bind('focus', function() {
 			$(document).bind('mousedown', function(e) {
 				var $target = $(e.target);
-				if ($target.closest('#tagTextInput').length) return;
+				if ($target.closest('#tagTextEdit').length) return;
 				if (! $target.closest('.entryNoBlur').length) {
 					//if ($target.data('cancelBlur')) return;
 					$selectee.data('entryIsSelected', 0);
@@ -543,9 +539,9 @@ function selected($selectee, forceUpdate) {
 				$(document).unbind('mousedown', arguments.callee);
 			})
 		});
-
+		
 		var $textInput = $("#tagTextInput").val(entryText).focus();
-
+		
 		$textInput.keyup(function(e) {
 			var $selectee = $(this).parents("li");
 			if (e.keyCode == 13) { // Enter pressed
@@ -576,7 +572,8 @@ function activateEntry($entry, doNotSelectEntry) {
 		return;
 	}
 	cacheNow();
-	$.getJSON(
+	$
+			.getJSON(
 					makeGetUrl("activateGhostEntry"),
 					makeGetArgs(getCSRFPreventionObjectMobile(
 							"activateGhostEntryCSRF", {
@@ -617,10 +614,6 @@ var entrySelectData;
 function unselecting($unselectee) {
 	if ($unselectee.data('entryIsSelected') == 1) {
 		var $textInput = $("#tagTextInput");
-		/*if ($textInput.data('cancelBlur')) {
-			$textInput.data('cancelBlur', false);
-			return;
-		}*/
 		$unselectee.data('entryIsSelected', 0);
 		$unselectee.removeClass('ui-selected');
 		$("a.entryDelete", $unselectee).hide();
@@ -632,14 +625,14 @@ function unselecting($unselectee) {
 function glow(entryId) {
 	var $entry;
 	if (typeof entryId == "string") {
-		$entry = $("#"+entryId);
+		$entry = $("#" + entryId);
 	} else {
 		$entry = entryId;
 	}
 	$entry.addClass("glow");
 	setTimeout(function() {
 		$entry.removeClass("glow");
-	}, 2000);
+	}, 500);
 };
 
 function displayEntry(entry, isUpdating, args) {
@@ -703,7 +696,7 @@ function displayEntry(entry, isUpdating, args) {
 	var selectStart = (timeAfterTag ? 0 : dateStr.length) + description.length + 1 + (formattedAmount.length == 0 ? 1 : 0);
 	var selectEnd = selectStart + formattedAmount.length - 1;
 	entrySelectData[id] = [selectStart, selectEnd, formattedAmount == 0]; // if third item is true, insert extra space at cursor
-
+	
 	var innerHTMLContent = '<span class="content-wrapper">'
 			+ (timeAfterTag ? '' : escapehtml(dateStr))
 			+ escapehtml(description)
@@ -734,10 +727,9 @@ function displayEntry(entry, isUpdating, args) {
 		}
 
 	}
-	
+
 	var $entryItem = $("#entry0 li#entryid" + id);
-	
-	
+
 	var data = {
 		entry : entry,
 		entryId : id,
@@ -749,7 +741,7 @@ function displayEntry(entry, isUpdating, args) {
 		isRepeat : isRepeat,
 		isRemind : isRemind
 	};
-	
+
 	$entryItem.data(data);
 	if (id == activateEntryId) {
 		return $entryItem;
@@ -817,7 +809,6 @@ function toggleSuffix($control, suffix) {
 
 function modifyEdit(suffix) {
 	var $control = $('#tagTextInput');
-	//$control.data('cancelBlur', true);
 	if (toggleSuffix($control, suffix)) {
 		var $selectee = $control.parents("li");
 		unselecting($selectee);
@@ -955,7 +946,7 @@ function doUpdateEntry(entryId, text, defaultToNow, allFuture) {
 				if (entries == "") {
 					return;
 				}
-				//Temporary fix since checkData fails
+				// Temporary fix since checkData fails
 				if (typeof entries[0] != 'undefined' && entries[0].length > 0) {
 					$.each(entries[0], function(index, entry) {
 						// Finding entry which is recently updated.
@@ -1118,7 +1109,7 @@ var initTrackPage = function() {
 	$entryInput.off("click");
 	$entryInput.on("focus", clearDefaultLoginText);
 	$entryInput.on("click", clearDefaultLoginText);
-	
+
 	$entryInput.keyup(function(e) {
 		if (e.keyCode == 13) {
 			processInput(false);
@@ -1189,65 +1180,73 @@ var initTrackPage = function() {
 						});
 }
 
-
-//Overriding autocomplete from autocomplete.js
+// Overriding autocomplete from autocomplete.js
 
 initAutocomplete = function() {
-	$.retrieveJSON(makeGetUrl("autocompleteData"), getCSRFPreventionObjectMobile("autocompleteDataCSRF", {all: 'info'}),
-			function(data, status) {
-		if (checkData(data, status)) {
-			tagStatsMap.import(data['all']);
-			algTagList = data['alg'];
-			freqTagList = data['freq'];
-			
-			var inputField = $("#input0");
-			
-			inputField.autocomplete({
-				minLength: 1,
-				attachTo: "#autocomplete",
-				source: function(request, response) {
-					var term = request.term.toLowerCase();
+	$.retrieveJSON(makeGetUrl("autocompleteData"),
+			getCSRFPreventionObjectMobile("autocompleteDataCSRF", {
+				all : 'info'
+			}), function(data, status) {
+				if (checkData(data, status)) {
+					tagStatsMap.import(data['all']);
+					algTagList = data['alg'];
+					freqTagList = data['freq'];
 
-					var skipSet = {};
-					var result = [];
-					
-					var matches = findAutoMatches(tagStatsMap, algTagList, term, 3, skipSet, 1);
-					
-					addStatsTermToSet(matches, skipSet);
-					appendStatsTextToList(result, matches);
-					
-					var remaining = 6 - matches.length;
-					
-					if (term.length == 1) {
-						var nextRemaining = remaining > 3 ? 3 : remaining;
-						matches = findAutoMatches(tagStatsMap, algTagList, term, nextRemaining, skipSet, 0);
-						addStatsTermToSet(matches, skipSet);
-						appendStatsTextToList(result, matches);
-						remaining -= nextRemaining;
-					}
-					
-					if (remaining > 0) {
-						matches = findAutoMatches(tagStatsMap, freqTagList, term, remaining, skipSet, 0);
-						appendStatsTextToList(result, matches);
-					}
+					var inputField = $("#input0");
 
-					var obj = new Object();
-					obj.data = result;
-					response(result);
-				},
-				selectcomplete: function(event, ui) {
-					var tagStats = tagStatsMap.getFromText(ui.item.value);
-					if (tagStats) {
-						var range = tagStats.getAmountSelectionRange();
-						inputField.selectRange(range[0], range[1]);
-						inputField.focus();
-					}
+					inputField.autocomplete({
+						minLength : 1,
+						attachTo : "#autocomplete",
+						source : function(request, response) {
+							var term = request.term.toLowerCase();
+
+							var skipSet = {};
+							var result = [];
+
+							var matches = findAutoMatches(tagStatsMap,
+									algTagList, term, 3, skipSet, 1);
+
+							addStatsTermToSet(matches, skipSet);
+							appendStatsTextToList(result, matches);
+
+							var remaining = 6 - matches.length;
+
+							if (term.length == 1) {
+								var nextRemaining = remaining > 3 ? 3
+										: remaining;
+								matches = findAutoMatches(tagStatsMap,
+										algTagList, term, nextRemaining,
+										skipSet, 0);
+								addStatsTermToSet(matches, skipSet);
+								appendStatsTextToList(result, matches);
+								remaining -= nextRemaining;
+							}
+
+							if (remaining > 0) {
+								matches = findAutoMatches(tagStatsMap,
+										freqTagList, term, remaining, skipSet,
+										0);
+								appendStatsTextToList(result, matches);
+							}
+
+							var obj = new Object();
+							obj.data = result;
+							response(result);
+						},
+						selectcomplete : function(event, ui) {
+							var tagStats = tagStatsMap
+									.getFromText(ui.item.value);
+							if (tagStats) {
+								var range = tagStats.getAmountSelectionRange();
+								inputField.selectRange(range[0], range[1]);
+								inputField.focus();
+							}
+						}
+					});
+					// open autocomplete on focus
+					inputField.focus(function() {
+						inputField.autocomplete("search", $("#input0").val());
+					});
 				}
 			});
-			// open autocomplete on focus
-			inputField.focus(function(){
-				inputField.autocomplete("search",$("#input0").val());
-			});
-		}
-	});
 }
