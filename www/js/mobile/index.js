@@ -36,6 +36,15 @@ var app = {
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function() {
     	app.receivedEvent('deviceready');
+    	
+    	// Login logout event handlers
+    	$(document).on( "login-success", function() {
+    	   app.registerNotification();
+    	});
+    	
+    	$(document).on( "ask-logout", function() {
+     	   app.unregisterNotification();
+     	});
     },
     registerNotification: function() {
         console.log("Registering Notification for "+device.platform);
@@ -58,11 +67,29 @@ var app = {
         }
 
     },
-    refreshNotificationRegistration: function() {
-    	console.log("Inside refresh notification");
+    unregisterNotification: function() {
+    	console.log("Unregistering push notification");
     	var pushNotification = window.plugins.pushNotification;
-    	pushNotification.unregister(function() { console.log("Unregistered Notification"); app.registerNotification(); }, 
-    			function() { console.log("Error trying to unregister: "+error); app.registerNotification(); });
+    	pushNotification.unregister(function() { 
+    			console.log("Unregistered Notification");
+    			var token;
+    	    	if (supportsLocalStorage()) {
+    	    		token = localStorage['pushNotificationToken'];
+    	    	} else {
+    	    		token = app.pushNotificationToken;
+    	    	}
+    	    	
+    	    	var argsToSend = getCSRFPreventionObjectMobile('registerForPushNotificationCSRF', 
+    	        		{ date:cachedDateUTC, userId:currentUserId, token:token,deviceType:app.deviceType()});
+    			$.getJSON(makeGetUrl("unregisterPushNotification"), makeGetArgs(argsToSend),
+    				function(data){
+    					if (checkData(data)) {
+    						console.log("Notification token removed from the server");
+    					}
+    			});    	
+    	    	
+    		}, 
+    		function() { console.log("Error trying to unregister: "+error); });
     },
     receivedEvent: function(id) {
         console.log('Received Event: ' + id);
@@ -151,7 +178,10 @@ var app = {
 				}
 		});    	
     	console.log("Regid " + token);
-    	
+    	app.pushNotificationToken = token;
+    	if (supportsLocalStorage()) {
+    		localStorage['pushNotificationToken'] = token;
+    	}
     },
     
     deviceType: function() {
@@ -166,7 +196,8 @@ var app = {
     
 };
 
-app.serverUrl = "http://192.168.0.102:8080";
+app.serverUrl = "http://192.168.0.103:8080";
+//app.serverUrl = "https://dev.wearecurio.us";
 
 // Overriding url methods from index.gsp
 
