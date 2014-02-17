@@ -54,14 +54,12 @@ setInterval(function(){cache.update()}, 10000);
 <meta name="description" content="A platform for health hackers" />
 <meta names="apple-mobile-web-app-status-bar-style"
 	content="black-translucent" />
-<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, target-densityDpi=device-dpi" />
+<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, target-densityDpi=device-dpi" />
 
 <meta name="apple-mobile-web-app-capable" content="yes" />
-<script type="text/javascript"
-	src="../js/jquery/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="../js/jquery/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="../js/jquery/jquery.offline.js"></script>
-<script type="text/javascript"
-	src="../js/jquery/jquery.json-2.2.js"></script>
+<script type="text/javascript" src="../js/jquery/jquery.json-2.2.js"></script>
 <script type="text/javascript"
 	src="../js/jquery/jquery-ui-1.8.18.custom.js"></script>
 <script type="text/javascript"
@@ -81,8 +79,7 @@ setInterval(function(){cache.update()}, 10000);
 	type="image/x-icon" />
 <link rel="stylesheet" href="../css/mobile.css?ver=1" />
 <link type="text/css"
-	href="../css/smoothness/jquery-ui-1.8.16.custom2.css"
-	rel="stylesheet">
+	href="../css/smoothness/jquery-ui-1.8.16.custom2.css" rel="stylesheet">
 <link type="text/css" href="../css/mobile/trackPage.css?ver=10"
 	rel="stylesheet">
 
@@ -101,97 +98,102 @@ setInterval(function(){cache.update()}, 10000);
 			<div class="login">
 
 				<a href="javascript:startLogin(0)"><img border="0"
-					id="loginlogo" src="../images/logo.gif" width="205"
-					height="230" alt="Curious" style="display:none;" /></a>
-	
-		<form id="loginform" onsubmit="return false;" action="#">
-			<input type="hidden" name="precontroller" value="" />
-			<input type="hidden" name="preaction" value="" />
-			<div id="createaccountDiv" class="loginlabel" style="display:none">
-			Create an account:
+					id="loginlogo" src="../images/logo.gif" width="205" height="230"
+					alt="Curious" style="display: none;" /></a>
+
+				<form id="loginform" onsubmit="return false;" action="#">
+					<input type="hidden" name="precontroller" value="" /> <input
+						type="hidden" name="preaction" value="" />
+					<div id="createaccountDiv" class="loginlabel" style="display: none">
+						Create an account:</div>
+					<div id="recoverinfoDiv" class="loginlabel" style="display: none">
+						Request your info by entering your username.</div>
+					<div style="width: 205px">
+						<div id="emailDiv" class="logininput" style="display: none">
+							<input class="textField" type="text" id="emailField" name="email"
+								value="" />
+						</div>
+						<div id="usernameDiv" class="logininput">
+							<input class="textField" type="text" id="usernameField"
+								name="username" value="" />
+						</div>
+						<div id="passwordDiv" class="logininput">
+							<input class="textField" type="password" id="passwordField"
+								name="password" />
+						</div>
+						<div id="loginButtonDiv" class="okCancelDiv">
+							<img class="loginButton" src="../images/login.png" width="76"
+								height="24" alt="Login" onclick="submitForm()" /><br />
+						</div>
+						<div id="cancelButtonDiv" class="okCancelDiv">
+							<img class="cancelButton" src="../images/cancel.png" width="76"
+								height="24" alt="Cancel" onclick="javascript:startLogin(0)" /> <img
+								class="loginButton" src="../images/submit.png" width="76"
+								height="24" alt="Submit" onclick="submitForm()" /><br />
+						</div>
+					</div>
+				</form>
+				<div id="loginoptionsDiv" class="loginoptions">
+					<a href="javascript:createAccount()">Create an account</a> | <a
+						href="javascript:recoverPassword()">Forget your info?</a>
+				</div>
 			</div>
-			<div id="recoverinfoDiv" class="loginlabel" style="display:none">
-			Request your info by entering your username.
+			<div class="info"></div>
+		</div>
+		<div id="trackPage" style="display: none;">
+			<div class="trackDay">
+				<div id="header">
+					<div class="dateBar">
+						<a class="back" href="#" onclick="changeDate(-1);"><span>back</span></a>
+						<span class="date"><input id="datepicker" type="text"
+							value="" /></span> <a class="next" href="#" onclick="changeDate(1);"><span>next</span></a>
+						<div style="clear: both"></div>
+					</div>
+
+					<div id="autocomplete"
+						style="position: absolute; top: 10px; right: 10px;"></div>
+
+					<div class="dataEntry">
+						<form id="taginput" onsubmit="return false;" action="#"
+							style="padding-top: 0.7em; padding-bottom: 0.7em;">
+							<input type="text" id="input0" name="data"
+								style="width: calc(100% - 110px); margin-right: 5px;"
+								class="textField" />
+							<div style="display: inline-block; vertical-align: middle;">
+								<a href="#" onclick="modifyInput('repeat')"><img
+									src="../images/repeat.png" style="width: 20px; height: 20px;"></a>
+								<a href="#" onclick="modifyInput('remind')"><img
+									src="../images/remind.png" style="width: 20px; height: 20px;"></a>
+								<a href="#" onclick="modifyInput('pinned')"><img
+									src="../images/pin.png" style="width: 20px; height: 20px;"></a>
+							</div>
+						</form>
+						<hr />
+					</div>
+				</div>
+
+				<div id="content">
+					<div class="dataTags">
+						<div id="recordList"
+							style="overflow: auto; height: 100%; -webkit-overflow-scrolling: touch;">
+							<ol id="entry0" style="width: 100%; height: 100%;">
+							</ol>
+						</div>
+					</div>
+				</div>
+
+				<div id="footer">
+					<div class="userInfo">
+						<div id="displayUser" class="username">Username</div>
+						<div class="online">
+							<a href="#" onclick="askLogout()" class="indicator">Log Out</a>
+						</div>
+						<div style="clear: both"></div>
+					</div>
+				</div>
 			</div>
-			<div style="width:205px">
-			<div id="emailDiv" class="logininput" style="display:none">
-				<input class="textField" type="text" id="emailField"
-					name="email" value="" />
-			</div>
-			<div id="usernameDiv" class="logininput">
-				<input class="textField" type="text" id="usernameField"
-					name="username" value="" />
-			</div>
-			<div id="passwordDiv" class="logininput">
-				<input class="textField" type="password" id="passwordField"
-					name="password" />
-			</div>
-			<div id="loginButtonDiv" class="okCancelDiv">
-				<img class="loginButton" src="../images/login.png" width="76" height="24" alt="Login" onclick="submitForm()" /><br />
-			</div>
-			<div id="cancelButtonDiv" class="okCancelDiv">
-				<img class="cancelButton" src="../images/cancel.png" width="76" height="24" alt="Cancel" onclick="javascript:startLogin(0)"/>
-				<img class="loginButton" src="../images/submit.png" width="76" height="24" alt="Submit" onclick="submitForm()" /><br />
-			</div>
-			</div>
-		</form>
-		<div id="loginoptionsDiv" class="loginoptions">
-			<a href="javascript:createAccount()">Create an account</a> |
-			<a href="javascript:recoverPassword()">Forget your info?</a>
+
 		</div>
 	</div>
-	<div class="info">
-		
-	</div>
-</div>
-<div id="trackPage" style="display: none;">
-
-	<div id="header">
-		<div class="dateBar">
-		<a class="back" href="#" onclick="changeDate(-1);"><span>back</span></a>
-		<span class="date"><input id="datepicker" type="text" value=""/></span>
-		<a class="next" href="#" onclick="changeDate(1);"><span>next</span></a>
-		<div style="clear:both"></div>
-	</div>
-
-	<div id="autocomplete" style="position: absolute; top: 10px; right: 10px;"></div>
-
-	<div class="dataEntry">
-		<form id="taginput" onsubmit="return false;" action="#" style="padding-top: 0.7em; padding-bottom: 0.7em;">
-			<input type="text" id="input0" name="data" style="width:calc(100% - 110px);margin-right:5px;" class="textField" />
-			<div style="display: inline-block;vertical-align: middle;">
-				<a href="#" onclick="modifyInput('repeat')"><img src="../images/repeat.png" style="width:20px;height:20px;"></a>
-				<a href="#" onclick="modifyInput('remind')"><img src="../images/remind.png" style="width:20px;height:20px;"></a>
-				<a href="#" onclick="modifyInput('pinned')"><img src="../images/pin.png" style="width:20px;height:20px;"></a>
-			</div>
-		</form>
-		<hr />
-		</div>
-	</div>
-
-	<div id="content">
-		<div class="dataTags">
-		<div id="recordList" style="overflow:auto;height:100%;-webkit-overflow-scrolling:touch;">
-		<ol id="entry0" style="width:100%;height:100%;">
-		</ol>
-		</div>
-		</div>
-	</div>
-
-	<div id="footer">
-		<div class="userInfo">
-		<div id="displayUser" class="username">Username</div>
-		<div class="online"><a href="#" onclick="askLogout()" class="indicator">Log Out</a></div>
-		<div style="clear:both"></div>
-		</div>
-	</div>
-</div>
-</div>
-<script type="text/javascript" src="../cordova.js"></script>
-	<script type="text/javascript" src="../js/mobile/index.js"></script>
-	<script type="text/javascript">
-		console.log("App object: "+app);
-    	app.initialize();
-    </script>
 </body>
 </html>

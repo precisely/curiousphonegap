@@ -142,42 +142,40 @@ function submitForm() {
 							}
 						});
 	} else if (loginMode == 10) { // forgot password
-		$
-				.getJSON(
-						makeGetUrl('doforgotData'),
-						makeGetArgs({
-							username : username
-						}),
-						function(data) {
-							if (data['success']) {
-								showAlert('Look for instructions on recovering your account information in your email.');
-								startLogin(0);
-							} else {
-								showAlert(data['message']
-										+ " Please try again or hit Cancel to return to the login screen.");
-							}
-						});
+		$.getJSON(
+			makeGetUrl('doforgotData'),
+			makeGetArgs({
+				username : username
+			}),
+			function(data) {
+				if (data['success']) {
+					showAlert('Look for instructions on recovering your account information in your email.');
+					startLogin(0);
+				} else {
+					showAlert(data['message']
+						+ " Please try again or hit Cancel to return to the login screen.");
+				}
+			});
 	} else if (loginMode == 20) { // create an account
-		$
-				.postJSON(
-						makePostUrl('doregisterData'),
-						makePostArgs({
-							email : email,
-							username : username,
-							password : password,
-							groups : "['announce','curious','curious announce']"
-						}),
-
-						function(data) {
-							if (data['success']) {
-								localStorage['mobileSessionId'] = data['mobileSessionId'];
-								dataReady = true;
-								launchTrack();
-							} else {
-								showAlert(data['message']
-										+ ' Please try again or hit Cancel to return to the login screen.');
-							}
-						});
+		$.postJSON(
+			makePostUrl('doregisterData'),
+			makePostArgs({
+				email : email,
+				username : username,
+				password : password,
+				groups : "['announce','curious','curious announce']"
+			}),
+			function(data) {
+				if (data['success']) {
+					localStorage['mobileSessionId'] = data['mobileSessionId'];
+					dataReady = true;
+					launchTrack();
+				} else {
+					showAlert(data['message']
+						+ ' Please try again or hit Cancel to return to the login screen.');
+					}
+			}
+		);
 	}
 }
 
@@ -264,16 +262,127 @@ function initAppCache() {
 
 function getAppCacheData(key) {
 	if (supportsLocalStorage()) {
-		var cache = localStorage['appCache'];
-		if (cache != null) {
-			var data = cache[key];
-			if (data != null)
-				return data;
-			else {
-				data = {};
-				cache[key] = data;
-				return data;
+		try {
+			return JSON.parse(localStorage[key]);
+		} catch(err) {
+			console.log('Unable to fetch data from cache. Error: '+err);
+			return null;
+		}
+	}
+}
+
+function setAppCacheData(key,value) {
+	if (supportsLocalStorage()) {
+		try {
+			if (typeof value == 'object') {
+				localStorage[key] = JSON.stringify(value);
+			} else {
+				localStorage[key] = value;
 			}
+			
+			return true;
+		} catch(err) {
+			console.log('Unable to save data to cache. Error: '+err);
+			return false;
+		}
+	}
+}
+
+/**
+ * Returning the dates for which the entries are cached
+ * 
+ * @returns {Array}
+ */
+function getEntryBucket() {
+	var entryBucketKey = 'appCache.entryCacheBucket';
+	var entryBucket = getAppCacheData(entryBucketKey); 
+	if (entryBucket == null) {
+		entryBucket = [];
+		// Fallback, recreating bucket from localStorage
+		// for installations that already have cached data
+		// but no buckets
+		for (var prop in localStorage) {
+			if (prop.indexOf('appCache.entryCache.') > -1) {
+				//Pushing just the date part
+				entryBucket.push(prop.substring(20));
+			}
+		}
+		setEntryBucket(entryBucket);
+	}
+	return entryBucket;
+}
+
+function setEntryBucket(entryBucket) {
+	var entryBucketKey = 'appCache.entryCacheBucket';
+	setAppCacheData(entryBucketKey, entryBucket);
+}
+
+/**
+ * Helper method to confirm if an entry already exists
+ * in the bucket.
+ * @param dateStr mm/dd/yyyy date for which the check needs to be made
+ * @returns {Boolean} returns true if the cache exists
+ */
+function isEntryCached(dateStr) {
+	var entryBucket = getEntryBucket();
+	for (var i=0; i<entryBucket.length; i++) {
+        if (entryBucket[i] === dateStr) {
+            return true;
+        }
+    }
+	return false;
+}
+
+/**
+ * Helper method, fetches the cached entries for a given date
+ * @param date
+ * @returns List of entries
+ */
+function getEntryCache(date) {
+	var dateStr = (date.getMonth()+1) + '/' + date.getDate() + '/' + (date.getYear() + 1900);
+	return getAppCacheData('appCache.entryCache.'+dateStr);
+	
+}
+
+/**
+ * Storing the entries for a given day in a local entry cache.
+ * The entry cache has an upper limit of 10. Only the last 10
+ * days that were fetched get cached 
+ * @param date 
+ * @param entries Entries for the above date
+ * @returns {Boolean}
+ */
+function setEntryCache(date,entries) {
+	var dateStr;
+	var entryBucket = getEntryBucket();
+	
+	if (typeof date == 'object') {
+		var month = ("0" + (date.getMonth() + 1)).slice(-2);
+		var day = ("0" + date.getDate()).slice(-2);
+		dateStr = month + '/' + day + '/' + (date.getYear() + 1900);
+	} else {
+		dateStr = date;
+	}
+	
+	if (setAppCacheData('appCache.entryCache.'+dateStr,entries)) {
+		if (!isEntryCached(dateStr)) {
+			entryBucket.push(dateStr);
+			if (entryBucket.length > 10) {
+				localStorage.removeItem('appCache.entryCache.'+entryBucket[0]);
+				entryBucket.shift();
+			}
+			setEntryBucket(entryBucket);
+		}
+		return true;
+	} else {
+		return false;
+	}
+}
+
+function clearEntryCache() {
+	for (var key in localStorage) {
+		if (key.indexOf("appCache.entryCache")>-1) {
+			localStorage.removeItem(key);
 		}
 	}
 }
@@ -293,7 +402,7 @@ function startLogin(mode) {
 
 		if (supportsLocalStorage()) {
 			localStorage['mobileSessionId'] = null;
-			localStorage['appCache'] = null;
+			clearEntryCache();
 			localStorage['lastPage'] = 'login';
 		}
 		$('#trackPage').hide();
@@ -380,7 +489,7 @@ function reloadPage() {
 	}
 }
 
-$(function() {
+$(window).load(function() {
 	pageLoaded = true;
 	reloadPage();
 });
@@ -403,24 +512,69 @@ $(document).ready(function() {
 		$("#loginlogo").attr("src", "../images/logo_mobile_lhp.gif");
 	}
 
-	$("#loginlogo").show();
-	$("body").on("swiperight", function() {
-		console.log("Swipe event right");
-		changeDate(-1);
+	$('#loginlogo').show();
+	
+	$('body').on('swiperight', function() {
+		console.log('Swipe event right');
+		swipeTrackPage(false);
 	}).on("swipeleft", function() {
-		console.log("Swipe event left");
-		changeDate(1);
+		console.log("Swipe event left");		
+		swipeTrackPage(true);
 	});
-
 });
+
+/**
+ * Adding another dummy track page and then simulating a slide.
+ * Eventually removing the dummy trackpage that was added.
+ * @param left accepting sign +/- as a param to animate left or right
+ */
+function swipeTrackPage (left) {
+	var $originalPage = $($('.trackDay')[0]); 
+	var width = $originalPage.width();
+	$originalPage.clone().appendTo('#trackPage');
+	var $dummyTrackPage = $($('.trackDay')[1]);
+	$dummyTrackPage.css({left: '0px'});
+	var dummyPageDirection = "";
+	if(left) {
+		$originalPage.css({left: width+'px'});
+		dummyPageDirection = '-';
+		changeDate(+1);
+	} else {
+		$originalPage.css({left: '-'+width+'px'});
+		changeDate(-1);
+	}
+	$dummyTrackPage.animate(
+			{
+				left: dummyPageDirection+width+'px'
+			},
+			900,
+			function () {
+				$dummyTrackPage.remove();
+			}
+	);
+	
+	$originalPage.animate(
+		{
+			left: '0px'
+		},
+		900
+	);
+} 
 
 function cacheDate() {
 	cachedDate = $datepickerField.datepicker('getDate');
 	cachedDateUTC = cachedDate.toUTCString();
+	cachedDateYesterday = new Date(cachedDate);
+	cachedDateYesterday.setDate(cachedDate.getDate()-1);
+	cachedDateTomorrow = new Date(cachedDate);
+	cachedDateTomorrow.setDate(cachedDate.getDate()+1);
+	
 }
 
 var currentTimeUTC;
 var timeZoneName;
+var cachedDateTomorrow;
+var cachedDateYesterday;
 
 function cacheNow() {
 	cacheDate();
@@ -434,35 +588,66 @@ function changeDate(amount) {
 	var currentDate = $datepicker.datepicker('getDate');
 	$datepicker.datepicker('setDate', new Date(currentDate.getTime() + amount
 			* 86400000));
+	cachedDate = currentDate;
 	refreshPage();
 }
 
 function refreshPage(callback) {
 	cacheNow();
 
-	var cachedObj = getAppCacheData(cachedDateUTC);
+	var cachedObj = getEntryCache(cachedDate);
+	var cacheForYesterdayAndTomorrow = {};
+	cacheForYesterdayAndTomorrow[cachedDateYesterday.toUTCString()] = getEntryCache(cachedDateYesterday);
+	cacheForYesterdayAndTomorrow[cachedDateTomorrow.toUTCString()] = getEntryCache(cachedDateTomorrow);
 
-	if (cachedObj['data'] != null) {
+	if (cachedObj != null) {
 		console.log("refresh entries from cache");
-		refreshEntries(data, false);
-	}
-
-	var argsToSend = getCSRFPreventionObjectMobile('getListDataCSRF', {
-		date : cachedDateUTC,
-		userId : currentUserId,
-		timeZoneName : timeZoneName
-	});
-	$.getJSON(makeGetUrl("getListData"), makeGetArgs(argsToSend),
+		refreshEntries(cachedObj, false);
+	} else {
+		var argsToSend = getCSRFPreventionObjectMobile('getListDataCSRF', {
+			date : cachedDateUTC,
+			userId : currentUserId,
+			timeZoneName : timeZoneName
+		});
+		$.getJSON(makeGetUrl("getListData"), makeGetArgs(argsToSend),
 			function(data) {
 				if (checkData(data)) {
 					console.log("refresh entries from get list");
 					refreshEntries(data, true);
 					dataReady = true;
+					setEntryCache(cachedDate, data);
 					if (typeof callback != 'undefined') {
 						callback();
 					}
 				}
 			});
+	}
+	
+	var otherDatesToFetch = [];
+	
+	for (var entryDate in cacheForYesterdayAndTomorrow) {
+		if (cacheForYesterdayAndTomorrow[entryDate] == null) {
+			console.log("");
+			otherDatesToFetch.push(entryDate);
+		}
+	}
+	
+	if (otherDatesToFetch.length > 0) {
+		argsToSend = getCSRFPreventionObjectMobile('getListDataCSRF', {
+			date : otherDatesToFetch,
+			userId : currentUserId,
+			timeZoneName : timeZoneName
+		});
+		$.getJSON(makeGetUrl("getListData"), makeGetArgs(argsToSend),
+			function(data) {
+				if (checkData(data)) {
+					for (var entryDate in data) {
+						setEntryCache(entryDate, data[entryDate]);
+					}
+				}
+			}
+		);
+	}
 }
 
 var currentEntryId = undefined;
@@ -537,7 +722,7 @@ function selected($selectee, forceUpdate) {
 					unselecting($unselectee);
 				}
 				$(document).unbind('mousedown', arguments.callee);
-			})
+			});
 		});
 		
 		var $textInput = $("#tagTextInput").val(entryText).focus();
@@ -677,13 +862,13 @@ function displayEntry(entry, isUpdating, args) {
 		}
 	}
 
-	var diff = dateToTime(date) - cachedDate.getTime();
-	if (diff < 0 || diff >= dayDuration) {
-		return null; // skip items outside display
-	}
+//	var diff = dateToTime(date) - cachedDate.getTime();
+//	if (diff < 0 || diff >= dayDuration) {
+//		return null; // skip items outside display
+//	}
 	var dateStr = '';
 	if (datePrecisionSecs < 43200) {
-		dateStr = dateToTimeStr(date, false);
+		dateStr = dateToTimeStr(new Date(date), false);
 		if (timeAfterTag) {
 			dateStr = ' ' + dateStr;
 		} else {
@@ -768,8 +953,8 @@ function displayEntries(entries) {
 function refreshEntries(entries, activateGhost) {
 	clearEntries();
 	var $entryToActivate = displayEntries(entries);
-	var cache = getAppCacheData(cachedDateUTC);
-	cache['data'] = entries;
+	//var cache = getEntryCache(cachedDate);
+	//setEntryCache(cachedDate, JSON.stringify(entries));
 
 	if (activateGhost && $entryToActivate) {
 		activateEntry($entryToActivate);
@@ -1147,37 +1332,27 @@ var initTrackPage = function() {
 
 	var cache = getAppCacheData('users');
 
-	if (cache != null) {
-		setPeopleData(cache['data']);
-	}
-
-	var cache = getAppCacheData('users');
-
-	if (cache && cache['data'] && isLoggedIn()) {
-		setPeopleData(data);
+	if (cache && isLoggedIn()) {
+		setPeopleData(cache);
 		initAutocomplete();
 		refreshPage();
+		return;
 	}
 
 	if (isOnline())
-		$
-				.getJSON(
-						makeGetUrl("getPeopleData"),
-						makeGetArgs(getCSRFPreventionObjectMobile("getPeopleDataCSRF")),
-						function(data) {
-							if (!checkData(data))
-								return;
-
-							var cache = getAppCacheData('users');
-							cache['data'] = data;
-
-							setPeopleData(data);
-
-							// wait to init autocomplete until after login
-							initAutocomplete();
-
-							refreshPage();
-						});
+		$.getJSON(
+			makeGetUrl("getPeopleData"),
+			makeGetArgs(getCSRFPreventionObjectMobile("getPeopleDataCSRF")),
+			function(data) {
+				if (!checkData(data))
+					return;				
+				setAppCacheData("users", data);
+				setPeopleData(data);
+				// wait to init autocomplete until after login
+				initAutocomplete();
+				refreshPage();
+			}
+		);
 }
 
 // Overriding autocomplete from autocomplete.js
