@@ -547,7 +547,7 @@ function swipeTrackPage (left) {
 			{
 				left: dummyPageDirection+width+'px'
 			},
-			900,
+			200,
 			function () {
 				$dummyTrackPage.remove();
 			}
@@ -557,7 +557,7 @@ function swipeTrackPage (left) {
 		{
 			left: '0px'
 		},
-		900
+		200
 	);
 } 
 

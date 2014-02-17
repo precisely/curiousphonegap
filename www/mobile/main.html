@@ -69,7 +69,7 @@ setInterval(function(){cache.update()}, 10000);
 <script type="text/javascript" src="../js/curious/base.js?ver=9"></script>
 <script type="text/javascript" src="../js/curious/curious.js?ver=9"></script>
 <script type="text/javascript" src="../js/curious/autocomplete.js?ver=9"></script>
-<script type="text/javascript" src="../js/mobile/mobileBase.js"></script>
+<script type="text/javascript" src="../js/mobile/mobileBase.js?ver=10"></script>
 
 <script type="text/javascript"
 	src="../js/jquery/jquery.mobile.touch.min.js?ver=9"></script>
@@ -195,5 +195,11 @@ setInterval(function(){cache.update()}, 10000);
 
 		</div>
 	</div>
+	<script type="text/javascript" src="../cordova.js"></script>
+	<script type="text/javascript" src="../js/mobile/index.js"></script>
+	<script type="text/javascript">
+		console.log("App object: "+app);
+    	app.initialize();
+    </script>
 </body>
 </html>
