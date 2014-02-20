@@ -265,7 +265,8 @@ function getAppCacheData(key) {
 		try {
 			return JSON.parse(localStorage[key]);
 		} catch(err) {
-			console.log('Unable to fetch data from cache. Error: '+err);
+			console.log('Unable to fetch or parse data from cache. Key: '+key);
+			console.log('Cache value at '+key+': '+localStorage[key]);
 			return null;
 		}
 	}
@@ -339,7 +340,9 @@ function isEntryCached(dateStr) {
  * @returns List of entries
  */
 function getEntryCache(date) {
-	var dateStr = (date.getMonth()+1) + '/' + date.getDate() + '/' + (date.getYear() + 1900);
+	var month = ("0" + (date.getMonth() + 1)).slice(-2);
+	var day = ("0" + date.getDate()).slice(-2);
+	var dateStr = month + '/' + day + '/' + (date.getYear() + 1900);
 	return getAppCacheData('appCache.entryCache.'+dateStr);
 	
 }
@@ -547,7 +550,7 @@ function swipeTrackPage (left) {
 			{
 				left: dummyPageDirection+width+'px'
 			},
-			200,
+			250,
 			function () {
 				$dummyTrackPage.remove();
 			}
@@ -557,7 +560,7 @@ function swipeTrackPage (left) {
 		{
 			left: '0px'
 		},
-		200
+		250
 	);
 } 
 
@@ -602,7 +605,7 @@ function refreshPage(callback) {
 
 	if (cachedObj != null) {
 		console.log("refresh entries from cache");
-		refreshEntries(cachedObj, false);
+		refreshEntries(cachedObj, false, false);
 	} else {
 		var argsToSend = getCSRFPreventionObjectMobile('getListDataCSRF', {
 			date : cachedDateUTC,
@@ -615,7 +618,6 @@ function refreshPage(callback) {
 					console.log("refresh entries from get list");
 					refreshEntries(data, true);
 					dataReady = true;
-					setEntryCache(cachedDate, data);
 					if (typeof callback != 'undefined') {
 						callback();
 					}
@@ -950,11 +952,14 @@ function displayEntries(entries) {
 	return $entryToActivate;
 }
 
-function refreshEntries(entries, activateGhost) {
+function refreshEntries(entries, activateGhost, cache) {
 	clearEntries();
 	var $entryToActivate = displayEntries(entries);
-	//var cache = getEntryCache(cachedDate);
-	//setEntryCache(cachedDate, JSON.stringify(entries));
+	cache = typeof cache !== 'undefined' ? cache : true;
+	
+	if (cache) {
+		setEntryCache(cachedDate, entries);
+	}
 
 	if (activateGhost && $entryToActivate) {
 		activateEntry($entryToActivate);
@@ -1140,6 +1145,7 @@ function doUpdateEntry(entryId, text, defaultToNow, allFuture) {
 						}
 					})
 					refreshEntries(entries[0]);
+					
 					updateAutocomplete(entries[1][0], entries[1][1],
 							entries[1][2], entries[1][3]);
 					if (entries[2] != null)
@@ -1229,6 +1235,7 @@ function processInput(forceAdd) {
 	if (text == "")
 		return; // no entry data
 	$field.val("");
+	$field.blur();
 	if ((!forceAdd) && (currentEntryId != undefined))
 		updateEntry(currentEntryId, text, defaultToNow);
 	else {
