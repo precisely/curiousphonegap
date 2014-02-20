@@ -143,6 +143,9 @@ setInterval(function(){cache.update()}, 10000);
 		<div id="trackPage" style="display: none;">
 			<div class="trackDay">
 				<div id="header">
+					<div id="fetchingData" style="height: 20px; width: 100%; display:none;">
+						<img src='../images/spinner.gif' /> Fetching data from Curious
+					</div>
 					<div class="dateBar">
 						<a class="back" href="#" onclick="changeDate(-1);"><span>back</span></a>
 						<span class="date"><input id="datepicker" type="text"
@@ -175,8 +178,8 @@ setInterval(function(){cache.update()}, 10000);
 				<div id="content">
 					<div class="dataTags">
 						<div id="recordList"
-							style="overflow: auto; height: 100%; -webkit-overflow-scrolling: touch;">
-							<ol id="entry0" style="width: 100%; height: 100%;">
+							style="overflow: auto; -webkit-overflow-scrolling: touch;">
+							<ol id="entry0" style="width: 100%;">
 							</ol>
 						</div>
 					</div>

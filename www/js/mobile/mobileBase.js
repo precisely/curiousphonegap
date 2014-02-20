@@ -348,6 +348,29 @@ function getEntryCache(date) {
 }
 
 /**
+ * Fetching entries for a particular date(s) from the server
+ */
+
+function fetchEntries(dates, callback) {
+	if (typeof callback != 'undefined') {
+		console.log('fetchEntries: Missing a callback');
+	}
+	
+	var argsToSend = getCSRFPreventionObjectMobile('getListDataCSRF', {
+		date : dates,
+		userId : currentUserId,
+		timeZoneName : timeZoneName
+	});
+	$.getJSON(makeGetUrl("getListData"), makeGetArgs(argsToSend),
+		function(data) {
+			if (checkData(data)) {
+				console.log("fetching entries from the server");
+					callback(data);
+			}
+		});
+}
+
+/**
  * Storing the entries for a given day in a local entry cache.
  * The entry cache has an upper limit of 10. Only the last 10
  * days that were fetched get cached 
@@ -524,6 +547,27 @@ $(document).ready(function() {
 		console.log("Swipe event left");		
 		swipeTrackPage(true);
 	});
+	$('#trackPage').on('vmousedown', function (event) {
+		window.moveStartY = event.pageY;
+		console.log('Move Start Y on Tap: ' + window.moveStartY);
+	});
+	
+	$('#trackPage').on('vmouseup', function(event) {
+		var moveVerticalDirection = window.moveStartY - event.pageY;
+		console.log('Move Start Y on move: ' + window.moveStartY);
+		console.log('pageY on move: ' + event.pageY);
+		console.log('Move Direction: ' + moveVerticalDirection);
+		if (moveVerticalDirection < 0 && -moveVerticalDirection > 40) {
+			$('#fetchingData').show();
+			fetchEntries(cachedDateUTC, function (entries) {
+				refreshEntries(entries, true);
+				dataReady = true;
+				$('#fetchingData').hide();
+				console.log('Data refreshed from the server');
+			});
+			
+		}
+	});
 });
 
 /**
@@ -607,22 +651,13 @@ function refreshPage(callback) {
 		console.log("refresh entries from cache");
 		refreshEntries(cachedObj, false, false);
 	} else {
-		var argsToSend = getCSRFPreventionObjectMobile('getListDataCSRF', {
-			date : cachedDateUTC,
-			userId : currentUserId,
-			timeZoneName : timeZoneName
+		fetchEntries(cachedDateUTC, function (entries) {
+			refreshEntries(entries, true);
+			dataReady = true;
+			if (typeof callback != 'undefined') {
+				callback();
+			}
 		});
-		$.getJSON(makeGetUrl("getListData"), makeGetArgs(argsToSend),
-			function(data) {
-				if (checkData(data)) {
-					console.log("refresh entries from get list");
-					refreshEntries(data, true);
-					dataReady = true;
-					if (typeof callback != 'undefined') {
-						callback();
-					}
-				}
-			});
 	}
 	
 	var otherDatesToFetch = [];
@@ -635,20 +670,11 @@ function refreshPage(callback) {
 	}
 	
 	if (otherDatesToFetch.length > 0) {
-		argsToSend = getCSRFPreventionObjectMobile('getListDataCSRF', {
-			date : otherDatesToFetch,
-			userId : currentUserId,
-			timeZoneName : timeZoneName
-		});
-		$.getJSON(makeGetUrl("getListData"), makeGetArgs(argsToSend),
-			function(data) {
-				if (checkData(data)) {
-					for (var entryDate in data) {
-						setEntryCache(entryDate, data[entryDate]);
-					}
-				}
+		fetchEntries(otherDatesToFetch, function(entriesList) {
+			for (var entryDate in entriesList) {
+				setEntryCache(entryDate, data[entryDate]);
 			}
-		);
+		});
 	}
 }
 
