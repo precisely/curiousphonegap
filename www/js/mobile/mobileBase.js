@@ -560,7 +560,7 @@ $(document).ready(function() {
 		console.log('Move Start Y on move: ' + window.moveStartY);
 		console.log('pageY on move: ' + event.pageY);
 		console.log('Move Direction: ' + moveVerticalDirection);
-		console.log('Window scroll position:' + $(body).scroo)
+		
 		if (moveVerticalDirection < 0 && -moveVerticalDirection > 40 && $('#recordList').scrollTop() < 0) {
 			$('#fetchingData').show();
 			fetchEntries(cachedDateUTC, function (entries) {
