@@ -533,6 +533,9 @@ var cachedDate, cachedDateUTC;
 var $datepickerField;
 
 $(document).ready(function() {
+	$.event.special.swipe.horizontalDistanceThreshold = 50;
+	$.event.special.swipe.verticalDistanceThreshold = 60;
+	
 	$datepickerField = $("input#datepicker");
 	if (window.location.href.indexOf("lamhealth") > -1) {
 		$("#loginlogo").attr("src", "../images/logo_mobile_lhp.gif");
@@ -557,7 +560,8 @@ $(document).ready(function() {
 		console.log('Move Start Y on move: ' + window.moveStartY);
 		console.log('pageY on move: ' + event.pageY);
 		console.log('Move Direction: ' + moveVerticalDirection);
-		if (moveVerticalDirection < 0 && -moveVerticalDirection > 40) {
+		console.log('Window scroll position:' + $(body).scroo)
+		if (moveVerticalDirection < 0 && -moveVerticalDirection > 40 && $('#recordList').scrollTop() < 0) {
 			$('#fetchingData').show();
 			fetchEntries(cachedDateUTC, function (entries) {
 				refreshEntries(entries, true);
