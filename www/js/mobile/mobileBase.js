@@ -306,7 +306,7 @@ function setAppCacheData(key,value) {
  * @returns {Array}
  */
 function getEntryBucket() {
-	var entryBucketKey = 'appCache.entryCacheBucket';
+	var entryBucketKey = 'entryCacheBucket';
 	var entryBucket = getAppCacheData(entryBucketKey); 
 	if (entryBucket == null) {
 		entryBucket = [];
@@ -325,7 +325,7 @@ function getEntryBucket() {
 }
 
 function setEntryBucket(entryBucket) {
-	var entryBucketKey = 'appCache.entryCacheBucket';
+	var entryBucketKey = 'entryCacheBucket';
 	setAppCacheData(entryBucketKey, entryBucket);
 }
 
@@ -354,8 +354,31 @@ function getEntryCache(date) {
 	var month = ("0" + (date.getMonth() + 1)).slice(-2);
 	var day = ("0" + date.getDate()).slice(-2);
 	var dateStr = month + '/' + day + '/' + (date.getYear() + 1900);
-	return getAppCacheData('appCache.entryCache.' + dateStr);
+	return getAppCacheData('entryCache.'+dateStr);
 	
+}
+
+/**
+ * Fetching entries for a particular date(s) from the server
+ */
+
+function fetchEntries(dates, callback) {
+	if (typeof callback != 'undefined') {
+		console.log('fetchEntries: Missing a callback');
+	}
+	
+	var argsToSend = getCSRFPreventionObjectMobile('getListDataCSRF', {
+		date : dates,
+		userId : currentUserId,
+		timeZoneName : timeZoneName
+	});
+	$.getJSON(makeGetUrl("getListData"), makeGetArgs(argsToSend),
+		function(data) {
+			if (checkData(data)) {
+				console.log("fetching entries from the server");
+					callback(data);
+			}
+		});
 }
 
 /**
@@ -521,6 +544,9 @@ var cachedDate, cachedDateUTC;
 var $datepickerField;
 
 $(document).ready(function() {
+	$.event.special.swipe.horizontalDistanceThreshold = 50;
+	$.event.special.swipe.verticalDistanceThreshold = 60;
+	
 	$datepickerField = $("input#datepicker");
 	if (window.location.href.indexOf("lamhealth") > -1) {
 		$("#loginlogo").attr("src", "../images/logo_mobile_lhp.gif");
@@ -534,6 +560,28 @@ $(document).ready(function() {
 	}).on("swipeleft", function() {
 		console.log("Swipe event left");		
 		swipeTrackPage(true);
+	});
+	$('#trackPage').on('vmousedown', function (event) {
+		window.moveStartY = event.pageY;
+		console.log('Move Start Y on Tap: ' + window.moveStartY);
+	});
+	
+	$('#trackPage').on('vmouseup', function(event) {
+		var moveVerticalDirection = window.moveStartY - event.pageY;
+		console.log('Move Start Y on move: ' + window.moveStartY);
+		console.log('pageY on move: ' + event.pageY);
+		console.log('Move Direction: ' + moveVerticalDirection);
+		
+		if (moveVerticalDirection < 0 && -moveVerticalDirection > 55 && $('#recordList').scrollTop() <= 0) {
+			$('#fetchingData').show();
+			fetchEntries(cachedDateUTC, function (entries) {
+				refreshEntries(entries, true);
+				dataReady = true;
+				$('#fetchingData').hide();
+				console.log('Data refreshed from the server');
+			});
+			
+		}
 	});
 });
 
@@ -618,48 +666,30 @@ function refreshPage(callback) {
 		console.log("refresh entries from cache");
 		refreshEntries(cachedObj, false, false);
 	} else {
-		var argsToSend = getCSRFPreventionObjectMobile('getListDataCSRF', {
-			date : cachedDateUTC,
-			userId : currentUserId,
-			timeZoneName : timeZoneName
+		fetchEntries(cachedDateUTC, function (entries) {
+			refreshEntries(entries, true);
+			dataReady = true;
+			if (typeof callback != 'undefined') {
+				callback();
+			}
 		});
-		$.getJSON(makeGetUrl("getListData"), makeGetArgs(argsToSend),
-			function(data) {
-				if (checkData(data)) {
-					console.log("refresh entries from get list");
-					refreshEntries(data, true);
-					dataReady = true;
-					if (typeof callback != 'undefined') {
-						callback();
-					}
-				}
-			});
 	}
 	
 	var otherDatesToFetch = [];
 	
 	for (var entryDate in cacheForYesterdayAndTomorrow) {
 		if (cacheForYesterdayAndTomorrow[entryDate] == null) {
-			console.log("");
+			console.log("Cache missing for " + entryDate);
 			otherDatesToFetch.push(entryDate);
 		}
 	}
 	
 	if (otherDatesToFetch.length > 0) {
-		argsToSend = getCSRFPreventionObjectMobile('getListDataCSRF', {
-			date : otherDatesToFetch,
-			userId : currentUserId,
-			timeZoneName : timeZoneName
-		});
-		$.getJSON(makeGetUrl("getListData"), makeGetArgs(argsToSend),
-			function(data) {
-				if (checkData(data)) {
-					for (var entryDate in data) {
-						setEntryCache(entryDate, data[entryDate]);
-					}
-				}
+		fetchEntries(otherDatesToFetch, function(entriesList) {
+			for (var entryDate in entriesList) {
+				setEntryCache(entryDate, entriesList[entryDate]);
 			}
-		);
+		});
 	}
 }
 
