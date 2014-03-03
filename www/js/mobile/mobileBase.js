@@ -32,14 +32,19 @@ function showYesNo(alertText, onConfirm) {
 	});
 }
 
+var localStorageIsSupported = 2;
+
 var localStorageSupported = function() {
+	if (localStorageIsSupported == true) return true;
+	if (localStorageSupported == false) return false;
 	try {
-		localStorage.setItem("test", "test");
-		localStorage.removeItem("test");
-		return 'localStorage' in window && window['localStorage'] !== null;
+		localStorage.setItem("_test__", "_test__");
+		localStorage.removeItem("_test__");
+		localStorageSupported = ('localStorage' in window && window['localStorage'] !== null);
 	} catch (e) {
-		return false;
+		localStorageSupported = false;
 	}
+	return localStorageSupported;
 }
 
 if (!localStorageSupported()) {
@@ -70,9 +75,11 @@ var activateEntryId = -1;
 
 function doLogout() {
 	console.log("Logging out...");
+	clearEntries();
 	callLogoutCallbacks();
+	currentUserId = undefined;
+	localStorage.clear();
 	localStorage['mobileSessionId'] = null;
-	localStorage['appCache'] = null;
 	localStorage['lastPage'] = 'login';
 	startLogin(0);
 	$(document).trigger("ask-logout");
@@ -250,40 +257,44 @@ function makePlainUrl(url) {
 	return url;
 }
 
-function initAppCache() {
+function clearAppCache() {
 	if (supportsLocalStorage()) {
-		if (localStorage['appCache'] == null) {
-			localStorage['appCache'] = {};
-			localStorage['lastPage'] = null;
-			return;
+		for (var key in localStorage) {
+			if (key.indexOf("appCache.") == 0) {
+				localStorage.removeItem(key);
+			}
 		}
 	}
+	
+	localStorage['lastPage'] = null;
 }
 
 function getAppCacheData(key) {
+	var aKey = 'appCache.' + key;
 	if (supportsLocalStorage()) {
 		try {
-			return JSON.parse(localStorage[key]);
+			return JSON.parse(localStorage[aKey]);
 		} catch(err) {
-			console.log('Unable to fetch or parse data from cache. Key: '+key);
-			console.log('Cache value at '+key+': '+localStorage[key]);
+			console.log('Unable to fetch or parse data from cache. Key: '+aKey);
+			console.log('Cache value at ' + aKey + ': ' + localStorage[aKey]);
 			return null;
 		}
 	}
 }
 
 function setAppCacheData(key,value) {
+	var aKey = 'appCache.' + key;
 	if (supportsLocalStorage()) {
 		try {
 			if (typeof value == 'object') {
-				localStorage[key] = JSON.stringify(value);
+				localStorage[aKey] = JSON.stringify(value);
 			} else {
-				localStorage[key] = value;
+				localStorage[aKey] = value;
 			}
 			
 			return true;
 		} catch(err) {
-			console.log('Unable to save data to cache. Error: '+err);
+			console.log('Unable to save data to cache. Error: ' + err);
 			return false;
 		}
 	}
@@ -303,7 +314,7 @@ function getEntryBucket() {
 		// for installations that already have cached data
 		// but no buckets
 		for (var prop in localStorage) {
-			if (prop.indexOf('appCache.entryCache.') > -1) {
+			if (prop.indexOf('appCache.entryCache.') == 0) {
 				//Pushing just the date part
 				entryBucket.push(prop.substring(20));
 			}
@@ -343,31 +354,8 @@ function getEntryCache(date) {
 	var month = ("0" + (date.getMonth() + 1)).slice(-2);
 	var day = ("0" + date.getDate()).slice(-2);
 	var dateStr = month + '/' + day + '/' + (date.getYear() + 1900);
-	return getAppCacheData('appCache.entryCache.'+dateStr);
+	return getAppCacheData('appCache.entryCache.' + dateStr);
 	
-}
-
-/**
- * Fetching entries for a particular date(s) from the server
- */
-
-function fetchEntries(dates, callback) {
-	if (typeof callback != 'undefined') {
-		console.log('fetchEntries: Missing a callback');
-	}
-	
-	var argsToSend = getCSRFPreventionObjectMobile('getListDataCSRF', {
-		date : dates,
-		userId : currentUserId,
-		timeZoneName : timeZoneName
-	});
-	$.getJSON(makeGetUrl("getListData"), makeGetArgs(argsToSend),
-		function(data) {
-			if (checkData(data)) {
-				console.log("fetching entries from the server");
-					callback(data);
-			}
-		});
 }
 
 /**
@@ -390,11 +378,11 @@ function setEntryCache(date,entries) {
 		dateStr = date;
 	}
 	
-	if (setAppCacheData('appCache.entryCache.'+dateStr,entries)) {
+	if (setAppCacheData('entryCache.'+dateStr, entries)) {
 		if (!isEntryCached(dateStr)) {
 			entryBucket.push(dateStr);
 			if (entryBucket.length > 10) {
-				localStorage.removeItem('appCache.entryCache.'+entryBucket[0]);
+				localStorage.removeItem('appCache.entryCache.' + entryBucket[0]);
 				entryBucket.shift();
 			}
 			setEntryBucket(entryBucket);
@@ -407,7 +395,7 @@ function setEntryCache(date,entries) {
 
 function clearEntryCache() {
 	for (var key in localStorage) {
-		if (key.indexOf("appCache.entryCache")>-1) {
+		if (key.indexOf("appCache.entryCache") == 0) {
 			localStorage.removeItem(key);
 		}
 	}
@@ -427,8 +415,8 @@ function startLogin(mode) {
 		loginMode = mode;
 
 		if (supportsLocalStorage()) {
+			localStorage.clear();
 			localStorage['mobileSessionId'] = null;
-			clearEntryCache();
 			localStorage['lastPage'] = 'login';
 		}
 		$('#trackPage').hide();
@@ -533,9 +521,6 @@ var cachedDate, cachedDateUTC;
 var $datepickerField;
 
 $(document).ready(function() {
-	$.event.special.swipe.horizontalDistanceThreshold = 50;
-	$.event.special.swipe.verticalDistanceThreshold = 60;
-	
 	$datepickerField = $("input#datepicker");
 	if (window.location.href.indexOf("lamhealth") > -1) {
 		$("#loginlogo").attr("src", "../images/logo_mobile_lhp.gif");
@@ -549,28 +534,6 @@ $(document).ready(function() {
 	}).on("swipeleft", function() {
 		console.log("Swipe event left");		
 		swipeTrackPage(true);
-	});
-	$('#trackPage').on('vmousedown', function (event) {
-		window.moveStartY = event.pageY;
-		console.log('Move Start Y on Tap: ' + window.moveStartY);
-	});
-	
-	$('#trackPage').on('vmouseup', function(event) {
-		var moveVerticalDirection = window.moveStartY - event.pageY;
-		console.log('Move Start Y on move: ' + window.moveStartY);
-		console.log('pageY on move: ' + event.pageY);
-		console.log('Move Direction: ' + moveVerticalDirection);
-		
-		if (moveVerticalDirection < 0 && -moveVerticalDirection > 40 && $('#recordList').scrollTop() <= 0) {
-			$('#fetchingData').show();
-			fetchEntries(cachedDateUTC, function (entries) {
-				refreshEntries(entries, true);
-				dataReady = true;
-				$('#fetchingData').hide();
-				console.log('Data refreshed from the server');
-			});
-			
-		}
 	});
 });
 
@@ -655,13 +618,22 @@ function refreshPage(callback) {
 		console.log("refresh entries from cache");
 		refreshEntries(cachedObj, false, false);
 	} else {
-		fetchEntries(cachedDateUTC, function (entries) {
-			refreshEntries(entries, true);
-			dataReady = true;
-			if (typeof callback != 'undefined') {
-				callback();
-			}
+		var argsToSend = getCSRFPreventionObjectMobile('getListDataCSRF', {
+			date : cachedDateUTC,
+			userId : currentUserId,
+			timeZoneName : timeZoneName
 		});
+		$.getJSON(makeGetUrl("getListData"), makeGetArgs(argsToSend),
+			function(data) {
+				if (checkData(data)) {
+					console.log("refresh entries from get list");
+					refreshEntries(data, true);
+					dataReady = true;
+					if (typeof callback != 'undefined') {
+						callback();
+					}
+				}
+			});
 	}
 	
 	var otherDatesToFetch = [];
@@ -674,11 +646,20 @@ function refreshPage(callback) {
 	}
 	
 	if (otherDatesToFetch.length > 0) {
-		fetchEntries(otherDatesToFetch, function(entriesList) {
-			for (var entryDate in entriesList) {
-				setEntryCache(entryDate, entriesList[entryDate]);
-			}
+		argsToSend = getCSRFPreventionObjectMobile('getListDataCSRF', {
+			date : otherDatesToFetch,
+			userId : currentUserId,
+			timeZoneName : timeZoneName
 		});
+		$.getJSON(makeGetUrl("getListData"), makeGetArgs(argsToSend),
+			function(data) {
+				if (checkData(data)) {
+					for (var entryDate in data) {
+						setEntryCache(entryDate, data[entryDate]);
+					}
+				}
+			}
+		);
 	}
 }
 
