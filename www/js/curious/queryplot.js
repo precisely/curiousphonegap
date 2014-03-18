@@ -2,6 +2,11 @@
  * Supporting Javascript file for plotting/loading/saving graph data ---
  */
 
+var beforeLinePlotEvent = "curious.before.line.plot";
+var afterLinePlotEvent = "curious.after.line.plot";
+var beforeLineRemoveEvent = "curious.before.line.remove";
+var afterLineRemoveEvent = "curious.after.line.remove";
+
 var plotLineColorSequence =      [ '#FF6633', '#990066', '#5BCDFC', '#449BAF', '#9AD3AE', '#D5D879' ];
 var plotColorClass =  {'#FF6633':'orange', '#990066':'eggplant', '#5BCDFC':'malibu', 
 		'#449BAF':'bostonBlue','#9AD3AE':'vistaBlue', '#D5D879':'chenin'};
@@ -306,6 +311,7 @@ function Plot(tagList, userId, userName, plotAreaDivId, store, interactive, prop
 		this.refreshAll();
 		this.setupSlider();
 		this.store();
+		$(document).trigger(afterLineRemoveEvent, this);
 	}
 	this.getCycleTagLine = function() {
 		return this.cycleTagLine;
@@ -354,11 +360,11 @@ function Plot(tagList, userId, userName, plotAreaDivId, store, interactive, prop
 		var first = true;
 		var plotDataStr = this.store();
 		if (plotDataStr == null) {
-			alert("No plotted data to save");
+			showAlert("No plotted data to save");
 			return;
 		}
 		
-		$.postJSON(makePostUrl("savePlotData"), { name: this.getName(), plotData: plotDataStr },
+		queuePostJSON(makePostUrl("savePlotData"), { name: this.getName(), plotData: plotDataStr },
 				function(data) {
 					checkData(data[0], '', "Error while saving live graph", "Live graph saved");
 				});
@@ -393,12 +399,12 @@ function Plot(tagList, userId, userName, plotAreaDivId, store, interactive, prop
 		var first = true;
 		var plotDataStr = this.storeSnapshot();
 		if (plotDataStr == null) {
-			alert("No plotted data to save");
+			showAlert("No plotted data to save");
 			return;
 		}
 		var plot = this;
 		
-		$.postJSON(makePostUrl("saveSnapshotData"), { name: this.getName() + ' (snapshot)', snapshotData: plotDataStr },
+		queuePostJSON(makePostUrl("saveSnapshotData"), { name: this.getName() + ' (snapshot)', snapshotData: plotDataStr },
 				function(data) {
 					if (checkData(data, '', "Error while saving snapshot")) {
 						window.location = makePlainUrl('discuss?plotIdMessage=' + data['plotDataId']);
@@ -406,6 +412,7 @@ function Plot(tagList, userId, userName, plotAreaDivId, store, interactive, prop
 				});
 	}
 	this.load = function(plotData) {
+		$(document).trigger(beforeLinePlotEvent);
 		var version = plotData.version;
 		if (plotData.startTime) {
 			this.properties.setStartDate(new Date(plotData.startTime));
@@ -433,6 +440,7 @@ function Plot(tagList, userId, userName, plotAreaDivId, store, interactive, prop
 		this.leftLinearSlider = plotData.leftLinearSlider;
 		this.rightLinearSlider = plotData.rightLinearSlider;
 		this.activeLineId = plotData.activeLineId;
+		$(document).trigger(afterLinePlotEvent);
 	}
 	
 	this.loadLine = function(save,version) {
@@ -480,14 +488,16 @@ function Plot(tagList, userId, userName, plotAreaDivId, store, interactive, prop
 			}
 		} 
 		
-		if ( version >= 5 && isSnapshot && typeof save.tag !== 'undefined') {
-			if (save.tag.type.indexOf("Group") !== -1) {
-				save.tag = this.restoreTagGroup(save.tag);
+		if (save.tag != null) {
+			if ( version >= 5 && isSnapshot && typeof save.tag !== 'undefined') {
+				if (save.tag.type.indexOf("Group") !== -1) {
+					save.tag = this.restoreTagGroup(save.tag);
+				} else {
+					save.tag = this.restoreTag(save.tag);
+				}
 			} else {
-				save.tag = this.restoreTag(save.tag);
+				save.tag = tagList.store.getTagByName(save.tag.description);
 			}
-		} else {
-			save.tag = tagList.store.getTagByName(save.tag.description);
 		}
 
 		if (!isSnapshot && save.tag instanceof TagGroup && save.tag.children.length == 0) {
@@ -495,7 +505,6 @@ function Plot(tagList, userId, userName, plotAreaDivId, store, interactive, prop
 		} else {
 			this.createPlotLine(save, parentLine);
 		}
-		
 	}
 	
 	this.createPlotLine = function(save, parentLine) {
@@ -619,20 +628,20 @@ function Plot(tagList, userId, userName, plotAreaDivId, store, interactive, prop
 	}
 	this.loadId = function(id) {
 		var plot = this;
-		$.getJSON(makeGetUrl("loadPlotDataId"), makeGetArgs({ id:id }), function(plotData) {
+		queueJSON(makeGetUrl("loadPlotDataId"), makeGetArgs({ id:id }), function(plotData) {
 			if (checkData(plotData)) {
 				plot.load(plotData);
 			} else
-				alert("Error while loading");
+				showAlert("Error while loading");
 		});
 	}
 	this.loadSnapshotId = function(id) {
 		var plot = this;
-		$.getJSON(makeGetUrl("loadSnapshotDataId"), makeGetArgs({ id:id }), function(plotData) {
+		queueJSON(makeGetUrl("loadSnapshotDataId"), makeGetArgs({ id:id }), function(plotData) {
 			if (checkData(plotData)) {
 				plot.loadSnapshot(plotData);
 			} else {
-				alert("Error while loading");
+				showAlert("Error while loading");
 				window.location = '/home/index';
 			}
 		});
@@ -1041,7 +1050,8 @@ function Plot(tagList, userId, userName, plotAreaDivId, store, interactive, prop
 		// prevent adding duplicate lines
 		if (this.getLineByTag(initialTag)) 
 			return;
-		
+
+		$(document).trigger(beforeLinePlotEvent, [initialTag]);
 		var plotLine = new PlotLine({plot:this, name:initialTag.description, color:this.leastUsedPlotLineColor(),
 				tag: initialTag,showYAxis: false/*this.countYAxesShowing() == 0*/,
 				isContinuous:initialTag.isContinuous, showPoints:initialTag.showPoints});
@@ -1052,7 +1062,7 @@ function Plot(tagList, userId, userName, plotAreaDivId, store, interactive, prop
 		this.refreshName();
 		
 		this.store();
-		
+		$(document).trigger(afterLinePlotEvent, [initialTag]);
 	}
 	this.addCycleLine = function(initialTag) {
 		if (this.cycleTagLine != null) {
@@ -1157,8 +1167,8 @@ function PlotLine(p) {
 	this.isFreqLineFlag = p.isFreqLineFlag ? true : false;
 	this.fillColor = colorToFillColor(p.color,'0.3');
 	this.cycleFillColor = colorToFillColor(p.color,'0.15');
-	this.sumData = p.sumData ? true : false;
-	this.sumNights = p.sumNights ? true : false;
+	this.sumData = p.sumData || p.sumNights ? true : false;
+	this.sumNights = false;
 	this.tag = p.tag == undefined ? null : p.tag;
 	this.tags = p.tags == undefined ? [] : p.tags;
 	this.yaxis = this.id + 1;
@@ -1249,7 +1259,7 @@ function PlotLine(p) {
 		return tags.length;
 	}
 	this.getSavePlotData = function() {
-		var data = {name:this.name,color:this.color,sumData:this.sumData,sumNights:this.sumNights,
+		var data = {name:this.name,color:this.color,sumData:this.sumData,
 				tag:this.tag,showYAxis:this.showYAxis,hidden:this.hidden,showLines:this.showLines,isCycle:this.isCycle,
 				isContinuous:this.isContinuous,isFreqLineFlag:this.isFreqLineFlag,showPoints:this.showPoints,fill:this.fill,smoothDataWidth:this.smoothDataWidth,
 				freqDataWidth:this.freqDataWidth,parentLineName:this.parentLine?this.parentLine.name:'',flatten:this.flatten,smoothData:this.smoothLine&&this.smoothDataWidth>0?true:false,
@@ -1368,7 +1378,7 @@ function PlotLine(p) {
 		if (this.isContinuous != val) {
 			this.isContinuous = val;
 			var plotLine = this;
-			$.getJSON(makeGetUrl("setTagPropertiesData"), getCSRFPreventionObject("setTagPropertiesDataCSRF",
+			queueJSON(makeGetUrl("setTagPropertiesData"), getCSRFPreventionObject("setTagPropertiesDataCSRF",
 					{ tags:$.toJSON(this.getTags()), isContinuous:val ? 'true' : 'false' }),
 					function(result){
 						if (checkData(result)) {
@@ -1381,7 +1391,7 @@ function PlotLine(p) {
 		if (this.showPoints != val) {
 			this.showPoints = val;
 			var plotLine = this;
-			$.getJSON(makeGetUrl("setTagPropertiesData"), getCSRFPreventionObject("setTagPropertiesDataCSRF",
+			queueJSON(makeGetUrl("setTagPropertiesData"), getCSRFPreventionObject("setTagPropertiesDataCSRF",
 					{ tags:$.toJSON(this.getTags()), showPoints:val ? 'true' : 'false' }),
 					function(result){
 						if (checkData(result)) {
@@ -1438,9 +1448,7 @@ function PlotLine(p) {
 		  + idSuffix + '" style="position:absolute;left:15px;top:15px"></div>';
 		if ((!this.snapshot) && (!this.isSmoothLine()) && (!this.isFreqLine()) && (!this.isCycle))
 			html += '<input type="checkbox" name="plotlinesum' + idSuffix + '" id="plotlinesum' + idSuffix + '"'
-					+ (this.sumData ? 'checked' : '') + '/> days \
-					<input type="checkbox" name="plotlinesumnights' + idSuffix + '" id="plotlinesumnights' + idSuffix + '"'
-					+ (this.sumNights ? 'checked' : '') + '/> nights<br/>';
+					+ (this.sumData ? 'checked' : '') + '/> sum ';
 		if (this.isCycle) {
 			html += '<div style="display:inline-block;">range <div style="display:inline-block;" id="plotlinerangemin' + idSuffix
 					+ '"></div><div style="display:inline-block;margin-left:10px;width:50px;display:relative;top:3px;" id="plotlinecyclerange'
@@ -1542,13 +1550,6 @@ function PlotLine(p) {
 				var plotLine = plot.getLine(plotLineId);
 				if (plotLine.sumData) plotLine.sumData = false;
 				else plotLine.sumData = true;
-				plot.loadAllData();
-				plot.refreshPlot();
-			});
-			$("#plotlinesumnights" + idSuffix).change(function(e) {
-				var plotLine = plot.getLine(plotLineId);
-				if (plotLine.sumNights) plotLine.sumNights = false;
-				else plotLine.sumNights = true;
 				plot.loadAllData();
 				plot.refreshPlot();
 			});
@@ -1663,13 +1664,12 @@ function PlotLine(p) {
 		
 		var timeZoneName = jstz.determine().name();
 		
-		var method = (this.sumData || this.sumNights) ? "getSumPlotData" : "getPlotData";
+		var method = this.sumData ? "getSumPlotData" : "getPlotData";
 		var plotLine = this;
 		
-		$.getJSON(makeGetUrl(method), getCSRFPreventionObject(method + "CSRF", {tags: $.toJSON(this.getTags()),
+		queueJSON(makeGetUrl(method), getCSRFPreventionObject(method + "CSRF", {tags: $.toJSON(this.getTags()),
 				startDate:startDate == null ? "" : startDate.toUTCString(),
 				endDate:endDate == null ? "" : endDate.toUTCString(),
-				sumNights:this.sumNights ? "true" : "",
 				timeZoneName:timeZoneName }),
 				function(entries){
 					if (checkData(entries)) {

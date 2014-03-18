@@ -28,6 +28,7 @@ function callLogoutCallbacks() {
 	for (var i in logoutCallbacks) {
 		logoutCallbacks[i]();
 	}
+	clearJSONQueue();
 }
 
 /*
@@ -178,12 +179,12 @@ function formatUnits(units) {
 function checkData(data, status, errorMessage, successMessage) {
 	if (data == 'error') {
 		if (errorMessage && status != 'cached')
-			alert(errorMessage);
+			showAlert(errorMessage);
 		return false;
 	}
 	if (data == 'login') {
 		if (status != 'cached') {
-			alert("Session timed out.");
+			showAlert("Session timed out.");
 			doLogout();
 			location.reload(true);
 		}
@@ -191,12 +192,12 @@ function checkData(data, status, errorMessage, successMessage) {
 	}
 	if (data == 'success') {
 		if (successMessage && status != 'cached')
-			alert(successMessage);
+			showAlert(successMessage);
 		return true;
 	}
 	if (typeof(data) == 'string') {
-		if (status != 'cached') {
-			alert(data);
+		if (status != 'cached' && data != "") {
+			showAlert(data);
 			location.reload(true);
 		}
 		return false;

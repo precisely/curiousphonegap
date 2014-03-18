@@ -195,7 +195,7 @@ var app = {
     }
     
 };
-//app.serverUrl = "http://192.168.0.103:8080";
+//app.serverUrl = "http://192.168.0.18:8080";
 app.serverUrl = "https://dev.wearecurio.us";
 
 // Overriding url methods from index.gsp

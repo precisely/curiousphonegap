@@ -159,8 +159,8 @@ function TagStatsMap() {
 }
 
 var tagStatsMap = new TagStatsMap();
-var algTagList;
-var freqTagList;
+var algTagList = [];
+var freqTagList = [];
 
 // refresh autocomplete data if new tag added
 function updateAutocomplete(term, amount, amountPrecision, units) {
@@ -173,7 +173,7 @@ function updateAutocomplete(term, amount, amountPrecision, units) {
 
 // clear any cached state on logoff
 registerLogoutCallback(function() {
-	$.clearJSON(makeGetUrl("autocompleteData"), makeGetArgs({all:'info'}));
+	$.clearJSON(makeGetUrl("autocompleteData"), getCSRFPreventionObject(makeGetArgs({all:'info'})));
 });
 
 var initAutocomplete = function() {
