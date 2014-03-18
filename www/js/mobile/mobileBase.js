@@ -702,6 +702,7 @@ function changeDate(amount) {
 	var currentDate = $datepicker.datepicker('getDate');
 	$datepicker.datepicker('setDate', new Date(currentDate.getTime() + amount
 			* 86400000));
+
 	cachedDate = currentDate;
 	refreshPage();
 }
@@ -1419,6 +1420,10 @@ var initTrackPage = function() {
 				refreshPage();
 			});
 
+	$datepicker.click( function() {
+		$('button.ui-datepicker-current').removeClass('ui-priority-secondary').addClass('ui-priority-primary');
+		console.log('Highlighting today button');
+	});
 	$(document).on(
 			"click",
 			".ui-datepicker-buttonpane button.ui-datepicker-current",
