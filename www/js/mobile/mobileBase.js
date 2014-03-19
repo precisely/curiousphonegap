@@ -815,7 +815,12 @@ function selected($selectee, forceUpdate) {
 					//if ($target.data('cancelBlur')) return;
 					$selectee.data('entryIsSelected', 0);
 					var $unselectee = $target.parents("li");
+					if ($target.closest('#input0').length) {
+						$unselectee = $selectee;
+					}
 					checkAndUpdateEntry($unselectee);
+					console.log('Unselecting entry: ' + $unselectee);
+					console.log('Target for click: ' + $unselectee);
 					$unselectee.data('entryIsSelected', 1);
 					unselecting($unselectee);
 				}
