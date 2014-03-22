@@ -129,7 +129,7 @@ function submitForm() {
 	var password = $("#passwordField").val();
 
 	if (loginMode == 0) { // login
-		queueJSON(
+		queueJSON("logging in",
 			makeGetUrl('dologinData'),
 			makeGetArgs({
 				username : username,
@@ -149,7 +149,7 @@ function submitForm() {
 				}
 			});
 	} else if (loginMode == 10) { // forgot password
-		queueJSON(
+		queueJSON("password recovery",
 			makeGetUrl('doforgotData'),
 			makeGetArgs({
 				username : username
@@ -393,7 +393,7 @@ function fetchEntries(dates, callback) {
 		timeZoneName : timeZoneName
 	});
 	console.log('Fetching entries from the server for dates: ' + dates);
-	queueJSON(makeGetUrl("getListData"), makeGetArgs(argsToSend),
+	queueJSON("loading entry list", makeGetUrl("getListData"), makeGetArgs(argsToSend),
 		function(data) {
 			if (checkData(data)) {
 				console.log('Data from the server: ' + data);
@@ -860,7 +860,7 @@ function activateEntry($entry, doNotSelectEntry) {
 		return;
 	}
 	cacheNow();
-	queueJSON(
+	queueJSON("activating entry",
 		makeGetUrl("activateGhostEntry"),
 		makeGetArgs(getCSRFPreventionObject(
 				"activateGhostEntryCSRF", {
@@ -1115,7 +1115,7 @@ function modifyInput(suffix) {
 }
 
 function deleteGhost($entryToDelete, entryId, allFuture) {
-	queueJSON(makeGetUrl("deleteGhostEntryData"),
+	queueJSON("deleting entry", makeGetUrl("deleteGhostEntryData"),
 			makeGetArgs(getCSRFPreventionObject(
 					"deleteGhostEntryDataCSRF", {
 						entryId : entryId,
@@ -1172,7 +1172,7 @@ function deleteEntryId(entryId) {
 						displayDate : cachedDateUTC
 					});
 
-			queueJSON(makeGetUrl("deleteEntrySData"), makeGetArgs(argsToSend),
+			queueJSON("deleting entry", makeGetUrl("deleteEntrySData"), makeGetArgs(argsToSend),
 					function(entries) {
 						if (checkData(entries)) {
 							refreshEntries(entries[0], false, true);
@@ -1240,7 +1240,7 @@ function doUpdateEntry(entryId, text, defaultToNow, allFuture) {
 		allFuture : allFuture ? '1' : '0'
 	});
 
-	queueJSON(makeGetUrl("updateEntrySData"), makeGetArgs(argsToSend),
+	queueJSON("saving entry", makeGetUrl("updateEntrySData"), makeGetArgs(argsToSend),
 			function(entries) {
 				if (entries == "") {
 					return;
@@ -1320,7 +1320,7 @@ function addEntry(userId, text, defaultToNow) {
 		defaultToNow : defaultToNow ? '1' : '0'
 	})
 
-	queueJSON(makeGetUrl("addEntrySData"), makeGetArgs(argsToSend), function(
+	queueJSON("adding new entry", makeGetUrl("addEntrySData"), makeGetArgs(argsToSend), function(
 			entries) {
 		if (checkData(entries)) {
 			if (entries[1] != null) {
@@ -1392,7 +1392,7 @@ function setPeopleData(data) {
 
 function getPeopleData(full) {
 	if (isOnline())
-		queueJSON(
+		queueJSON("loading login data",
 			makeGetUrl("getPeopleData"),
 			makeGetArgs(getCSRFPreventionObject("getPeopleDataCSRF")),
 			function(data) {

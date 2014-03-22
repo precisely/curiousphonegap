@@ -33,7 +33,7 @@ function Tag(args) {
 	//Wrapping all init statements that we want to override in a method
 	this.init = function() {
 		$(this).on("updateEvent",function(){
-			queueJSON("/tag/update?callback=?", {id:this.id, description:this.description, type:this.type} , function(data) {
+			queueJSON("saving tag information", "/tag/update?callback=?", {id:this.id, description:this.description, type:this.type} , function(data) {
 				console.log(data);
 			});
 		});
@@ -50,7 +50,7 @@ function Tag(args) {
 	}
 	
 	this.getTagProperties = function(callback) {
-		queueJSON("/tag/getTagProperties?callback=?",
+		queueJSON("loading tag information", "/tag/getTagProperties?callback=?",
 		getCSRFPreventionObject("getTagPropertiesCSRF", {id : this.id}),
 		function(data) {
 			this.isContinuous = data.isContinuous;
@@ -118,7 +118,7 @@ function TagGroup(args) {
 			}.bind(this));
 			callback(this);
 		} else {
-			queueJSON("/tag/showTagGroup?callback=?", getCSRFPreventionObject("showTagGroupCSRF", {
+			queueJSON("loading tag group", "/tag/showTagGroup?callback=?", getCSRFPreventionObject("showTagGroupCSRF", {
 				id : this.id,
 				description: this.getDescription()
 			}), function(data) {
@@ -223,7 +223,7 @@ function TagGroup(args) {
 			csrfKey = "removeTagGroupFromTagGroupCSRF"
 			url = "/tag/removeTagGroupFromTagGroup?callback=?";
 		}
-		queueJSON(url, getCSRFPreventionObject(csrfKey, {
+		queueJSON("deleting tag from group", url, getCSRFPreventionObject(csrfKey, {
 			tagGroupId : this.id,
 			id: childItem.id
 		}), function(data) {
@@ -233,7 +233,7 @@ function TagGroup(args) {
 	}
 
 	this.remove = function() {
-		queueJSON("/tag/deleteTagGroup?callback=?", getCSRFPreventionObject("deleteTagGroupCSRF", {
+		queueJSON("deleting tag group", "/tag/deleteTagGroup?callback=?", getCSRFPreventionObject("deleteTagGroupCSRF", {
 			id : this.id
 		}), function(data) {
 			this.removed();
@@ -436,7 +436,7 @@ function TagList(args) {
 	}
 	
 	this.createTagGroupFromTags = function(targetTag, sourceTag, callback) {
-		queueJSON("/tag/createTagGroup?callback=?", getCSRFPreventionObject("createTagGroupCSRF", {
+		queueJSON("creating tag group", "/tag/createTagGroup?callback=?", getCSRFPreventionObject("createTagGroupCSRF", {
 			tagGroupName : this.generateUniqueTagName(targetTag.description
 					+ " group"),
 			tagIds : [ sourceTag.id, targetTag.id ].toString()
@@ -450,8 +450,8 @@ function TagList(args) {
 	}
 	
 	this.addTagGroupToTagGroup = function(targetTagGroup, sourceTagGroup) {
-		console.log("Debug addTagGroupToTagGroup");
-		queueJSON("/tag/addTagGroupToTagGroup?callback=?", getCSRFPreventionObject("addTagGroupToTagGroupCSRF", {
+		console.log("addTagGroupToTagGroup");
+		queueJSON("adding tag group", "/tag/addTagGroupToTagGroup?callback=?", getCSRFPreventionObject("addTagGroupToTagGroupCSRF", {
 			parentTagGroupId : targetTagGroup.id,
 			childTagGroupId : sourceTagGroup.id
 		}), function(data) {
@@ -461,8 +461,8 @@ function TagList(args) {
 	}
 	
 	this.addTagToTagGroup = function(tagGroup, tag) {
-		console.log("Debug addTagToTagGroup");
-		queueJSON("/tag/addTagToTagGroup?callback=?", getCSRFPreventionObject("addTagToTagGroupCSRF", {
+		console.log("addTagToTagGroup");
+		queueJSON("adding tag to group", "/tag/addTagToTagGroup?callback=?", getCSRFPreventionObject("addTagToTagGroupCSRF", {
 			tagGroupId : tagGroup.id,
 			id : tag.id
 		}), function(data) {
@@ -676,7 +676,7 @@ function TagListWidget(args) {
 		var sourceItem = $source.data(DATA_KEY_FOR_ITEM_VIEW).getData();
 		if ((sourceItem instanceof TagGroup)
 				&& sourceItem.isWildcard) {
-			queueJSON("/tag/addWildcardTagGroup?callback=?", {
+			queueJSON("adding wildcard group", "/tag/addWildcardTagGroup?callback=?", {
 				description : sourceItem.description,
 			}, function(data) {
 				data.type = "wildcardTagGroup";

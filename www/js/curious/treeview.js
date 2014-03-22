@@ -332,7 +332,7 @@ function TreeItemList(options) {
 	
 	this.load = function() {
 		// get top-level list of items, add new or changed ones to list
-		queueJSON(this.options.url, getCSRFPreventionObject("listTagsAndTagGroupsCSRF", {sort: this.options.sort}), function(data) {
+		queueJSON("loading list of tags", this.options.url, getCSRFPreventionObject("listTagsAndTagGroupsCSRF", {sort: this.options.sort}), function(data) {
 			this.listItems.each(function(item) {
 				item.state = TREEITEM_UNMARKED; // mark for deletion
 			});

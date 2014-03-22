@@ -628,7 +628,7 @@ function Plot(tagList, userId, userName, plotAreaDivId, store, interactive, prop
 	}
 	this.loadId = function(id) {
 		var plot = this;
-		queueJSON(makeGetUrl("loadPlotDataId"), makeGetArgs({ id:id }), function(plotData) {
+		queueJSON("loading graph", makeGetUrl("loadPlotDataId"), makeGetArgs({ id:id }), function(plotData) {
 			if (checkData(plotData)) {
 				plot.load(plotData);
 			} else
@@ -637,7 +637,7 @@ function Plot(tagList, userId, userName, plotAreaDivId, store, interactive, prop
 	}
 	this.loadSnapshotId = function(id) {
 		var plot = this;
-		queueJSON(makeGetUrl("loadSnapshotDataId"), makeGetArgs({ id:id }), function(plotData) {
+		queueJSON("loading graph", makeGetUrl("loadSnapshotDataId"), makeGetArgs({ id:id }), function(plotData) {
 			if (checkData(plotData)) {
 				plot.loadSnapshot(plotData);
 			} else {
@@ -1378,7 +1378,7 @@ function PlotLine(p) {
 		if (this.isContinuous != val) {
 			this.isContinuous = val;
 			var plotLine = this;
-			queueJSON(makeGetUrl("setTagPropertiesData"), getCSRFPreventionObject("setTagPropertiesDataCSRF",
+			queueJSON("saving setting", makeGetUrl("setTagPropertiesData"), getCSRFPreventionObject("setTagPropertiesDataCSRF",
 					{ tags:$.toJSON(this.getTags()), isContinuous:val ? 'true' : 'false' }),
 					function(result){
 						if (checkData(result)) {
@@ -1391,7 +1391,7 @@ function PlotLine(p) {
 		if (this.showPoints != val) {
 			this.showPoints = val;
 			var plotLine = this;
-			queueJSON(makeGetUrl("setTagPropertiesData"), getCSRFPreventionObject("setTagPropertiesDataCSRF",
+			queueJSON("saving setting", makeGetUrl("setTagPropertiesData"), getCSRFPreventionObject("setTagPropertiesDataCSRF",
 					{ tags:$.toJSON(this.getTags()), showPoints:val ? 'true' : 'false' }),
 					function(result){
 						if (checkData(result)) {
@@ -1667,7 +1667,7 @@ function PlotLine(p) {
 		var method = this.sumData ? "getSumPlotData" : "getPlotData";
 		var plotLine = this;
 		
-		queueJSON(makeGetUrl(method), getCSRFPreventionObject(method + "CSRF", {tags: $.toJSON(this.getTags()),
+		queueJSON("loading graph data", makeGetUrl(method), getCSRFPreventionObject(method + "CSRF", {tags: $.toJSON(this.getTags()),
 				startDate:startDate == null ? "" : startDate.toUTCString(),
 				endDate:endDate == null ? "" : endDate.toUTCString(),
 				timeZoneName:timeZoneName }),
