@@ -675,7 +675,9 @@ function swipeTrackPage (left) {
 } 
 
 function cacheDate() {
+	var now = new Date();
 	cachedDate = $datepickerField.datepicker('getDate');
+	isTodayOrLater = now.getTime() - (24 * 60 * 60000) < cachedDate.getTime();
 	console.log('Current selected date:' + cachedDate);
 	cachedDateUTC = cachedDate.toUTCString();
 	cachedDateYesterday = new Date(cachedDate);
@@ -685,6 +687,7 @@ function cacheDate() {
 	
 }
 
+var isTodayOrLater;
 var currentTimeUTC;
 var timeZoneName;
 var cachedDateTomorrow;
@@ -697,17 +700,17 @@ function cacheNow() {
 	timeZoneName = jstz.determine().name();
 }
 
-function changeDate(amount) {
+function changeDate(amount, loadFromCache) {
 	var $datepicker = $("#datepicker");
 	var currentDate = $datepicker.datepicker('getDate');
 	$datepicker.datepicker('setDate', new Date(currentDate.getTime() + amount
 			* 86400000));
 
 	cachedDate = currentDate;
-	refreshPage();
+	refreshPage(loadFromCache); // force cache load when swiping
 }
 
-function refreshPage(callback) {
+function refreshPage(loadFromCache) {
 	cacheNow();
 
 	var cachedObj = getEntryCache(cachedDate);
@@ -715,17 +718,20 @@ function refreshPage(callback) {
 	cacheForYesterdayAndTomorrow[cachedDateYesterday.toUTCString()] = getEntryCache(cachedDateYesterday);
 	cacheForYesterdayAndTomorrow[cachedDateTomorrow.toUTCString()] = getEntryCache(cachedDateTomorrow);
 
-	if (cachedObj != null && (!isOnline())) {
+	// load first from cache if not online or loadFromCache is specified
+	if (cachedObj != null && ((!isOnline()) || loadFromCache)) {
 		console.log("refresh entries from cache");
 		refreshEntries(cachedObj, false, false);
 		dataReady = true;
-	} else {
+	}
+	// refresh from server ASAP
+	if (isOnline()) {
 		fetchEntries(cachedDateUTC, function (entries) {
 			refreshEntries(entries, false, true);
 			dataReady = true;
-			if (typeof callback != 'undefined') {
-				callback();
-			}
+			//if (typeof callback != 'undefined') {
+			//	callback();
+			//}
 			callDataReadyCallbacks();
 		});
 	}
@@ -1152,7 +1158,7 @@ function deleteEntryId(entryId) {
 	} else {
 		var $entryToDelete = getEntryElement(entryId);
 		if ($entryToDelete.data("isTimed") || $entryToDelete.data("isGhost")) {
-			if ($entryToDelete.data("isContinuous")) {
+			if ($entryToDelete.data("isContinuous") || isTodayOrLater) {
 				deleteGhost($entryToDelete, entryId, true);
 			} else {
 				showAB("Delete just this one event or also future events?",
@@ -1283,8 +1289,8 @@ function updateEntry(entryId, text, defaultToNow) {
 	var $oldEntry = getEntryElement(entryId);
 	$oldEntry.addClass("glow");
 	$(".content-wrapper", $oldEntry).html(text);
-	if (($oldEntry.data("isRepeat") && (!$oldEntry.data("isRemind")))
-			|| $oldEntry.data("isGhost")) {
+	if ((($oldEntry.data("isRepeat") && (!$oldEntry.data("isRemind")))
+			|| $oldEntry.data("isGhost")) && (!isTodayOrLater)) {
 		showAB("Update just this one event or also future events?", "One",
 				"Future", function() {
 					doUpdateEntry(entryId, text, defaultToNow, false);
