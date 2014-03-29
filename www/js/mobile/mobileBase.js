@@ -32,6 +32,26 @@ function showYesNo(alertText, onConfirm) {
 	});
 }
 
+function showAB(alertText, aText, bText, onA, onB) {
+	$("#alert-message-text").text(alertText);
+	var buttons = {};
+	buttons[aText + " "] = function() {
+		onA();
+		$( this ).dialog( "close" );
+	};
+	buttons[bText] = function() {
+		onB();
+		$( this ).dialog( "close" );
+	};
+	$("#alert-message").dialog({
+		dialogClass: "no-close",
+		modal: true,
+		resizable: false,
+		title: "Query",
+		buttons: buttons
+	});
+}
+
 var localStorageIsSupported = 2;
 
 var localStorageSupported = function() {
@@ -164,7 +184,7 @@ function submitForm() {
 				}
 			});
 	} else if (loginMode == 20) { // create an account
-		queuePostJSON(
+		queuePostJSON("creating account",
 			makePostUrl('doregisterData'),
 			makePostArgs({
 				email : email,

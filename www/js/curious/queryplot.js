@@ -364,7 +364,7 @@ function Plot(tagList, userId, userName, plotAreaDivId, store, interactive, prop
 			return;
 		}
 		
-		queuePostJSON(makePostUrl("savePlotData"), { name: this.getName(), plotData: plotDataStr },
+		queuePostJSON("saving graph", makePostUrl("savePlotData"), { name: this.getName(), plotData: plotDataStr },
 				function(data) {
 					checkData(data[0], '', "Error while saving live graph", "Live graph saved");
 				});
@@ -404,7 +404,7 @@ function Plot(tagList, userId, userName, plotAreaDivId, store, interactive, prop
 		}
 		var plot = this;
 		
-		queuePostJSON(makePostUrl("saveSnapshotData"), { name: this.getName() + ' (snapshot)', snapshotData: plotDataStr },
+		queuePostJSON("sharing graph", makePostUrl("saveSnapshotData"), { name: this.getName() + ' (snapshot)', snapshotData: plotDataStr },
 				function(data) {
 					if (checkData(data, '', "Error while saving snapshot")) {
 						window.location = makePlainUrl('discuss?plotIdMessage=' + data['plotDataId']);

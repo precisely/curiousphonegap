@@ -801,12 +801,12 @@ function initTagListWidget() {
 	var widget = tagListWidget;
 
 	tagSearchInput.keyup(function(e) {
-		if ($(e.srcElement).val() == "") {
+		if ($(e.target).val() == "") {
 			$("li", "#wildcardTagGroupSearch").remove();
 			widget.showAllTags();
 			return;
 		}
-		var d = $(e.srcElement).val();
+		var d = $(e.target).val();
 		widget.showMatchingTags(d);
 		var wildcardTagGroup = new TagGroup({id:0,description:d,type:'wildcardTagGroup'});
 		var wildcardTagGroupView = new TagGroupView(wildcardTagGroup);
