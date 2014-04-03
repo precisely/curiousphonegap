@@ -1008,7 +1008,7 @@ function displayEntry(entry, isUpdating, args) {
 	var formattedAmount = formatAmount(amount, amountPrecision);
 	var selectStart = (timeAfterTag ? 0 : dateStr.length) + description.length + 1 + (formattedAmount.length == 0 ? 1 : 0);
 	var selectEnd = selectStart + formattedAmount.length - 1;
-	entrySelectData[id] = [selectStart, selectEnd, formattedAmount == 0]; // if third item is true, insert extra space at cursor
+	entrySelectData[id] = [selectStart, selectEnd, amountPrecision < 0]; // if third item is true, insert extra space at cursor
 	
 	var innerHTMLContent = '<span class="content-wrapper">'
 			+ (timeAfterTag ? '' : escapehtml(dateStr))
