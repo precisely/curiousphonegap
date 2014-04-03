@@ -10,3 +10,4 @@ platforms/android/bin/build.prop
 platforms/android/assets/*
 www/res_old/*
 .project
+dropbox-link
