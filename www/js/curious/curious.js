@@ -195,6 +195,11 @@ function checkData(data, status, errorMessage, successMessage) {
 			showAlert(successMessage);
 		return true;
 	}
+	if (data == 'refresh') {
+		showAlert("Server timeout, refreshing page.")
+		location.reload(true);
+		return false;
+	}
 	if (typeof(data) == 'string') {
 		if (status != 'cached' && data != "") {
 			showAlert(data);

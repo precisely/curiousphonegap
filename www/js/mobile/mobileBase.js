@@ -596,19 +596,13 @@ $(window).load(function() {
 
 var defaultToNow = true;
 var timeAfterTag = true;
-var CONTINUOUS_BIT = 0x100;
-var GHOST_BIT = 0x200;
-var CONCRETEGHOST_BIT = 0x400;
-var TIMED_BIT = 0x1 | 0x2 | 0x4;
-var REPEAT_BIT = 0x1 | 0x2;
-var REMIND_BIT = 0x4;
 
 var cachedDate, cachedDateUTC;
 var $datepickerField;
 
 $(document).ready(function() {
-	$.event.special.swipe.horizontalDistanceThreshold = 50;
-	$.event.special.swipe.verticalDistanceThreshold = 60;
+	$.event.special.swipe.horizontalDistanceThreshold = 100;
+	$.event.special.swipe.verticalDistanceThreshold = 50;
 	
 	$datepickerField = $("input#datepicker");
 	if (window.location.href.indexOf("lamhealth") > -1) {
@@ -858,6 +852,12 @@ function selected($selectee, forceUpdate) {
 		
 		$textInput.keyup(function(e) {
 			var $selectee = $(this).parents("li");
+			var entryData = $selectee.data();
+			if ([13, 27].indexOf(e.keyCode)) {
+				if (entryData.isContinuous || (entryData.isGhost && entryData.isRemind)) {
+					activateEntry($selectee, true);
+				}
+			}
 			if (e.keyCode == 13) { // Enter pressed
 				unselecting($selectee);
 			} else if (e.keyCode == 27) { // Esc pressed
@@ -865,6 +865,9 @@ function selected($selectee, forceUpdate) {
 			}
 		});
 
+		if ($selectee.data('isContinuous'))
+			toggleSuffix($("#tagTextInput"), 'pinned');
+		
 		if (selectRange) {
 			$("#tagTextInput").selectRange(selectRange[0], selectRange[1]);
 		}
@@ -880,6 +883,7 @@ function activateEntry($entry, doNotSelectEntry) {
 	var entryId = $entry.data("entry-id");
 	var isContinuous = $entry.data("isContinuous");
 	var isGhost = $entry.data("isGhost");
+	var text = $entry.find('input#tagTextInput').val();
 
 	if (!isGhost) {
 		selected($entry, false);
@@ -893,7 +897,8 @@ function activateEntry($entry, doNotSelectEntry) {
 					entryId : entryId,
 					date : cachedDateUTC,
 					currentTime : currentTimeUTC,
-					timeZoneName : timeZoneName
+					timeZoneName : timeZoneName,
+					text: text
 				})),
 		function(newEntry) {
 			if (checkData(newEntry)) {
@@ -964,29 +969,32 @@ function displayEntry(entry, isUpdating, args) {
 
 	var isGhost = false, isConcreteGhost = false, isAnyGhost = false, isContinuous = false, isTimed = false, isRepeat = false, isRemind = false;
 	if (entry.repeatType) {
-		if ((entry.repeatType & GHOST_BIT) != 0) {
+		var repeatType = entry.repeatType;
+		if (RepeatType.isGhost(repeatType)) {
 			isGhost = true;
 			isAnyGhost = true;
 			classes += " ghost anyghost";
 		}
-		if ((entry.repeatType & CONCRETEGHOST_BIT) != 0) {
+		if (RepeatType.isConcreteGhost(repeatType)) {
 			isConcreteGhost = true;
 			isAnyGhost = true;
 			classes += " concreteghost anyghost";
 		}
-		if ((entry.repeatType & CONTINUOUS_BIT) != 0) {
+		if (RepeatType.isContinuous(repeatType)) {
 			isContinuous = true;
 			classes += " continuous"
 		}
-		if ((entry.repeatType & TIMED_BIT) != 0) {
+		if (RepeatType.isTimed(repeatType)) {
 			isTimed = true;
 			classes += " timedrepeat"
 		}
-		if ((entry.repeatType & REPEAT_BIT) != 0) {
+		if (RepeatType.isRepeat(repeatType)) {
 			isRepeat = true;
+			classes += " repeat"
 		}
-		if ((entry.repeatType & REMIND_BIT) != 0) {
+		if (RepeatType.isRemind(repeatType)) {
 			isRemind = true;
+			classes += " remind"
 		}
 	}
 
@@ -1221,7 +1229,7 @@ function deleteCurrentEntry() {
 }
 
 /**
- * Sees to check if text is different from original text. IF different than call
+ * Checks if text is different from original text. IF different than call
  * updateEntry() method to notify server and update in UI.
  */
 function checkAndUpdateEntry($unselectee) {
@@ -1230,7 +1238,19 @@ function checkAndUpdateEntry($unselectee) {
 	var newText = $("input#tagTextInput").val();
 	var $oldEntry = getEntryElement(currentEntryId);
 	$oldEntry.addClass("glow");
-	if (($oldEntry.data('originalText') == newText) && (!$unselectee.data('forceUpdate'))) {
+	
+	var doNotUpdate = false;
+	
+	if ($oldEntry.data('isContinuous') && (!doNotUpdate)) {
+		var $contentWrapper = $oldEntry.find(".content-wrapper");
+		$contentWrapper.html($oldEntry.data('contentHTML'));
+		$contentWrapper.show();
+		addEntry(currentUserId, newText, defaultToNow);
+		//updateEntry(currentEntryId, newText, defaultToNow);
+		doNotUpdate = true;
+	}
+	if ((!$oldEntry.data('isRemind')) &&
+			(doNotUpdate || ($oldEntry.data('originalText') == newText) && (!$unselectee.data('forceUpdate')))) {
 		setTimeout(function() {
 			$oldEntry.removeClass("glow");
 		}, 500)
@@ -1482,7 +1502,7 @@ var initTrackPage = function() {
 
 	var $entryArea = $("#entry0");
 	$entryArea.listable({
-		cancel : 'a, input, li.entry.ghost'
+		cancel : 'a, input'
 	});
 	$entryArea.off("listableselected");
 	/*$entryArea.off("listableunselecting");
@@ -1502,7 +1522,13 @@ var initTrackPage = function() {
 			// in selectable.
 			return false;
 		}
-		activateEntry($(this));
+		var $entry = $(this);
+		var entryData = $entry.data();
+		if (entryData.isContinuous || (entryData.isGhost && entryData.isRemind)) {
+			// Handled by selected event, i.e. selected() method is called.
+		} else {
+			activateEntry($entry, doNotSelectEntry);
+		}
 	})
 
 	var cache = getAppCacheData('users');
