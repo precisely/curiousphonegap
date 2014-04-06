@@ -853,11 +853,6 @@ function selected($selectee, forceUpdate) {
 		$textInput.keyup(function(e) {
 			var $selectee = $(this).parents("li");
 			var entryData = $selectee.data();
-			if ([13, 27].indexOf(e.keyCode)) {
-				if (entryData.isContinuous || (entryData.isGhost && entryData.isRemind)) {
-					activateEntry($selectee, true);
-				}
-			}
 			if (e.keyCode == 13) { // Enter pressed
 				unselecting($selectee);
 			} else if (e.keyCode == 27) { // Esc pressed
