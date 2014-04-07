@@ -352,7 +352,7 @@ a:link.indicator,a:hover.indicator,a:focus.indicator,a:visited.indicator,a:activ
 	width: 90%
 }
 
-#entry0 li.entry.ghost:not(.ui-selected) {
+#entry0 li.entry.ghost:not(.ui-selected):not(.glow) {
 	color: #D9D9D9;
 	background-color: #FFFFFF;
 }

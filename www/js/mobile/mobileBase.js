@@ -1314,7 +1314,6 @@ function updateEntry(entryId, text, defaultToNow) {
 		addDataReadyCallback(function() {
 			updateEntry(entryId, text, defaultToNow);
 		});
-		pingPeopleData();
 		return;
 	}
 	if (!isOnline()) {
@@ -1345,7 +1344,6 @@ function addEntry(userId, text, defaultToNow) {
 		addDataReadyCallback(function() {
 			addEntry(entryId, text, defaultToNow);
 		});
-		pingPeopleData();
 		return;
 	}
 	if (!isOnline()) {
