@@ -507,9 +507,9 @@ function startLogin(mode) {
 		clearDataReadyCallbacks();
 		$('#trackPage').hide();
 
-		resetDefaultText($("#emailField"), 'url(/static/images/email.png)');
-		resetDefaultText($("#passwordField"), 'url(/static/images/password.png)');
-		resetDefaultText($("#usernameField"), 'url(/static/images/username.png)');
+		resetDefaultText($("#emailField"), 'url(../images/email.png)');
+		resetDefaultText($("#passwordField"), 'url(../images/password.png)');
+		resetDefaultText($("#usernameField"), 'url(../images/username.png)');
 		if (mode == 0) { // login
 			$("#loginlogo").css('margin-bottom', '50px');
 			$("#emailDiv").hide();
@@ -606,7 +606,7 @@ $(document).ready(function() {
 	
 	$datepickerField = $("input#datepicker");
 	if (window.location.href.indexOf("lamhealth") > -1) {
-		$("#loginlogo").attr("src", "/static/images/logo_mobile_lhp.gif");
+		$("#loginlogo").attr("src", "../images/logo_mobile_lhp.gif");
 	}
 
 	$('#loginlogo').show();
@@ -808,9 +808,9 @@ function selected($selectee, forceUpdate) {
 		$contentWrapper.hide();
 		$selectee
 				.append('<span id="tagTextEdit" style="display:inline"><input type="text" id="tagTextInput" style="margin: 2px; width: calc(100% - 110px);"></input>'
-						+ '<img class="entryModify entryNoBlur" src="/static/images/repeat.png" id="tagEditRepeat" style="width:14px;height:14px;padding-left:1px;padding-top:2px;">'
-						+ '<img class="entryModify entryNoBlur" src="/static/images/remind.png" id="tagEditRemind" style="width:14px;height:14px;padding-left:1px;padding-top:2px;">'
-						+ '<img class="entryModify entryNoBlur" src="/static/images/pin.png" id="tagEditPinned" style="width:14px;height:14px;padding-left:1px;padding-top:2px;"></span>');
+						+ '<img class="entryModify entryNoBlur" src="../images/repeat.png" id="tagEditRepeat" style="width:14px;height:14px;padding-left:1px;padding-top:2px;">'
+						+ '<img class="entryModify entryNoBlur" src="../images/remind.png" id="tagEditRemind" style="width:14px;height:14px;padding-left:1px;padding-top:2px;">'
+						+ '<img class="entryModify entryNoBlur" src="../images/pin.png" id="tagEditPinned" style="width:14px;height:14px;padding-left:1px;padding-top:2px;"></span>');
 
 		$("#tagEditRepeat").off("mousedown");
 		$("#tagEditRemind").off("mousedown");
@@ -1024,7 +1024,7 @@ function displayEntry(entry, isUpdating, args) {
 			+ id
 			+ '" href="#" onMouseDown="deleteEntryId('
 			+ id
-			+ ')"><img style="width="12" height="12" src="/static/images/x.gif"></a>';
+			+ ')"><img style="width="12" height="12" src="../images/x.gif"></a>';
 
 	if (isUpdating) {
 		$("#entry0 li#entryid" + id).html(innerHTMLContent);
@@ -1257,7 +1257,7 @@ function checkAndUpdateEntry($unselectee) {
 		$unselectee.addClass("glow");
 		$unselectee.data('forceUpdate', 0);
 		$contentWrapper
-				.append("&nbsp;&nbsp;<img src='/static/images/spinner.gif' />");
+				.append("&nbsp;&nbsp;<img src='../images/spinner.gif' />");
 		updateEntry(currentEntryId, newText, defaultToNow);
 	}
 	

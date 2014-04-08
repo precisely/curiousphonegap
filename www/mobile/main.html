@@ -1,6 +1,6 @@
 <html manifest="/mobile/cache.manifest">
 <head>
-<link rel="shortcut icon" href="/static/images/favicon.ico"
+<link rel="shortcut icon" href="../images/favicon.ico"
 	type="image/x-icon" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="layout" content="main" />
@@ -58,23 +58,23 @@ setInterval(function(){cache.update()}, 10000);
 <!-- <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, target-densityDpi=device-dpi" /> -->
 
 <meta name="apple-mobile-web-app-capable" content="yes" />
-<script type="text/javascript" src="/static/js/jquery/jquery-1.7.2.min.js"></script>
-<script type="text/javascript" src="/static/js/jquery/jquery.json-2.2.js"></script>
-<script type="text/javascript" src="/static/js/jquery/jquery-ui-1.8.18.custom.js"></script>
-<script type="text/javascript" src="/static/js/jstz-1.0.4.min.js"></script>
+<script type="text/javascript" src="../js/jquery/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="../js/jquery/jquery.json-2.2.js"></script>
+<script type="text/javascript" src="../js/jquery/jquery-ui-1.8.18.custom.js"></script>
+<script type="text/javascript" src="../js/jstz-1.0.4.min.js"></script>
 
-<script type="text/javascript" src="/static/js/jquery/jquery.selectable.custom.js?ver=22"></script>
-<script type="text/javascript" src="/static/js/curious/base.js?ver=22"></script>
-<script type="text/javascript" src="/static/js/curious/curious.js?ver=22"></script>
-<script type="text/javascript" src="/static/js/curious/autocomplete.js?ver=22"></script>
-<script type="text/javascript" src="/static/js/mobile/mobileBase.js?ver=22"></script>
-<script type="text/javascript" src="/static/js/jquery/jquery.mobile.touch.min.js?ver=22"></script>
+<script type="text/javascript" src="../js/jquery/jquery.selectable.custom.js?ver=22"></script>
+<script type="text/javascript" src="../js/curious/base.js?ver=22"></script>
+<script type="text/javascript" src="../js/curious/curious.js?ver=22"></script>
+<script type="text/javascript" src="../js/curious/autocomplete.js?ver=22"></script>
+<script type="text/javascript" src="../js/mobile/mobileBase.js?ver=22"></script>
+<script type="text/javascript" src="../js/jquery/jquery.mobile.touch.min.js?ver=22"></script>
 
-<link rel="apple-touch-icon" href="/static/images/apple-touch-icon-precomposed.png" />
-<link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon" />
-<link rel="stylesheet" href="/static/css/mobile.css?ver=20" />
-<link type="text/css" href="/static/css/smoothness/jquery-ui-1.8.16.custom2.css" rel="stylesheet">
-<link type="text/css" href="/static/css/mobile/trackPage.css?ver=20" rel="stylesheet">
+<link rel="apple-touch-icon" href="../images/apple-touch-icon-precomposed.png" />
+<link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon" />
+<link rel="stylesheet" href="../css/mobile.css?ver=20" />
+<link type="text/css" href="../css/smoothness/jquery-ui-1.8.16.custom2.css" rel="stylesheet">
+<link type="text/css" href="../css/mobile/trackPage.css?ver=20" rel="stylesheet">
 
 </head>
 <body>
@@ -91,7 +91,7 @@ setInterval(function(){cache.update()}, 10000);
 			<div class="login">
 
 				<a href="javascript:startLogin(0)"><img border="0"
-					id="loginlogo" src="/static/images/logo.gif" width="205" height="230"
+					id="loginlogo" src="../images/logo.gif" width="205" height="230"
 					alt="Curious" style="display: none;" /></a>
 
 				<form id="loginform" onsubmit="return false;" action="#">
@@ -115,13 +115,13 @@ setInterval(function(){cache.update()}, 10000);
 								name="password" />
 						</div>
 						<div id="loginButtonDiv" class="okCancelDiv">
-							<img class="loginButton" src="/static/images/login.png" width="76"
+							<img class="loginButton" src="../images/login.png" width="76"
 								height="24" alt="Login" onclick="submitForm()" /><br />
 						</div>
 						<div id="cancelButtonDiv" class="okCancelDiv">
-							<img class="cancelButton" src="/static/images/cancel.png" width="76"
+							<img class="cancelButton" src="../images/cancel.png" width="76"
 								height="24" alt="Cancel" onclick="javascript:startLogin(0)" /> <img
-								class="loginButton" src="/static/images/submit.png" width="76"
+								class="loginButton" src="../images/submit.png" width="76"
 								height="24" alt="Submit" onclick="submitForm()" /><br />
 						</div>
 					</div>
@@ -137,7 +137,7 @@ setInterval(function(){cache.update()}, 10000);
 			<div class="trackDay">
 				<div id="header">
 					<div id="fetchingData" style="height: 20px; width: 100%; display:none;">
-						<img src='/static/images/spinner.gif' style="display:block; margin-left: auto; margin-right: auto"/>
+						<img src='../images/spinner.gif' style="display:block; margin-left: auto; margin-right: auto"/>
 					</div>
 					<div class="dateBar">
 						<a class="back" href="#" onclick="changeDate(-1);"><span>back</span></a>
@@ -157,11 +157,11 @@ setInterval(function(){cache.update()}, 10000);
 								class="textField" />
 							<div style="display: inline-block; vertical-align: middle;">
 								<a href="#" onclick="modifyInput('repeat')"><img
-									src="/static/images/repeat.png" style="width: 20px; height: 20px;"></a>
+									src="../images/repeat.png" style="width: 20px; height: 20px;"></a>
 								<a href="#" onclick="modifyInput('remind')"><img
-									src="/static/images/remind.png" style="width: 20px; height: 20px;"></a>
+									src="../images/remind.png" style="width: 20px; height: 20px;"></a>
 								<a href="#" onclick="modifyInput('pinned')"><img
-									src="/static/images/pin.png" style="width: 20px; height: 20px;"></a>
+									src="../images/pin.png" style="width: 20px; height: 20px;"></a>
 							</div>
 						</form>
 						<hr />
