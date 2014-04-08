@@ -72,7 +72,7 @@ a,a:link,a:hover,a:visited {
 }
 .bugs a {	
 	display:block;
-	background:url(../images/bugs.gif) no-repeat;
+	background:url(/static/images/bugs.gif) no-repeat;
 	width:19px;
 	height:20px;
 	position:absolute;
@@ -92,7 +92,7 @@ a,a:link,a:hover,a:visited {
 	padding:10px 0px 10px 0px;
 }
 #headerlogo {
-	background:url(../images/logo_alpha.png) no-repeat;
+	background:url(/static/images/logo_alpha.png) no-repeat;
 	width: 420px;
 	height:30px;
 	display:inline-block;
@@ -105,7 +105,7 @@ a,a:link,a:hover,a:visited {
 	}
 }
 #headerbutton {
-	background:url(../images/lhpdonate.gif) no-repeat;
+	background:url(/static/images/lhpdonate.gif) no-repeat;
 	width:180px;
 	height:60px;
 	display:inline-block;
@@ -369,7 +369,7 @@ ul.ui-autocomplete {
 #searchTags h1 a {
 	color:#000000;
 	padding-left:1.3em;
-	background:url(../images/your_tags.gif) no-repeat 0px .2em;	
+	background:url(/static/images/your_tags.gif) no-repeat 0px .2em;	
 }
 #searchTags input.textInput {
 	width: 100%;
@@ -632,7 +632,7 @@ body.track-page .date-controls h1 a {
 	float:left;
 }
 body.track-page .date-controls h1 .gear {
-	background:url(../images/records_gear.gif);
+	background:url(/static/images/records_gear.gif);
 	width:15px;
 	height:15px;
 	display:inline-block;
@@ -645,7 +645,7 @@ body.track-page .date-controls #datePicker {
 	text-transform:uppercase;
 }
 a.calendar {
-	background:url(../images/calendar.gif) no-repeat;
+	background:url(/static/images/calendar.gif) no-repeat;
 	width:13px;
 	height:14px;
 	margin:7px 0px 0px 10px;
@@ -680,7 +680,7 @@ a.calendar {
 	height:30px;
 }
 .calendarRange .slider {
-	background:url(../images/slider_bg.gif) center center repeat-x;
+	background:url(/static/images/slider_bg.gif) center center repeat-x;
 }
 .calendarRange hr {
 	height:1px;

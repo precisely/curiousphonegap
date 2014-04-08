@@ -173,13 +173,12 @@ function updateAutocomplete(term, amount, amountPrecision, units) {
 
 // clear any cached state on logoff
 registerLogoutCallback(function() {
-	$.clearJSON(makeGetUrl("autocompleteData"), getCSRFPreventionObject(makeGetArgs({all:'info'})));
 });
 
 var initAutocomplete = function() {
-	$.retrieveJSON(makeGetUrl("autocompleteData"), getCSRFPreventionObject("autocompleteDataCSRF", {all: 'info'}),
-			function(data, status) {
-		if (checkData(data, status)) {
+	backgroundJSON("getting autocomplete info", makeGetUrl("autocompleteData"), getCSRFPreventionObject("autocompleteDataCSRF", {all: 'info'}),
+			function(data) {
+		if (checkData(data)) {
 			tagStatsMap.import(data['all']);
 			algTagList = data['alg'];
 			freqTagList = data['freq'];
