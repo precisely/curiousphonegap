@@ -7,10 +7,14 @@ function showAlert(alertText) {
 		title: "Alert",
 		buttons: {
 			Ok: function() {
-				$( this ).dialog( "close" );
+				$(this).dialog("close");
 			}
 		}
 	});
+}
+
+function closeAlert() {
+	$("#alert-message").dialog("close");
 }
 
 function showYesNo(alertText, onConfirm) {
@@ -22,11 +26,11 @@ function showYesNo(alertText, onConfirm) {
 		title: "Query",
 		buttons: {
 			"Yes ": function() {
-				$( this ).dialog( "close" );
+				$(this).dialog("close");
 				onConfirm();
 			},
 			No: function() {
-				$( this ).dialog( "close" );
+				$(this).dialog("close");
 			}
 		}
 	});
@@ -37,11 +41,11 @@ function showAB(alertText, aText, bText, onA, onB) {
 	var buttons = {};
 	buttons[aText + " "] = function() {
 		onA();
-		$( this ).dialog( "close" );
+		$(this).dialog("close");
 	};
 	buttons[bText] = function() {
 		onB();
-		$( this ).dialog( "close" );
+		$(this).dialog("close");
 	};
 	$("#alert-message").dialog({
 		dialogClass: "no-close",

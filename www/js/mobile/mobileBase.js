@@ -13,6 +13,10 @@ function showAlert(alertText) {
 	});
 }
 
+function closeAlert() {
+	$("#alert-message").dialog("close");
+}
+
 function showYesNo(alertText, onConfirm) {
 	$("#alert-message-text").text(alertText);
 	$("#alert-message").dialog({
@@ -37,11 +41,11 @@ function showAB(alertText, aText, bText, onA, onB) {
 	var buttons = {};
 	buttons[aText + " "] = function() {
 		onA();
-		$( this ).dialog( "close" );
+		$(this).dialog("close");
 	};
 	buttons[bText] = function() {
 		onB();
-		$( this ).dialog( "close" );
+		$(this).dialog("close");
 	};
 	$("#alert-message").dialog({
 		dialogClass: "no-close",

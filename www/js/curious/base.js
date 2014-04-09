@@ -1,5 +1,36 @@
 // Base Javascript library extensions
 
+function isOnline() {
+	return window.navigator.onLine;
+}
+
+function supportsLocalStorage() {
+	try {
+		return 'localStorage' in window && window['localStorage'] !== null;
+	} catch (e) {
+		return false;
+	}
+}
+
+/*
+ * Logout callbacks; register callbacks to be called when user logs out
+ */
+var _logoutCallbacks = [];
+
+var _loginSessionNumber = 0;
+
+function registerLogoutCallback(closure) {
+	_logoutCallbacks.push(closure);
+}
+
+function callLogoutCallbacks() {
+	for (var i in _logoutCallbacks) {
+		_logoutCallbacks[i]();
+	}
+	clearJSONQueue();
+	++_loginSessionNumber;
+}
+
 /*
  * Add universal startsWith method to all String classes
  */
@@ -116,12 +147,24 @@ DateUtil.prototype.getDateRangeForToday = function() {
 var numJSONCalls = 0;
 var pendingJSONCalls = [];
 
-function queuePostJSON(description, url, args, successCallback, failCallback, delay) {
-	queueJSON(description, url, args, successCallback, failCallback, delay, true);
+function backgroundPostJSON(description, url, args, successCallback, failCallback, delay) {
+	queueJSON(description, url, args, successCallback, failCallback, delay, true, true);
 }
 
-function queueJSON(description, url, args, successCallback, failCallback, delay, post) {
-	var pending = true;
+function queuePostJSON(description, url, args, successCallback, failCallback, delay) {
+	queueJSON(description, url, args, successCallback, failCallback, delay, true, false);
+}
+
+function queueJSON(description, url, args, successCallback, failCallback, delay, post, background) {
+	var currentLoginSession = _loginSessionNumber; // cache current login session
+	var stillRunning = true;
+	var alertShown = false;
+	window.setTimeout(function() {
+		if (stillRunning) {
+			alertShown = true;
+			showAlert(description + ": in progress");
+		}
+	}, 3000);
 	if (typeof args == "function") {
 		delay = failCallback;
 		failCallback = successCallback
@@ -134,25 +177,39 @@ function queueJSON(description, url, args, successCallback, failCallback, delay,
 		args['dateToken'] = new Date().getTime();
 	}
 	var wrapSuccessCallback = function(data, msg) {
+		stillRunning = false;
+		if (alertShown)
+			closeAlert();
+		if (currentLoginSession != _loginSessionNumber)
+			return; // if current login session is over, cancel callbacks
 		if (successCallback)
 			successCallback(data);
-		--numJSONCalls;
-		if (numJSONCalls < 0)
-			numJSONCalls = 0;
-		if (pendingJSONCalls.length > 0) {
-			var nextCall = pendingJSONCalls.shift();
-			nextCall();
+		if (!background) {
+			--numJSONCalls;
+			if (numJSONCalls < 0)
+				numJSONCalls = 0;
+			if (pendingJSONCalls.length > 0) {
+				var nextCall = pendingJSONCalls.shift();
+				nextCall();
+			}
 		}
 	};
 	var wrapFailCallback = function(data, msg) {
+		stillRunning = false;
+		if (alertShown)
+			closeAlert();
+		if (currentLoginSession != _loginSessionNumber)
+			return; // if current login session is over, cancel callbacks
 		if (failCallback)
 			failCallback(data);
-		--numJSONCalls;
-		if (numJSONCalls < 0)
-			numJSONCalls = 0;
-		if (pendingJSONCalls.length > 0) {
-			var nextCall = pendingJSONCalls.shift();
-			nextCall();
+		if (!background) {
+			--numJSONCalls;
+			if (numJSONCalls < 0)
+				numJSONCalls = 0;
+			if (pendingJSONCalls.length > 0) {
+				var nextCall = pendingJSONCalls.shift();
+				nextCall();
+			}
 		}
 		if (msg == "timeout") {
 			if (delay * 2 > 1000000) { // stop retrying after delay too large
@@ -163,11 +220,11 @@ function queueJSON(description, url, args, successCallback, failCallback, delay,
 				showAlert("Server not responding... retrying " + description);
 			delay = (delay > 0 ? delay * 2 : 5000);
 			window.setTimeout(function() {
-				queueJSON(description, url, args, successCallback, failCallback, delay);
+				queueJSON(description, url, args, successCallback, failCallback, delay, background);
 			}, delay);
 		}
 	};
-	if (numJSONCalls > 0) { // json call in progress
+	if ((!background) && (numJSONCalls > 0)) { // json call in progress
 		var jsonCall = function() {
 			$.ajax({
 				type: (post ? "post" : "get"),
@@ -182,7 +239,8 @@ function queueJSON(description, url, args, successCallback, failCallback, delay,
 		++numJSONCalls;
 		pendingJSONCalls.push(jsonCall);
 	} else { // first call
-		++numJSONCalls;
+		if (!background)
+			++numJSONCalls;
 		$.ajax({
 			type: (post ? "post" : "get"),
 			dataType: "json",
@@ -196,42 +254,7 @@ function queueJSON(description, url, args, successCallback, failCallback, delay,
 }
 
 function backgroundJSON(description, url, args, successCallback, failCallback, delay, post) {
-	if (typeof args == "function") {
-		delay = failCallback;
-		failCallback = successCallback
-		successCallback = args;
-		args = undefined;
-	}
-	if (args == undefined || args == null) {
-		args = {dateToken:new Date().getTime()};
-	} else if (!args['dateToken']) {
-		args['dateToken'] = new Date().getTime();
-	}
-	var wrapFailCallback = function(data, msg) {
-		if (failCallback)
-			failCallback(data);
-		if (msg == "timeout") {
-			if (delay * 2 > 1000000) { // stop retrying after delay too large
-				showAlert("Server down... giving up");
-				return;
-			}
-			if (!(delay > 0))
-				showAlert("Server not responding... retrying " + description);
-			delay = (delay > 0 ? delay * 2 : 5000);
-			window.setTimeout(function() {
-				backgroundJSON(description, url, args, successCallback, failCallback, delay);
-			}, delay);
-		}
-	};
-	$.ajax({
-		type: (post ? "post" : "get"),
-		dataType: "json",
-		url: url,
-		data: args,
-		timeout: 20000 + (delay > 0 ? delay : 0)
-	})
-	.done(successCallback)
-	.fail(wrapFailCallback);
+	queueJSON(description, url, args, successCallback, failCallback, delay, post, true);
 }
 
 function clearJSONQueue() {
