@@ -388,3 +388,11 @@ a:link.indicator,a:hover.indicator,a:focus.indicator,a:visited.indicator,a:activ
 	background-color: #413535;
 	color: white;
 }
+
+#entry0 li.entry.ui-selected .entryModify {
+	cursor: pointer;
+	width: 14px;
+	height: 14px;
+	padding-left: 1px;
+	padding-top: 2px;
+}

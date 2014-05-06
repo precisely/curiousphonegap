@@ -328,6 +328,16 @@ function Plot(tagList, userId, userName, plotAreaDivId, store, interactive, prop
 			plotLine.loadPlotData();
 		}
 	}
+	this.clearGraphs = function () {
+	    if (confirm("Are you sure you want to clear the graph and start over?")) {
+			for (var i in this.lines) {
+				var line = this.lines[i];
+				console.log('Plot ID: ' + this.id);
+				console.log('Line ID: ' + line.id);
+				removePlotLine(this.id, line.id);
+			}
+		}
+	}
 	this.store = function() {
 		var plotData = [];
 		localStorage['plotUserId' + this.id] = this.userId;
@@ -366,7 +376,7 @@ function Plot(tagList, userId, userName, plotAreaDivId, store, interactive, prop
 		
 		queuePostJSON("saving graph", makePostUrl("savePlotData"), { name: this.getName(), plotData: plotDataStr },
 				function(data) {
-					checkData(data[0], '', "Error while saving live graph", "Live graph saved");
+					checkData(data[0], '', "Error while saving live graph", "Graph saved");
 				});
 	}
 	this.storeSnapshot = function() {
@@ -867,6 +877,11 @@ function Plot(tagList, userId, userName, plotAreaDivId, store, interactive, prop
 		var plot = this;
 		this.lastItemClicked = null;
 		this.lastItemClickTime = null;
+		if (plotArea.is(":hidden")) {
+			// Preventing flot.js exception of 0 height or width. (Hiding an element returns width & height as 0)
+			console.warn("Plotarea is hidden. Not drawing the graph.");
+			return false;
+		}
 		$.plot(plotArea, this.plotData, this.plotOptions);
 		plotArea.off("click");
 		plotArea.on("click", function(event) {
@@ -874,7 +889,7 @@ function Plot(tagList, userId, userName, plotAreaDivId, store, interactive, prop
 				plot.ignoreClick = false;
 				return;
 			}
-			if (plot.activeLineId) {
+			if (typeof plot.activeLineId != 'undefined' && plot.activeLineId != null) {
 				var activeLine = plot.getLine(plot.activeLineId);
 				if (activeLine) {
 					activeLine.deactivate();
@@ -903,20 +918,27 @@ function Plot(tagList, userId, userName, plotAreaDivId, store, interactive, prop
         		plot.lastItemClickTime = now;
 				var dialogDiv = plot.getDialogDiv(); 
 				var plotLine = plot.plotData[item.seriesIndex]['plotLine'];
-				// if this has a loaded smooth line which isn't active, then deactivate the other active line
-				plot.deactivateActivatedLine(plotLine);
 				plot.ignoreClick = true;
-				if (!plotLine.smoothLine) {	// If current line clicked is a smooth line (child line)
+				plot.deactivateActivatedLine(plotLine);
+				if(plotLine.smoothLine) {	//means there is a smooth line of this accordion line
+					plot.activeLineId = plotLine.smoothLine.id;
+					plotLine.smoothLine.activate();
+					console.log('plotclick: activating line id: ' + plotLine.id);
+				} else {
 					plot.activeLineId = plotLine.id;
 					plotLine.activate();
+					console.log('plotclick: activating line id: ' + plotLine.id);
 				}
 				if (!plotLine.isSmoothLine()) {	// If current line clicked is a actual line (parent line)
+					console.log('plotclick: parent of a smoot line with line id: ' + plotLine.id);
 					dialogDiv.html(plot.plotData[item.seriesIndex].popuplabel + ': <a href="' + plot.properties.showDataUrl(plot.userId, plot.userName, item.datapoint[0])
 							+ '">' + $.datepicker.formatDate('M d', new Date(item.datapoint[0])) + "</a>"
 							+ ' (' + item.datapoint[1] + ')');
 					dialogDiv.dialog({ position: [pos.pageX + 10, pos.pageY], width: 140, height: 42});
 				}
-	        }
+	        } else {
+				console.log('plotclick: Item not found');
+			}
 	    });
 		
 		this.store();
@@ -940,8 +962,11 @@ function Plot(tagList, userId, userName, plotAreaDivId, store, interactive, prop
 		}
 		var activeLine = plot.getLine(plot.activeLineId);
 		if (activeLine) {
+			console.log('plot.deactivateActivatedLine: Deactivating line id: ' + plot.activeLineId);
 			activeLine.deactivate();
 			plot.getDialogDiv().dialog("close");
+		} else {
+			console.log('plot.deactivateActivatedLine: No active line to deactivate');
 		}
 	}
 	this.removePendingLoad = function() {
@@ -1369,10 +1394,18 @@ function PlotLine(p) {
 		$("#plotlinehide" + this.getIdSuffix()).attr('checked', val);
 	}
 	this.setContinuousCheckbox = function(val) {
-		$("#plotlinecontinuous" + this.getIdSuffix()).attr('checked', val);
+		$("input[name='plotlinecontinuous" + this.getIdSuffix() + "']").each(function(index, radio) {
+			if ($(radio).val() == 'continuous') {
+				$(radio).prop('checked', val);
+			}
+		});
 	}
 	this.setShowPointsCheckbox = function(val) {
-		$("#plotlinepoints" + this.getIdSuffix()).attr('checked', val);
+		$("input[name='plotlinepoints" + this.getIdSuffix() + "']").each(function(index, radio) {
+			if ($(radio).val() == 'points') {
+				$(radio).prop('checked', val);
+			}
+		});
 	}
 	this.setIsContinuous = function(val) {
 		if (this.isContinuous != val) {
@@ -1433,22 +1466,17 @@ function PlotLine(p) {
 	this.appendHTML = function() {
 		if (this.isSmoothLine() || this.isFreqLine()) return; // don't show controls for smooth line
 		var makeActive = false;
-		if (this.getDiv().accordion('option','active') === 0) {
-			makeActive = 0;
-		}
 		var idSuffix = this.getIdSuffix();
 		if (!this.isContinuous) this.isContinuous = false;
 		if (!this.showPoints) this.showPoints = false;
 		var html = '<div id="plotline' + idSuffix + '" class="'+plotColorClass[this.color]+'">\
-		  <h3><a href="#"><div class="plotGroup"><span id="plotline' + idSuffix + '" class="description">'
+		  <h3><div class="plotGroup"><span id="plotline' + idSuffix + '" class="description">'
 		  + escapehtml(this.name) + '</span> <span class="plotGroup">'
-		  + (this.snapshot ? '' : '<img style="padding-right:2px" onclick="renamePlotLine(\'' + this.plot.id
-			  + "','" + this.id + '\')" src="/images/edit.gif"/><img onclick="removePlotLine(\'' + this.plot.id + "','" + this.id + '\')" height="12" width="12" src="/images/x.gif"/>')
-		  + '</span></div></a></h3><div class="plotlineinfo" style="position:relative"><div id="editplotline'
+		  + (this.snapshot ? '' : '<img class="edit" onclick="renamePlotLine(\'' + this.plot.id
+			  + "','" + this.id + '\')" src="/images/edit.gif"/><span class="delete" onclick="removePlotLine(\'' + 
+			  this.plot.id + "','" + this.id + '\')" >x</span>')
+		  + '</span></div></h3><div class="plotlineinfo hide"><div id="editplotline'
 		  + idSuffix + '" style="position:absolute;left:15px;top:15px"></div>';
-		if ((!this.snapshot) && (!this.isSmoothLine()) && (!this.isFreqLine()) && (!this.isCycle))
-			html += '<input type="checkbox" name="plotlinesum' + idSuffix + '" id="plotlinesum' + idSuffix + '"'
-					+ (this.sumData ? 'checked' : '') + '/> sum ';
 		if (this.isCycle) {
 			html += '<div style="display:inline-block;">range <div style="display:inline-block;" id="plotlinerangemin' + idSuffix
 					+ '"></div><div style="display:inline-block;margin-left:10px;width:50px;display:relative;top:3px;" id="plotlinecyclerange'
@@ -1456,19 +1484,28 @@ function PlotLine(p) {
 					+ '"></div></div>';
 		}
 		if (!this.isCycle)
-			html += '<input type="checkbox" name="plotlineflatten' + idSuffix + '" id="plotlineflatten' + idSuffix + '"'
-				+ (this.flatten ? 'checked' : '') + '/> flatten \
-				<input type="checkbox" name="plotlinehide' + idSuffix + '" id="plotlinehide' + idSuffix + '" '
-				+ (this.hidden ? 'checked' : '') + '/> hide <br/>\
-				<input type="checkbox" name="plotlinecontinuous' + idSuffix + '" id="plotlinecontinuous' + idSuffix + '"'
-				+ (this.isContinuous ? 'checked' : '') + '/> continuous \
-				<input type="checkbox" name="plotlinepoints' + idSuffix + '" id="plotlinepoints' + idSuffix + '"'
-				+ (this.showPoints ? 'checked' : '') + '/> points ';
+		    html += '<h4>GRAPH AS</h4><div class="form-group"><div class="widget"><input type="radio" name="plotlinepoints' 
+			+ idSuffix + '" id="plotlinepoints' + idSuffix + '"' + 'value="points"' + (this.showPoints ? 'checked' : '') 
+			+ '/> <label> PLOT</label></div><img src="/images/gf-plot.png" class="graph-icon" /></div> \
+				<div class="form-group"><div class="widget"><input type="radio" name="plotlinepoints' 
+				+ idSuffix + '" id="plotlineline' + idSuffix + '"' +  'value="line"' + (this.showPoints ? '' :'checked') 
+				+ '/> <label> LINE</label></div><img src="/images/gf-line.png" class="graph-icon" /></div> ';
+			html += '<h4 style="margin-top:15px">DATA TYPE</h4><div class="form-group"><div class="widget"><input type="radio"'
+			+ 'value="continuous" name="plotlinecontinuous' + idSuffix + '" id="plotlinecontinuous' + idSuffix + '"' 
+			+ (this.isContinuous ? 'checked' : '') + '/> <label>CONTINUOUS</label></div> \
+			<img src="/images/gf-continuous.png" class="graph-icon" /> </div> \
+			<div class="form-group"><div class="widget"><input type="radio" value="event" name="plotlinecontinuous' + idSuffix
+			 + '" id="plotlinecontinuous' + idSuffix + '"' + (this.isContinuous ? '' : 'checked') 
+			 + '/> <label>EVENT</label></div><img src="/images/gf-event.png" class="graph-icon" /> </div>';
 		/*if ((!this.isCycle) && (!this.isSmoothLine()) && (!this.isFreqLine()))
 			html += '<input type="checkbox" name="plotlineshow' + idSuffix + '" id="plotlineshow' + idSuffix + '" '
 				+ (this.showYAxis ? 'checked' : '') + '/> yaxis ';*/
+
+		if ((!this.snapshot) && (!this.isSmoothLine()) && (!this.isFreqLine()) && (!this.isCycle))
+			html += '<h4 style="margin-top:15px">OPERATIONS</h4> <div class="form-group"><input type="checkbox" name="plotlinesum' + idSuffix + '" id="plotlinesum' + idSuffix + '"'
+					+ (this.sumData ? 'checked' : '') + '/> <label>SUM</label></div> ';
 		if (!this.isCycle) {
-			html += '<div style="display:inline-block;">smooth <div style="display:inline-block;margin-left:10px;width:70px;display:relative;top:3px;" id="plotlinesmoothwidth' + idSuffix + '"></div></div>';
+			html += '<div style="display:inline-block;margin-left:10px;width:90%;display:relative;top:3px;" id="plotlinesmoothwidth' + idSuffix + '"></div>';
 			//html += '<div style="display:inline-block;">frequency <div style="display:inline-block;margin-left:10px;width:70px;display:relative;top:3px;" id="plotlinefreqwidth' + idSuffix + '"></div></div>';
 		}
 		html += '<ul class="tags" id="plotline' + idSuffix + 'list"></ul></div></div>';
@@ -1554,9 +1591,19 @@ function PlotLine(p) {
 				plot.refreshPlot();
 			});
 		}
-		$("#plotlinecontinuous" + idSuffix).change(function(e) {
+		$("input[name='plotlinecontinuous" + idSuffix + "']").change(function(e) {
 			var plotLine = plot.getLine(plotLineId);
-			if (plotLine.isContinuous) {
+			if ($(e.target).val() == 'continuous') {
+				plotLine.setIsContinuous(true);
+				if (plotLine.parentLine) {
+					plotLine.parentLine.setIsContinuous(true);
+					plotLine.parentLine.setContinuousCheckbox(true);
+				} else if (plotLine.smoothLine && plotLine.smoothLine != 1 && plotLine.smoothDataWidth > 0) {
+					plotLine.smoothLine.setIsContinuous(true);
+				}
+				plot.prepAllLines();
+				plot.refreshPlot();
+			} else {
 				plotLine.setIsContinuous(false);
 				if (plotLine.parentLine) {
 					plotLine.parentLine.setIsContinuous(false);
@@ -1567,27 +1614,18 @@ function PlotLine(p) {
 				plot.prepAllLines();
 				plot.refreshPlot();
 			}
-			else {
-				plotLine.setIsContinuous(true);
-				if (plotLine.parentLine) {
-					plotLine.parentLine.setIsContinuous(true);
-					plotLine.parentLine.setContinuousCheckbox(true);
-				} else if (plotLine.smoothLine && plotLine.smoothLine != 1 && plotLine.smoothDataWidth > 0) {
-					plotLine.smoothLine.setIsContinuous(true);
-				}
-				plot.prepAllLines();
-				plot.refreshPlot();
-			}
 		});
-		$("#plotlinepoints" + idSuffix).change(function(e) {
+		$("input[name='plotlinepoints" + idSuffix + "']").change(function(e) {
 			var plotLine = plot.getLine(plotLineId);
-			if (plotLine.showPoints) {
-				plotLine.setShowPoints(false);
+			if ($(e.target).val() == 'points') {
+				console.log('setShowPoints - true');
+				plotLine.setShowPoints(true);
 				plot.prepAllLines();
 				plot.refreshPlot();
 			}
 			else {
-				plotLine.setShowPoints(true);
+				console.log('setShowPoints - false');
+				plotLine.setShowPoints(false);
 				plot.prepAllLines();
 				plot.refreshPlot();
 			}
@@ -1600,27 +1638,14 @@ function PlotLine(p) {
 			plot.refreshPlot();
 		});
 		var div = $('#plotline' + idSuffix);
-		div.accordion({ active: makeActive, collapsible: true, clearStyle: true });
 
-		div.click(function() {
-			var plotLine = this;
-			var plot = this.plot;
-			
-			if($("h3", this.getDiv()).hasClass("ui-state-active")) {
-				plot.deactivateActivatedLine(plotLine);
-				if(plotLine.smoothLine) {	//means there is a smooth line of this accordion line
-					plot.activeLineId = plotLine.smoothLine.id;
-					plotLine.smoothLine.activate();
-				} else {
-					plot.activeLineId = plotLine.id;
-					plotLine.activate();
-				}
-			} else {
-				// When accordion is collpsed.
-				this.deactivate();
-			}
-			
-		}.bind(this));
+		$('.plotlineinfo', div).mouseleave(function(e) {
+			$(e.target).closest('.plotlineinfo').toggle();
+		});
+		$('.plotGroup', div).click(function(e) {
+			var $droppableElement = $(e.target).closest('.ui-droppable');
+			$('.plotlineinfo', $droppableElement).toggle();
+		});
 		
 		var plotLine = this;
 		
@@ -2147,3 +2172,10 @@ function PlotLine(p) {
 	if (this.entries)
 		this.normalizeEntries();
 }
+
+$(window).resize(function() {
+	if (plot && plot.plotData && plot.plotData.length != 0 && !plot.plotArea.is(":hidden")) {
+		console.log('Refreshing graph on window resize');
+		plot.refreshAll();
+	}
+});

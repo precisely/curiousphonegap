@@ -625,7 +625,7 @@ function TagListWidget(args) {
 			$(this).draggable({
 				revert : 'invalid',
 				helper: function(event) {
-					return $( "<div>"+$(event.target).html()+"</div>" );
+					return $( '<div class="draggable-helper">' + $(event.target).html() + '</div>' );
 			    }
 			});
 			$(this).droppable({

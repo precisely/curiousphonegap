@@ -1,0 +1,14 @@
+@media (max-width: 768px) {
+	body.login #login {
+		padding: 20px;
+	}
+	body.login #login form {
+		padding-top: 40px;
+	}
+	body.login #login .loginbody2 {
+		padding: 20px 0;
+	}
+	body.login #login .loginbody2 img {
+		width: 100%;
+	}
+}

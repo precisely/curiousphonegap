@@ -1,7 +1,7 @@
 /* FRAME */
 .bugs a {	
 	display:block;
-	background:url(/static/images/bugs.gif) no-repeat;
+	background:url(/images/bugs.gif) no-repeat;
 	width:19px;
 	height:20px;
 	position:absolute;
@@ -9,7 +9,7 @@
 	right:-20px;	
 }
 #headerlogo {
-	background:url(/static/images/logo_lhp_alpha.png) no-repeat;
+	background:url(/images/logo_lhp_alpha.png) no-repeat;
 	width:285px;
 	height:30px;
 	display:inline-block;
@@ -17,7 +17,7 @@
 	vertical-align:middle;
 }
 #headerbutton {
-	background:url(/static/images/lhpdonate.gif) no-repeat;
+	background:url(/images/lhpdonate.gif) no-repeat;
 	width:135px;
 	height:50px;
 	display:inline-block;

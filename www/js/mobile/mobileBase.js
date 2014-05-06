@@ -75,26 +75,6 @@ if (!localStorageSupported()) {
 	console.log("HTML5 local storage error");
 }
 
-$.datepicker._gotoToday = function(id) {
-	var target = $(id);
-	var inst = this._getInst(target[0]);
-	if (this._get(inst, 'gotoCurrent') && inst.currentDay) {
-		inst.selectedDay = inst.currentDay;
-		inst.drawMonth = inst.selectedMonth = inst.currentMonth;
-		inst.drawYear = inst.selectedYear = inst.currentYear;
-	} else {
-		var date = new Date();
-		inst.selectedDay = date.getDate();
-		inst.drawMonth = inst.selectedMonth = date.getMonth();
-		inst.drawYear = inst.selectedYear = date.getFullYear();
-		// the below two lines are new
-		this._setDateDatepicker(target, date);
-		this._selectDate(id, this._getDateDatepicker(target));
-	}
-	this._notifyChange(inst);
-	this._adjustDate(target);
-}
-
 var activateEntryId = -1;
 
 function doLogout() {
@@ -636,7 +616,7 @@ $(document).ready(function() {
 		if (moveVerticalDirection < 0 && -moveVerticalDirection > 55 && $('#recordList').scrollTop() <= 0) {
 			$('#fetchingData').show();
 			fetchEntries(cachedDateUTC, function (entries) {
-				refreshEntries(entries, false, true);
+				refreshEntries(entries, true);
 				dataReady = true;
 				$('#fetchingData').hide();
 				console.log('Data refreshed from the server');
@@ -739,13 +719,13 @@ function refreshPage(loadFromCache) {
 	// load first from cache if not online or loadFromCache is specified
 	if (cachedObj != null && ((!isOnline()) || loadFromCache)) {
 		console.log("refresh entries from cache");
-		refreshEntries(cachedObj, false, false);
+		refreshEntries(cachedObj, false);
 		dataReady = true;
 	}
 	// refresh from server ASAP
 	if (isOnline()) {
 		fetchEntries(cachedDateUTC, function (entries) {
-			refreshEntries(entries, false, true);
+			refreshEntries(entries, true);
 			dataReady = true;
 			//if (typeof callback != 'undefined') {
 			//	callback();
@@ -779,27 +759,22 @@ function clearEntries() {
 	$("#entry0").html('');
 }
 
-/*
- * Gets called on selection of the entry, or used to select an entry.
+/**
+ * Used to select an entry.
  */
+function selectEntry($selectee, forceUpdate) {
+	console.debug('Select Entry:', $selectee.attr('id'));
 
-var mouseDownOnDeleteEntry = false; // Used to track mousedown during blur even
-function selected($selectee, forceUpdate) {
-	var state = $selectee.data('entryIsSelected');
 	$selectee.data('forceUpdate', forceUpdate);
+	$selectee.siblings().removeClass("ui-selected");
 	var $contentWrapper = $selectee.find(".content-wrapper");
-	if ($("#tagTextInput").size() == 1)
-		return;
-	$selectee.siblings().removeClass("ui-selected").data('entryIsSelected', 0);
 
-	if (state == undefined || state == 0) {
+	// TODO Remove if condition. Not removing because to view git diff properly.
+	if (true) {
 		$selectee.addClass('ui-selected');
-		$selectee.data('entryIsSelected', 1);
 		$selectee.data('contentHTML', $contentWrapper.html()); // store
-		// original HTML
-		// for later
+		// original HTML for later
 		currentEntryId = $selectee.data("entry-id");
-		$("#entrydelid" + currentEntryId).css('display', 'inline');
 		var entryText = $selectee.text();
 		var selectRange = entrySelectData[currentEntryId];
 		if (selectRange != undefined) {
@@ -811,132 +786,66 @@ function selected($selectee, forceUpdate) {
 
 		$contentWrapper.hide();
 		$selectee
-				.append('<span id="tagTextEdit" style="display:inline"><input type="text" id="tagTextInput" style="margin: 2px; width: calc(100% - 110px);"></input>'
-						+ '<img class="entryModify entryNoBlur" src="../images/repeat.png" id="tagEditRepeat" style="width:14px;height:14px;padding-left:1px;padding-top:2px;">'
-						+ '<img class="entryModify entryNoBlur" src="../images/remind.png" id="tagEditRemind" style="width:14px;height:14px;padding-left:1px;padding-top:2px;">'
-						+ '<img class="entryModify entryNoBlur" src="../images/pin.png" id="tagEditPinned" style="width:14px;height:14px;padding-left:1px;padding-top:2px;"></span>');
-
-		$("#tagEditRepeat").off("mousedown");
-		$("#tagEditRemind").off("mousedown");
-		$("#tagEditPinned").off("mousedown");
-
-		$("#tagEditRepeat").on("mousedown", function(e) {
-			modifyEdit('repeat');
-		});
-		$("#tagEditRemind").on("mousedown", function(e) {
-			modifyEdit('remind');
-		});
-		$("#tagEditPinned").on("mousedown", function(e) {
-			modifyEdit('pinned');
-		});
-
-		// Adding logic to prevent blur from activating when clicking on certain controls
-		$("#tagTextInput").bind('focus', function() {
-			$(document).bind('mousedown', function(e) {
-				var $target = $(e.target);
-				if ($target.closest('#tagTextEdit').length) return;
-				if (! $target.closest('.entryNoBlur').length) {
-					//if ($target.data('cancelBlur')) return;
-					$selectee.data('entryIsSelected', 0);
-					var $unselectee = $target.parents("li");
-					if ($target.closest('#input0').length) {
-						$unselectee = $selectee;
-					}
-					checkAndUpdateEntry($unselectee);
-					console.log('Unselecting entry: ' + $unselectee);
-					console.log('Target for click: ' + $unselectee);
-					$unselectee.data('entryIsSelected', 1);
-					unselecting($unselectee);
-				}
-				$(document).unbind('mousedown', arguments.callee);
-			});
-		});
+				.append('<span id="tagTextEdit"><input type="text" class="entryNoBlur" id="tagTextInput" style="margin: 2px; width: calc(100% - 110px);"></input>'
+						+ '<img class="entryModify" data-suffix="repeat" src="../images/repeat.png">'
+						+ '<img class="entryModify" data-suffix="remind" src="../images/remind.png">'
+						+ '<img class="entryModify" data-suffix="pinnded" src="../images/pin.png"></span>');
 		
 		var $textInput = $("#tagTextInput").val(entryText).focus();
 		
 		$textInput.keyup(function(e) {
-			var $selectee = $(this).parents("li");
 			var entryData = $selectee.data();
 			if (e.keyCode == 13) { // Enter pressed
-				unselecting($selectee);
+				checkAndUpdateEntry($selectee);
 			} else if (e.keyCode == 27) { // Esc pressed
-				unselecting($selectee, true);
+				unselectEntry($selectee);
 			}
 		});
 
-		if ($selectee.data('isContinuous'))
+		if ($selectee.data('isContinuous')) {
 			toggleSuffix($("#tagTextInput"), 'pinned');
+		}
 		
 		if (selectRange) {
 			$("#tagTextInput").selectRange(selectRange[0], selectRange[1]);
 		}
-	} else if (state == 2) {
-		$selectee.data('entryIsSelected', 0);
 	}
-}
-
-function activateEntry($entry, doNotSelectEntry) {
-	console.log("Activating entry");
-	console.log($entry);
-	var gEntry = $entry;
-	var entryId = $entry.data("entry-id");
-	var isContinuous = $entry.data("isContinuous");
-	var isGhost = $entry.data("isGhost");
-	var text = $entry.find('input#tagTextInput').val();
-
-	if (!isGhost) {
-		selected($entry, false);
-		return;
-	}
-	cacheNow();
-	queueJSON("activating entry",
-		makeGetUrl("activateGhostEntry"),
-		makeGetArgs(getCSRFPreventionObject(
-				"activateGhostEntryCSRF", {
-					entryId : entryId,
-					date : cachedDateUTC,
-					currentTime : currentTimeUTC,
-					timeZoneName : timeZoneName,
-					text: text
-				})),
-		function(newEntry) {
-			if (checkData(newEntry)) {
-				// newEntry.glow = true;
-				var newEntryId = newEntry.id;
-				if (isContinuous) {
-					var $lastContinuousGhostEntry = $("#entry0 li.entry.ghost.continuous:last");
-					displayEntry(
-							newEntry,
-							false,
-							{
-								appendAfterEntry : $lastContinuousGhostEntry
-							});
-				} else {
-					activateEntryId = newEntry.id;
-					displayEntry(newEntry, false, {
-						replaceEntry : gEntry
-					});
-				}
-				var $newEntry = $("li#entryid" + newEntryId);
-				if (!doNotSelectEntry) {
-					selected($newEntry, true);
-				}
-			}
-		});
 }
 
 var dayDuration = 86400000;
 var entrySelectData;
 
-function unselecting($unselectee) {
-	if ($unselectee.data('entryIsSelected') == 1) {
-		var $textInput = $("#tagTextInput");
-		$unselectee.data('entryIsSelected', 0);
-		$unselectee.removeClass('ui-selected');
-		$("a.entryDelete", $unselectee).hide();
-		checkAndUpdateEntry($unselectee);
-		currentEntryId = null;
+/**
+ * Used to un-select and entry. Removes the entry edit text field
+ * & displays the original content back.
+ */
+function unselectEntry($unselectee, displayNewText, displaySpinner) {
+	console.log('Unselect Entry:', $unselectee.attr('id'));
+
+	var $contentWrapper = $unselectee.find(".content-wrapper");
+	var displayText = $unselectee.data('contentHTML');
+
+	if (displayNewText) {
+		var newText = $("input#tagTextInput").val();
+		if (newText) {
+			displayText = newText;
+		}
 	}
+
+	$contentWrapper.html(displayText);
+	$contentWrapper.show();
+	if (displaySpinner) {
+		$contentWrapper.append(" &nbsp;<img src='../images/spinner.gif' />");
+	}
+
+	$("#tagTextEdit").remove();
+	$unselectee.removeClass('ui-selected');
+}
+
+function showEntryContent($entry) {
+	var $contentWrapper = $entry.find(".content-wrapper");
+	$contentWrapper.html($entry.data('contentHTML'));
+	$contentWrapper.show();
 }
 
 function glow(entryId) {
@@ -1085,7 +994,7 @@ function displayEntries(entries) {
 	return $entryToActivate;
 }
 
-function refreshEntries(entries, activateGhost, cache) {
+function refreshEntries(entries, cache) {
 	clearEntries();
 	var $entryToActivate = displayEntries(entries);
 	cache = typeof cache !== 'undefined' ? cache : true;
@@ -1093,11 +1002,6 @@ function refreshEntries(entries, activateGhost, cache) {
 	if (cache) {
 		console.log('Refreshing the cache for:' + cachedDate);
 		setEntryCache(cachedDate, entries);
-	}
-
-	if (activateGhost && $entryToActivate) {
-		activateEntry($entryToActivate);
-		activateEntryId = -1;
 	}
 }
 
@@ -1135,16 +1039,16 @@ function modifyEdit(suffix) {
 	var $control = $('#tagTextInput');
 	if (toggleSuffix($control, suffix)) {
 		var $selectee = $control.parents("li");
-		unselecting($selectee);
-		selected($selectee, false);
+		checkAndUpdateEntry($selectee);
+		selectEntry($selectee, false);
 	}
 }
 
 function modifyInput(suffix) {
 	initInput();
-	// toggleSuffix($('#input0'), suffix);
-	if (toggleSuffix($('#input0'), suffix))
+	if (toggleSuffix($('#input0'), suffix)) {
 		processInput();
+	}
 }
 
 function deleteGhost($entryToDelete, entryId, allFuture) {
@@ -1208,9 +1112,10 @@ function deleteEntryId(entryId) {
 			queueJSON("deleting entry", makeGetUrl("deleteEntrySData"), makeGetArgs(argsToSend),
 					function(entries) {
 						if (checkData(entries)) {
-							refreshEntries(entries[0], false, true);
-							updateAutocomplete(entries[1][0], entries[1][1],
-									entries[1][2], entries[1][3]);
+							refreshEntries(entries[0], true);
+							if (entries[1] != null)
+								updateAutocomplete(entries[1][0], entries[1][1],
+										entries[1][2], entries[1][3]);
 							if (entries[2] != null)
 								updateAutocomplete(entries[2][0],
 										entries[2][1], entries[2][2],
@@ -1221,10 +1126,7 @@ function deleteEntryId(entryId) {
 					});
 		}
 	}
-}
-
-function deleteCurrentEntry() {
-	deleteEntryId(currentEntryId);
+	return false;
 }
 
 /**
@@ -1232,40 +1134,36 @@ function deleteCurrentEntry() {
  * updateEntry() method to notify server and update in UI.
  */
 function checkAndUpdateEntry($unselectee) {
+	if ($unselectee == undefined) {
+		console.warn("Undefined unselectee.");
+		return;
+	}
 	var $contentWrapper = $unselectee.find(".content-wrapper");
 	
 	var newText = $("input#tagTextInput").val();
-	var $oldEntry = getEntryElement(currentEntryId);
-	$oldEntry.addClass("glow");
-	
-	var doNotUpdate = false;
-	
-	if ($oldEntry.data('isContinuous') && (!doNotUpdate)) {
-		var $contentWrapper = $oldEntry.find(".content-wrapper");
-		$contentWrapper.html($oldEntry.data('contentHTML'));
-		$contentWrapper.show();
-		addEntry(currentUserId, newText, defaultToNow);
-		//updateEntry(currentEntryId, newText, defaultToNow);
-		doNotUpdate = true;
+	if (newText == undefined) {
+		console.warn("Undefined new text.");
+		return;
 	}
-	if ((!$oldEntry.data('isRemind')) &&
-			(doNotUpdate || ($oldEntry.data('originalText') == newText) && (!$unselectee.data('forceUpdate')))) {
+	$unselectee.addClass("glow");
+	
+	if ($unselectee.data('isContinuous')) {
+		console.debug('Is a continuous entry:', $unselectee.attr('id'));
+		addEntry(currentUserId, newText, defaultToNow);
+		unselectEntry($unselectee, false, true);
+	} else if (!$unselectee.data('isRemind') && $unselectee.data('originalText') == newText) {
 		setTimeout(function() {
-			$oldEntry.removeClass("glow");
+			$unselectee.removeClass("glow");
 		}, 500)
-		var $contentWrapper = $oldEntry.find(".content-wrapper");
-		$contentWrapper.html($oldEntry.data('contentHTML'));
-		$contentWrapper.show();
+		console.debug('Is not remind & no change in entry.');
+		unselectEntry($unselectee);
 	} else {
-		$contentWrapper.show();
+		console.log('Either remind or change in entry.');
+
 		$unselectee.addClass("glow");
-		$unselectee.data('forceUpdate', 0);
-		$contentWrapper
-				.append("&nbsp;&nbsp;<img src='../images/spinner.gif' />");
+		unselectEntry($unselectee, true, true);
 		updateEntry(currentEntryId, newText, defaultToNow);
 	}
-	
-	$("#tagTextEdit").remove();
 }
 
 function getEntryElement(entryId) {
@@ -1298,10 +1196,11 @@ function doUpdateEntry(entryId, text, defaultToNow, allFuture) {
 							entry.glow = true;
 						}
 					})
-					refreshEntries(entries[0], false, true);
+					refreshEntries(entries[0], true);
 					
-					updateAutocomplete(entries[1][0], entries[1][1],
-							entries[1][2], entries[1][3]);
+					if (entries[1] != null)
+						updateAutocomplete(entries[1][0], entries[1][1],
+								entries[1][2], entries[1][3]);
 					if (entries[2] != null)
 						updateAutocomplete(entries[2][0], entries[2][1],
 								entries[2][2], entries[2][3]);
@@ -1375,9 +1274,10 @@ function addEntry(userId, text, defaultToNow) {
 					entry.glow = true;
 				}
 			})
-			refreshEntries(entries[0], false, true);
-			updateAutocomplete(entries[2][0], entries[2][1], entries[2][2],
-					entries[2][3]);
+			refreshEntries(entries[0], true);
+			if (entries[2] != null)
+				updateAutocomplete(entries[2][0], entries[2][1], entries[2][2],
+						entries[2][3]);
 		} else {
 			showAlert("Error adding entry");
 		}
@@ -1454,6 +1354,54 @@ function getPeopleData(full) {
 		);
 }
 
+/**
+ * Global mousedown handler for entry & data.
+ */
+$(document).on("mousedown", function(e) {
+	// Only handle for left mouse click.
+	if (event.which != 1) {
+		return;
+	}
+
+	var $target = $(e.target);
+	var $alreadySelectedEntry = $("li.entry.ui-selected");
+
+	// Checking if any entry is already selected when mousedown event triggered.
+	var isAnyEntrySelected = $alreadySelectedEntry.length > 0;
+
+	// When clicked on any entry element i.e. li.entry
+	var isClickedOnEntry = $target.closest("li.entry").length > 0;
+
+	// If such elements are clicked, where we not have to do anything. (Like deleteEntry)
+	var isEventToCancel = $target.closest(".entryNoBlur").length > 0;
+
+	// If any of the 3 image buttons (besides edit entry text field) are clicked.
+	var isEntryModify = $target.closest("img.entryModify").length > 0;
+
+	if (isEventToCancel) {
+		return;
+	}
+
+	if (isAnyEntrySelected) {
+		if (isEntryModify) {
+			var suffix = $target.data('suffix');
+			modifyEdit(suffix);
+			return;
+		}
+		console.debug('Mousedown: There is a selcted entry. Will now unselect.')
+		checkAndUpdateEntry($("li.entry.ui-selected"));
+		return;
+	}
+
+	if (isClickedOnEntry) {
+		// parents() method returns all anscestors as list. So element at 0th position will be li.entry
+		var selectee = $target.parents("li.entry").andSelf()[0];
+		console.debug('Mousedown: Clicked on an entry. Will now select.');
+		selectEntry($(selectee), false);
+		return false;
+	}
+});
+
 var initTrackPage = function() {
 	localStorage['lastPage'] = 'track';
 
@@ -1498,35 +1446,6 @@ var initTrackPage = function() {
 	});
 
 	var $entryArea = $("#entry0");
-	$entryArea.listable({
-		cancel : 'a, input'
-	});
-	$entryArea.off("listableselected");
-	/*$entryArea.off("listableunselecting");
-	$entryArea.on("listableunselecting", function(e, ui) {
-		var $unselectee = $("#" + ui.unselecting.id);
-		unselecting($unselectee);
-	});*/
-	$entryArea.on("listableselected", function(e, ui) {
-		var $selectee = $("#" + ui.selected.id);
-		console.log("Select event triggered");
-		selected($selectee, false);
-	});
-
-	$(document).on("click", "li.entry.ghost", function(e) {
-		if (e.target.nodeName && $(e.target).closest("a,img").length) {
-			// Not doing anything when delete icon clicked like 'cancel' option
-			// in selectable.
-			return false;
-		}
-		var $entry = $(this);
-		var entryData = $entry.data();
-		if (entryData.isContinuous || (entryData.isGhost && entryData.isRemind)) {
-			// Handled by selected event, i.e. selected() method is called.
-		} else {
-			activateEntry($entry, doNotSelectEntry);
-		}
-	})
 
 	var cache = getAppCacheData('users');
 
