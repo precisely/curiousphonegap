@@ -789,7 +789,7 @@ function selectEntry($selectee, forceUpdate) {
 				.append('<span id="tagTextEdit"><input type="text" class="entryNoBlur" id="tagTextInput" style="margin: 2px; width: calc(100% - 110px);"></input>'
 						+ '<img class="entryModify" data-suffix="repeat" src="../images/repeat.png">'
 						+ '<img class="entryModify" data-suffix="remind" src="../images/remind.png">'
-						+ '<img class="entryModify" data-suffix="pinnded" src="../images/pin.png"></span>');
+						+ '<img class="entryModify" data-suffix="pinned" src="../images/pin.png"></span>');
 		
 		var $textInput = $("#tagTextInput").val(entryText).focus();
 		

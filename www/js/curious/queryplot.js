@@ -467,7 +467,7 @@ function Plot(tagList, userId, userName, plotAreaDivId, store, interactive, prop
 			isSnapshot = true;
 		}
 		
-		if (version <= 4 && save.tags.length > 0) {
+		if ((version <= 4 || save.tag == null) && (save.tags != null && save.tags.length > 0)) {
 			var tagInstance;
 			if (save.tags.length == 1) {
 				tagInstance = new Tag({

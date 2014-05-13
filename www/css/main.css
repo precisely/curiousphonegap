@@ -161,7 +161,7 @@ body.graph-page .body1 {
 	position: relative;
 }
 body.graph-page #tagListWrapper ul#tagList {
-	height: 583px;
+	height: 550px;
 }
 body.graph-page .querymain {
 	margin: 0px;
@@ -172,7 +172,7 @@ body.graph-page .querymain {
 	margin-top: 4px;
 }
 body.graph-page .querymain #plotArea {
-	height:500px;
+	height:530px;
 }
 body.graph-page .querymain #plotArea canvas {
 	z-index: 2;
@@ -209,7 +209,7 @@ body.discuss-page input#discussTitleInput {
 	margin-left:58px;
 }
 .discussmain .discussPlotArea {
-	height:550px;
+	height:500px;
 }
 /**
  * Styles for discuss page ends here.
@@ -700,10 +700,10 @@ div.plotGroup .delete {
 
 div.plotGroup .edit {
 	padding-right: 2px;
-	display: none;
+	visibility: hidden;
 }
 div.plotGroup:hover .edit {
-	display: inline-block;
+	visibility: visible;
 }
 div.plotLine {
 	padding:2px 5px;

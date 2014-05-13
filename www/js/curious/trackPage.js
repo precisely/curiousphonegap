@@ -178,8 +178,10 @@ function toggleSuffix($control, suffix) {
 		$control.val(text);
 
 		if (suffix == "repeat") {
-			$control.selectRange(text.length, text.length);
-			$control.focus();
+			window.setTimeout(function() {
+				$control.selectRange(text.length, text.length);
+				$control.focus();
+			}, 1);
 			return text.length > 0;
 		}
 	}
@@ -188,8 +190,10 @@ function toggleSuffix($control, suffix) {
 		$control.val(text);
 
 		if (suffix == "remind") {
-			$control.selectRange(text.length, text.length);
-			$control.focus();
+			window.setTimeout(function() {
+				$control.selectRange(text.length, text.length);
+				$control.focus();
+			}, 1);
 			return text.length > 0;
 		}
 	}
@@ -198,8 +202,10 @@ function toggleSuffix($control, suffix) {
 		$control.val(text);
 
 		if (suffix == "pinned") {
-			$control.selectRange(text.length, text.length);
-			$control.focus();
+			window.setTimeout(function() {
+				$control.selectRange(text.length, text.length);
+				$control.focus();
+			}, 1);
 			return text.length > 0;
 		}
 	}
@@ -207,8 +213,10 @@ function toggleSuffix($control, suffix) {
 	var retVal = text.length > 0;	
 	text = text + " " + suffix;
 	$control.val(text);
-	$control.selectRange(text.length, text.length);
-	$control.focus();
+	window.setTimeout(function() {
+		$control.selectRange(text.length, text.length);
+		$control.focus();
+	}, 1);
 
 	return retVal;
 }
@@ -474,7 +482,7 @@ function checkAndUpdateEntry($unselectee) {
  */
 $(document).on("mousedown", function(e) {
 	// Only handle for left mouse click.
-	if (event.which != 1) {
+	if (e.which != 1) {
 		return;
 	}
 
@@ -492,7 +500,7 @@ $(document).on("mousedown", function(e) {
 
 	// If any of the 3 image buttons (besides edit entry text field) are clicked.
 	var isEntryModify = $target.closest("img.entryModify").length > 0;
-
+	
 	if (isEventToCancel) {
 		return;
 	}
