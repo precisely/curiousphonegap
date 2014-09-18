@@ -9,5 +9,6 @@ platforms/android/bin/Curious.ap_.d
 platforms/android/bin/build.prop
 platforms/android/assets/*
 www/res_old/*
+www
 .project
 dropbox-link
