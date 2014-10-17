@@ -69,15 +69,28 @@
                                             object:nil
                                              queue:[NSOperationQueue mainQueue]
                                         usingBlock:^(NSNotification* notification) {
-            [weakSelf.commandDelegate evalJs:@"Keyboard.isVisible = true;"];
+            [weakSelf.commandDelegate evalJs:@"Keyboard.fireOnShow();"];
             weakSelf.keyboardIsVisible = YES;
         }];
     _keyboardHideObserver = [nc addObserverForName:UIKeyboardDidHideNotification
                                             object:nil
                                              queue:[NSOperationQueue mainQueue]
                                         usingBlock:^(NSNotification* notification) {
-            [weakSelf.commandDelegate evalJs:@"Keyboard.isVisible = false;"];
+            [weakSelf.commandDelegate evalJs:@"Keyboard.fireOnHide();"];
             weakSelf.keyboardIsVisible = NO;
+        }];
+
+    _keyboardWillShowObserver = [nc addObserverForName:UIKeyboardWillShowNotification
+                                            object:nil
+                                             queue:[NSOperationQueue mainQueue]
+                                        usingBlock:^(NSNotification* notification) {
+            [weakSelf.commandDelegate evalJs:@"Keyboard.fireOnShowing();"];
+        }];
+    _keyboardWillHideObserver = [nc addObserverForName:UIKeyboardWillHideNotification
+                                            object:nil
+                                             queue:[NSOperationQueue mainQueue]
+                                        usingBlock:^(NSNotification* notification) {
+            [weakSelf.commandDelegate evalJs:@"Keyboard.fireOnHiding();"];
         }];
 }
 
@@ -149,35 +162,39 @@
         return;
     }
 
-    if (ashrinkView) {
-        [nc removeObserver:_shrinkViewKeyboardShowObserver];
-        _shrinkViewKeyboardShowObserver = [nc addObserverForName:UIKeyboardWillShowNotification
-                                                          object:nil
-                                                           queue:[NSOperationQueue mainQueue]
-                                                      usingBlock:^(NSNotification* notification) {
-                [weakSelf performSelector:@selector(shrinkViewKeyboardWillShow:) withObject:notification afterDelay:0];
-            }];
+    // No-op on iOS7.  It already resizes webview by default, and this plugin is causing layout issues
+    // with fixed position elements.  We possibly should attempt to implement shringview = false on iOS7.
+    if (!IsAtLeastiOSVersion(@"7.0")) {
+        if (ashrinkView) {
+            [nc removeObserver:_shrinkViewKeyboardShowObserver];
+            _shrinkViewKeyboardShowObserver = [nc addObserverForName:UIKeyboardWillShowNotification
+                                                              object:nil
+                                                               queue:[NSOperationQueue mainQueue]
+                                                          usingBlock:^(NSNotification* notification) {
+                    [weakSelf performSelector:@selector(shrinkViewKeyboardWillShow:) withObject:notification afterDelay:0];
+                }];
 
-        [nc removeObserver:_shrinkViewKeyboardHideObserver];
-        _shrinkViewKeyboardHideObserver = [nc addObserverForName:UIKeyboardWillHideNotification
-                                                          object:nil
-                                                           queue:[NSOperationQueue mainQueue]
-                                                      usingBlock:^(NSNotification* notification) {
-                [weakSelf performSelector:@selector(shrinkViewKeyboardWillHide:) withObject:notification afterDelay:0];
-            }];
-    } else {
-        [nc removeObserver:_shrinkViewKeyboardShowObserver];
-        [nc removeObserver:_shrinkViewKeyboardHideObserver];
-
-        // if a keyboard is already visible (and keyboard was shrunk), hide observer will NOT be called, so we observe it once
-        if (self.keyboardIsVisible && _shrinkView) {
+            [nc removeObserver:_shrinkViewKeyboardHideObserver];
             _shrinkViewKeyboardHideObserver = [nc addObserverForName:UIKeyboardWillHideNotification
                                                               object:nil
                                                                queue:[NSOperationQueue mainQueue]
                                                           usingBlock:^(NSNotification* notification) {
-                    [weakSelf shrinkViewKeyboardWillHideHelper:notification];
-                    [[NSNotificationCenter defaultCenter] removeObserver:_shrinkViewKeyboardHideObserver];
+                    [weakSelf performSelector:@selector(shrinkViewKeyboardWillHide:) withObject:notification afterDelay:0];
                 }];
+        } else {
+            [nc removeObserver:_shrinkViewKeyboardShowObserver];
+            [nc removeObserver:_shrinkViewKeyboardHideObserver];
+
+            // if a keyboard is already visible (and keyboard was shrunk), hide observer will NOT be called, so we observe it once
+            if (self.keyboardIsVisible && _shrinkView) {
+                _shrinkViewKeyboardHideObserver = [nc addObserverForName:UIKeyboardWillHideNotification
+                                                                  object:nil
+                                                                   queue:[NSOperationQueue mainQueue]
+                                                              usingBlock:^(NSNotification* notification) {
+                        [weakSelf shrinkViewKeyboardWillHideHelper:notification];
+                        [[NSNotificationCenter defaultCenter] removeObserver:_shrinkViewKeyboardHideObserver];
+                    }];
+            }
         }
     }
 
@@ -200,7 +217,12 @@
                 for (UIView* peripheralView in view.subviews) {
                     // hides the backdrop (iOS 7)
                     if ([[peripheralView description] hasPrefix:@"<UIKBInputBackdropView"]) {
-                        [[peripheralView layer] setOpacity:0.0];
+                        // check that this backdrop is for the accessory bar (at the top),
+                        // sparing the backdrop behind the main keyboard
+                        CGRect rect = peripheralView.frame;
+                        if (rect.origin.y == 0) {
+                            [[peripheralView layer] setOpacity:0.0];
+                        }
                     }
 
                     // hides the accessory bar
@@ -238,7 +260,10 @@
     if (!_shrinkView) {
         return;
     }
-    _savedWebViewFrame = self.webView.frame;
+
+    if (CGRectIsEmpty(_savedWebViewFrame)) {
+        _savedWebViewFrame = self.webView.frame;
+    }
 
     CGRect keyboardFrame = [notif.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
     keyboardFrame = [self.viewController.view convertRect:keyboardFrame fromView:nil];
@@ -255,6 +280,14 @@
     }
 }
 
+- (void)shrinkViewKeyboardWillHide:(NSNotification*)notif
+{
+    if (!_shrinkView) {
+        return;
+    }
+    [self shrinkViewKeyboardWillHideHelper:notif];
+}
+
 - (void)shrinkViewKeyboardWillHideHelper:(NSNotification*)notif
 {
     self.webView.scrollView.scrollEnabled = YES;
@@ -265,13 +298,8 @@
     CGRect newFrame = _savedWebViewFrame;
     self.webView.scrollView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
     self.webView.frame = newFrame;
-}
 
-- (void)shrinkViewKeyboardWillHide:(NSNotification*)notif
-{
-    if (_shrinkView) {
-        [self shrinkViewKeyboardWillHideHelper:notif];
-    }
+    _savedWebViewFrame = CGRectNull;
 }
 
 // //////////////////////////////////////////////////

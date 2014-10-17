@@ -55,7 +55,7 @@
         "org.apache.cordova.device": {
             "PACKAGE_NAME": "us.wearecurio.app"
         },
-        "org.apache.cordova.keyboard": {
+        "org.apache.cordova.labs.keyboard": {
             "PACKAGE_NAME": "us.wearecurio.app"
         },
         "org.apache.cordova.statusbar": {
