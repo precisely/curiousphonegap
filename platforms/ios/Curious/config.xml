@@ -19,15 +19,6 @@
     <feature name="LocalStorage">
         <param name="ios-package" value="CDVLocalStorage" />
     </feature>
-    <name>Curious</name>
-    <description>Track Data, chart experience, find meaning.</description>
-    <author email="support@wearecurio.us" href="http://dev.wearecurio.us">Curious Inc</author>
-    <icon src="icon.png" />
-    <preference name="KeyboardDisplayRequiresUserAction" value="false" />
-    <preference name="HideKeyboardFormAccessoryBar" value="true" />
-    <preference name="StatusBarOverlaysWebView" value="false" />
-    <access origin="*" />
-    <content src="index.html" />
     <feature name="PushPlugin">
         <param name="ios-package" value="PushPlugin" />
     </feature>
@@ -37,13 +28,22 @@
     <feature name="Device">
         <param name="ios-package" value="CDVDevice" />
     </feature>
-    <feature name="Keyboard">
-        <param name="ios-package" onload="true" value="CDVKeyboard" />
-    </feature>
     <feature name="StatusBar">
         <param name="ios-package" onload="true" value="CDVStatusBar" />
     </feature>
     <preference name="StatusBarOverlaysWebView" value="true" />
     <preference name="StatusBarBackgroundColor" value="#000000" />
     <preference name="StatusBarStyle" value="lightcontent" />
+    <feature name="Keyboard">
+        <param name="ios-package" onload="true" value="IonicKeyboard" />
+    </feature>
+    <name>Curious</name>
+    <description>Track Data, chart experience, find meaning.</description>
+    <author email="support@wearecurio.us" href="http://dev.wearecurio.us">Curious Inc</author>
+    <icon src="icon.png" />
+    <preference name="KeyboardDisplayRequiresUserAction" value="false" />
+    <preference name="HideKeyboardFormAccessoryBar" value="true" />
+    <preference name="StatusBarOverlaysWebView" value="false" />
+    <access origin="*" />
+    <content src="index.html" />
 </widget>

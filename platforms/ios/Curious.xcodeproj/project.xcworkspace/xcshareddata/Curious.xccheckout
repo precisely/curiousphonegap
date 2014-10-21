@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>D950E43E-D0E2-46B6-AF07-FAC2A717E486</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Curious</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>5ABEBC6EA33425DED7D5F0FF0585C920E5271EC1</key>
+		<string>github.com:syntheticzero/curiousphonegap.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>platforms/ios/Curious.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>5ABEBC6EA33425DED7D5F0FF0585C920E5271EC1</key>
+		<string>../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>github.com:syntheticzero/curiousphonegap.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>5ABEBC6EA33425DED7D5F0FF0585C920E5271EC1</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>5ABEBC6EA33425DED7D5F0FF0585C920E5271EC1</string>
+			<key>IDESourceControlWCCName</key>
+			<string>curiousphonegap</string>
+		</dict>
+	</array>
+</dict>
+</plist>
