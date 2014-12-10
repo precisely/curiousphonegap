@@ -1,0 +1,26 @@
+/media/Others/Repos/curiousphonegap/platforms/android/ant-build/classes.dex : \
+/media/Others/Repos/curiousphonegap/platforms/android/ant-build/classes/org/apache/cordova/statusbar/StatusBar$2.class \
+/media/Others/Repos/curiousphonegap/platforms/android/ant-build/classes/org/apache/cordova/statusbar/StatusBar$3.class \
+/media/Others/Repos/curiousphonegap/platforms/android/ant-build/classes/org/apache/cordova/statusbar/StatusBar.class \
+/media/Others/Repos/curiousphonegap/platforms/android/ant-build/classes/org/apache/cordova/statusbar/StatusBar$1.class \
+/media/Others/Repos/curiousphonegap/platforms/android/ant-build/classes/org/apache/cordova/device/Device.class \
+/media/Others/Repos/curiousphonegap/platforms/android/ant-build/classes/com/plugin/gcm/PushHandlerActivity.class \
+/media/Others/Repos/curiousphonegap/platforms/android/ant-build/classes/com/plugin/gcm/PushPlugin.class \
+/media/Others/Repos/curiousphonegap/platforms/android/ant-build/classes/com/plugin/gcm/GCMIntentService.class \
+/media/Others/Repos/curiousphonegap/platforms/android/ant-build/classes/com/plugin/gcm/CordovaGCMBroadcastReceiver.class \
+/media/Others/Repos/curiousphonegap/platforms/android/ant-build/classes/com/ionic/keyboard/IonicKeyboard.class \
+/media/Others/Repos/curiousphonegap/platforms/android/ant-build/classes/com/ionic/keyboard/IonicKeyboard$1.class \
+/media/Others/Repos/curiousphonegap/platforms/android/ant-build/classes/com/ionic/keyboard/IonicKeyboard$3.class \
+/media/Others/Repos/curiousphonegap/platforms/android/ant-build/classes/com/ionic/keyboard/IonicKeyboard$2.class \
+/media/Others/Repos/curiousphonegap/platforms/android/ant-build/classes/us/wearecurio/app/BuildConfig.class \
+/media/Others/Repos/curiousphonegap/platforms/android/ant-build/classes/us/wearecurio/app/Manifest$permission.class \
+/media/Others/Repos/curiousphonegap/platforms/android/ant-build/classes/us/wearecurio/app/CordovaApp.class \
+/media/Others/Repos/curiousphonegap/platforms/android/ant-build/classes/us/wearecurio/app/R$drawable.class \
+/media/Others/Repos/curiousphonegap/platforms/android/ant-build/classes/us/wearecurio/app/R$xml.class \
+/media/Others/Repos/curiousphonegap/platforms/android/ant-build/classes/us/wearecurio/app/R$string.class \
+/media/Others/Repos/curiousphonegap/platforms/android/ant-build/classes/us/wearecurio/app/R.class \
+/media/Others/Repos/curiousphonegap/platforms/android/ant-build/classes/us/wearecurio/app/Manifest.class \
+/media/Others/Repos/curiousphonegap/platforms/android/ant-build/classes/us/wearecurio/app/R$attr.class \
+/media/Others/Repos/curiousphonegap/platforms/android/ant-build/dexedLibs/classes-b0138337c651f4fdfd68c2de7caa4608.jar \
+/media/Others/Repos/curiousphonegap/platforms/android/ant-build/dexedLibs/gcm-b4c3647855f117ec53f46439ffc92639.jar \
+/media/Others/Repos/curiousphonegap/platforms/android/ant-build/dexedLibs/android-support-v13-8d0d9fd0bb206442cdf3846330c0bc2b.jar \
