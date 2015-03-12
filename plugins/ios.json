@@ -9,6 +9,10 @@
                 "parents": {
                     "/*": [
                         {
+                            "xml": "<feature name=\"Keyboard\"><param name=\"ios-package\" onload=\"true\" value=\"IonicKeyboard\" /></feature>",
+                            "count": 1
+                        },
+                        {
                             "xml": "<feature name=\"PushPlugin\"><param name=\"ios-package\" value=\"PushPlugin\" /></feature>",
                             "count": 1
                         },
@@ -35,10 +39,6 @@
                         {
                             "xml": "<preference name=\"StatusBarStyle\" value=\"lightcontent\" />",
                             "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"Keyboard\"><param name=\"ios-package\" onload=\"true\" value=\"IonicKeyboard\" /></feature>",
-                            "count": 1
                         }
                     ]
                 }
@@ -46,6 +46,9 @@
         }
     },
     "installed_plugins": {
+        "com.ionic.keyboard": {
+            "PACKAGE_NAME": "us.wearecurio.app"
+        },
         "com.phonegap.plugins.PushPlugin": {
             "PACKAGE_NAME": "us.wearecurio.app"
         },
@@ -56,9 +59,6 @@
             "PACKAGE_NAME": "us.wearecurio.app"
         },
         "org.apache.cordova.statusbar": {
-            "PACKAGE_NAME": "us.wearecurio.app"
-        },
-        "com.ionic.keyboard": {
             "PACKAGE_NAME": "us.wearecurio.app"
         }
     },

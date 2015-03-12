@@ -10,6 +10,9 @@
     <feature name="Keyboard">
         <param name="ios-package" value="IonicKeyboard" onload="true" />
     </feature>
+    <feature name="PushPlugin">
+        <param name="ios-package" value="PushPlugin" />
+    </feature>
     <preference name="KeyboardDisplayRequiresUserAction" value="false" />
     <preference name="HideKeyboardFormAccessoryBar" value="true" />
     <preference name="StatusBarOverlaysWebView" value="false" />
