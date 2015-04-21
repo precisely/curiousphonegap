@@ -27,6 +27,8 @@
 
 #import "AppDelegate.h"
 #import "MainViewController.h"
+#import <HockeySDK/HockeySDK.h>
+
 
 #import <Cordova/CDVPlugin.h>
 
@@ -63,6 +65,11 @@
  */
 - (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
+    [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"99a191367e661a550f1ba09b6bf52e85"];
+    [[BITHockeyManager sharedHockeyManager] startManager];
+    [[BITHockeyManager sharedHockeyManager].authenticator
+     authenticateInstallation];
+
     CGRect screenBounds = [[UIScreen mainScreen] bounds];
 
 #if __has_feature(objc_arc)

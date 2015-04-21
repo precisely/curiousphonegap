@@ -6,8 +6,11 @@
 	objectVersion = 46;
 	objects = {
 /* Begin PBXBuildFile section */
+		0CE1B773C0FA406CAC4551D8 /* CDVDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D678A74F904223BD096B35 /* CDVDevice.m */; };
+		1045EB600F644F7F9E3A3191 /* LoggerClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E77B24B36224E5784957D70 /* LoggerClient.m */; };
 		1D3623260D0F684500981E51 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* AppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
+		1E5744E631044A278270611A /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DB9D4B318A1A432FA03BD0F5 /* QuickLook.framework */; };
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
 		301BF552109A68D80062928A /* libCordova.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 301BF535109A57CC0062928A /* libCordova.a */; };
 		302D95F114D2391D003F00A1 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 302D95EF14D2391D003F00A1 /* MainViewController.m */; };
@@ -27,7 +30,18 @@
 		30B4F30219D5E07200D9F7D8 /* Default-Landscape-736h.png in Resources */ = {isa = PBXBuildFile; fileRef = 30B4F2FF19D5E07200D9F7D8 /* Default-Landscape-736h.png */; };
 		30C1856619D5FC0A00212699 /* icon-60@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30C1856519D5FC0A00212699 /* icon-60@3x.png */; };
 		30FC414916E50CA1004E6F35 /* icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30FC414816E50CA1004E6F35 /* icon-72@2x.png */; };
+		487A94C7238B4531AE7BBD33 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BF2D026FF1B4EDFA1E7479E /* UIKit.framework */; };
 		5B1594DD16A7569C00FEF299 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */; };
+		64CD0265591848E6BB331B84 /* DDASLLogCapture.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C4F5C2EB4984588BB48194A /* DDASLLogCapture.m */; };
+		6DEFCE3C678B4A3AB449B7D5 /* DDLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C99F2F628A24C63AE37BDA8 /* DDLog.m */; };
+		6FAF56A7AC084B18AB3969F6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 450A38CE293C4C23A8BA8235 /* QuartzCore.framework */; };
+		70DC76AD3BEE48C1BDC21810 /* DDFileLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = E2ABB2239B1F45DEB79F8A94 /* DDFileLogger.m */; };
+		7235857BDE4D466088D1179E /* PushPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 5686165B652C4435B5D35FF9 /* PushPlugin.m */; };
+		754380796E534163B577A37D /* HockeySDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E7B48AED8F7842F19513AFC0 /* HockeySDKResources.bundle */; };
+		78C125A842AC4284BB7FD9AE /* HockeyAppPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 60EB203695AE4006816BB7FE /* HockeyAppPlugin.m */; };
+		7AD2EC401AE6769E0033A19C /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AD2EC3C1AE6769E0033A19C /* HockeySDK.framework */; };
+		7AD2EC411AE6769E0033A19C /* HockeySDK.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 7AD2EC3E1AE6769E0033A19C /* HockeySDK.xcconfig */; };
+		7AD2EC421AE6769E0033A19C /* HockeySDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 7AD2EC3F1AE6769E0033A19C /* HockeySDKResources.bundle */; };
 		7E7966DE1810823500FA85AD /* icon-40.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966D41810823500FA85AD /* icon-40.png */; };
 		7E7966DF1810823500FA85AD /* icon-40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966D51810823500FA85AD /* icon-40@2x.png */; };
 		7E7966E01810823500FA85AD /* icon-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966D61810823500FA85AD /* icon-50.png */; };
@@ -38,14 +52,27 @@
 		7E7966E51810823500FA85AD /* icon-76@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966DB1810823500FA85AD /* icon-76@2x.png */; };
 		7E7966E61810823500FA85AD /* icon-small.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966DC1810823500FA85AD /* icon-small.png */; };
 		7E7966E71810823500FA85AD /* icon-small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966DD1810823500FA85AD /* icon-small@2x.png */; };
-		D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */; };
-		BE70E7329AFA48C0AA6E027D /* IonicKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = D7426DBD5228406AB04E630F /* IonicKeyboard.m */; };
-		EBF4E37CB55E4E3C89EB34FA /* UIWebViewExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 3924519FB74E48C38E353006 /* UIWebViewExtension.m */; };
+		7FC99F4D87AD453F87F6859B /* DDContextFilterLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6C716F11AF634385B7793D25 /* DDContextFilterLogFormatter.m */; };
+		862D73FDE8A64C3CA1756D99 /* DDMultiFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 88EFA1ED72E74D1DAED76D01 /* DDMultiFormatter.m */; };
+		9E335AB7BC7E457F852CA3A7 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91AFE7DAA56A4CF3B072E753 /* CoreText.framework */; };
+		A1220D2FC0C84F5E905CB3FB /* DDASLLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 850AE38F5AEE492581FC6ACE /* DDASLLogger.m */; };
+		AD6EDF15F32F4CA3B3D41FEE /* DDAbstractDatabaseLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = E7E32D7D94264076A3BB14B4 /* DDAbstractDatabaseLogger.m */; };
 		B051BAE00CFC4F1EADED1799 /* AppDelegate+notification.m in Sources */ = {isa = PBXBuildFile; fileRef = F86CF538C62046ADAD7C2136 /* AppDelegate+notification.m */; };
-		7235857BDE4D466088D1179E /* PushPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 5686165B652C4435B5D35FF9 /* PushPlugin.m */; };
-		D7B39B35972847679D43D80B /* CDVLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E6A2ED9D4414A12A5618A8E /* CDVLogger.m */; };
-		0CE1B773C0FA406CAC4551D8 /* CDVDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D678A74F904223BD096B35 /* CDVDevice.m */; };
+		B13D531555CF4CB8AB0C5B13 /* NSLoggerCocoaLumberjackConnectorPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = F5302C74E2DD4816A9A53078 /* NSLoggerCocoaLumberjackConnectorPlugin.m */; };
+		B98B664D189E4F9189EDAE64 /* DDNSLoggerLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = C9F95F8D98BE41B48373474A /* DDNSLoggerLogger.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		BE70E7329AFA48C0AA6E027D /* IonicKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = D7426DBD5228406AB04E630F /* IonicKeyboard.m */; };
+		C0254A2E7FAA4AEA9743D346 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA8EF0A377B2432CB31B597C /* CFNetwork.framework */; };
+		C26BA40193DC41C4ADAAF530 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBF97A2F452C4B8F8C1E0DDE /* Security.framework */; };
+		C2D3AA5EC99D4591A4940648 /* DDDispatchQueueLogFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 78AD4EE5F3CA4D11B0946A0A /* DDDispatchQueueLogFormatter.m */; };
+		CBE84B6641BD44A3B56F2F2B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAC3DEBA769B4086B195E594 /* Foundation.framework */; };
 		CEABE5E548154486A07A9CBB /* CDVStatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = A6E1F598D7D94BCB9638098B /* CDVStatusBar.m */; };
+		D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */; };
+		D7B39B35972847679D43D80B /* CDVLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E6A2ED9D4414A12A5618A8E /* CDVLogger.m */; };
+		E110D89FC4824439BF84B3B7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4792B44CBDE344BA8C1DE6D6 /* SystemConfiguration.framework */; };
+		E370EC8EF0DA49C8A3F58C77 /* DDTTYLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 9BA3D31830AB4159A5F66B50 /* DDTTYLogger.m */; };
+		E936EE3A47B642F5B3137CCA /* HockeySDK.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 3DBC74AFDB5E43BA96FBF21C /* HockeySDK.xcconfig */; };
+		EBF4E37CB55E4E3C89EB34FA /* UIWebViewExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 3924519FB74E48C38E353006 /* UIWebViewExtension.m */; };
+		ECB53D47B04A431EBA5C3078 /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBBF315FA38A4A7C8CD534E3 /* HockeySDK.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,14 +93,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		057DB91E132A4B1B8FE095D9 /* DDFileLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDFileLogger.h; path = "org.nypr.cordova.nslogger-cocoalumberjack-connector-plugin/DDFileLogger.h"; sourceTree = "<group>"; };
 		1D3623240D0F684500981E51 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		1D6058910D05DD3D006BFB54 /* Curious.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Curious.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		1F766FDD13BBADB100FB74C0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Localizable.strings; sourceTree = "<group>"; };
-		1F766FE013BBADB100FB74C0 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = Localizable.strings; sourceTree = "<group>"; };
+		1D6058910D05DD3D006BFB54 /* Curious.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Curious.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		25A8B57A24C74D52B0A7A9C6 /* LoggerCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoggerCommon.h; path = "org.nypr.cordova.nslogger-cocoalumberjack-connector-plugin/LoggerCommon.h"; sourceTree = "<group>"; };
+		26D5DF72DE574E0CB44DBAB5 /* CDVLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVLogger.h; path = org.apache.cordova.console/CDVLogger.h; sourceTree = "<group>"; };
 		288765FC0DF74451002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		301BF52D109A57CC0062928A /* CordovaLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CordovaLib.xcodeproj; path = "CordovaLib/CordovaLib.xcodeproj"; sourceTree = "<group>"; };
+		2A199EA717AA47F2A6A334C5 /* DDLog+LOGV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "DDLog+LOGV.h"; path = "org.nypr.cordova.nslogger-cocoalumberjack-connector-plugin/DDLog+LOGV.h"; sourceTree = "<group>"; };
+		301BF52D109A57CC0062928A /* CordovaLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CordovaLib.xcodeproj; path = CordovaLib/CordovaLib.xcodeproj; sourceTree = "<group>"; };
 		301BF56E109A69640062928A /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; path = www; sourceTree = SOURCE_ROOT; };
 		302D95EE14D2391D003F00A1 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		302D95EF14D2391D003F00A1 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
@@ -94,7 +123,28 @@
 		30C1856519D5FC0A00212699 /* icon-60@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-60@3x.png"; sourceTree = "<group>"; };
 		30FC414816E50CA1004E6F35 /* icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-72@2x.png"; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* Curious-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Curious-Prefix.pch"; sourceTree = "<group>"; };
+		3924519FB74E48C38E353006 /* UIWebViewExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIWebViewExtension.m; path = com.ionic.keyboard/UIWebViewExtension.m; sourceTree = "<group>"; };
+		3DBC74AFDB5E43BA96FBF21C /* HockeySDK.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = unknown; path = HockeySDK.xcconfig; sourceTree = "<group>"; };
+		450A38CE293C4C23A8BA8235 /* QuartzCore.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		4792B44CBDE344BA8C1DE6D6 /* SystemConfiguration.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		4C99F2F628A24C63AE37BDA8 /* DDLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDLog.m; path = "org.nypr.cordova.nslogger-cocoalumberjack-connector-plugin/DDLog.m"; sourceTree = "<group>"; };
+		52EA5E6E0757486A8CAAF5FC /* UIWebViewExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIWebViewExtension.h; path = com.ionic.keyboard/UIWebViewExtension.h; sourceTree = "<group>"; };
+		564E9E1935C943ACA8CACD3D /* DDASLLogCapture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDASLLogCapture.h; path = "org.nypr.cordova.nslogger-cocoalumberjack-connector-plugin/DDASLLogCapture.h"; sourceTree = "<group>"; };
+		5686165B652C4435B5D35FF9 /* PushPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PushPlugin.m; path = com.phonegap.plugins.PushPlugin/PushPlugin.m; sourceTree = "<group>"; };
+		58344EE8F0594A6B840F4E0C /* IonicKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IonicKeyboard.h; path = com.ionic.keyboard/IonicKeyboard.h; sourceTree = "<group>"; };
+		5A8E574CC8B54C92BF72E617 /* HockeyAppPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HockeyAppPlugin.h; path = org.nypr.cordova.hockeyappplugin/HockeyAppPlugin.h; sourceTree = "<group>"; };
 		5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		5CA91C707C6A4B669359E9CA /* CDVDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVDevice.h; path = org.apache.cordova.device/CDVDevice.h; sourceTree = "<group>"; };
+		5E6A2ED9D4414A12A5618A8E /* CDVLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDVLogger.m; path = org.apache.cordova.console/CDVLogger.m; sourceTree = "<group>"; };
+		5F0A35AE73AC4565A5CDC3AF /* DDDispatchQueueLogFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDDispatchQueueLogFormatter.h; path = "org.nypr.cordova.nslogger-cocoalumberjack-connector-plugin/DDDispatchQueueLogFormatter.h"; sourceTree = "<group>"; };
+		60EB203695AE4006816BB7FE /* HockeyAppPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HockeyAppPlugin.m; path = org.nypr.cordova.hockeyappplugin/HockeyAppPlugin.m; sourceTree = "<group>"; };
+		6BF2D026FF1B4EDFA1E7479E /* UIKit.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		6C716F11AF634385B7793D25 /* DDContextFilterLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDContextFilterLogFormatter.m; path = "org.nypr.cordova.nslogger-cocoalumberjack-connector-plugin/DDContextFilterLogFormatter.m"; sourceTree = "<group>"; };
+		78AD4EE5F3CA4D11B0946A0A /* DDDispatchQueueLogFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDDispatchQueueLogFormatter.m; path = "org.nypr.cordova.nslogger-cocoalumberjack-connector-plugin/DDDispatchQueueLogFormatter.m"; sourceTree = "<group>"; };
+		7AD2EC3C1AE6769E0033A19C /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HockeySDK.framework; sourceTree = "<group>"; };
+		7AD2EC3E1AE6769E0033A19C /* HockeySDK.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = HockeySDK.xcconfig; sourceTree = "<group>"; };
+		7AD2EC3F1AE6769E0033A19C /* HockeySDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = HockeySDKResources.bundle; sourceTree = "<group>"; };
+		7C4F5C2EB4984588BB48194A /* DDASLLogCapture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDASLLogCapture.m; path = "org.nypr.cordova.nslogger-cocoalumberjack-connector-plugin/DDASLLogCapture.m"; sourceTree = "<group>"; };
 		7E7966D41810823500FA85AD /* icon-40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-40.png"; sourceTree = "<group>"; };
 		7E7966D51810823500FA85AD /* icon-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-40@2x.png"; sourceTree = "<group>"; };
 		7E7966D61810823500FA85AD /* icon-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-50.png"; sourceTree = "<group>"; };
@@ -105,26 +155,45 @@
 		7E7966DB1810823500FA85AD /* icon-76@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-76@2x.png"; sourceTree = "<group>"; };
 		7E7966DC1810823500FA85AD /* icon-small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-small.png"; sourceTree = "<group>"; };
 		7E7966DD1810823500FA85AD /* icon-small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-small@2x.png"; sourceTree = "<group>"; };
+		850AE38F5AEE492581FC6ACE /* DDASLLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDASLLogger.m; path = "org.nypr.cordova.nslogger-cocoalumberjack-connector-plugin/DDASLLogger.m"; sourceTree = "<group>"; };
+		88D678A74F904223BD096B35 /* CDVDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDVDevice.m; path = org.apache.cordova.device/CDVDevice.m; sourceTree = "<group>"; };
+		88EFA1ED72E74D1DAED76D01 /* DDMultiFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDMultiFormatter.m; path = "org.nypr.cordova.nslogger-cocoalumberjack-connector-plugin/DDMultiFormatter.m"; sourceTree = "<group>"; };
+		8A117C17826546CE8DB128A1 /* NSLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSLogger.h; path = "org.nypr.cordova.nslogger-cocoalumberjack-connector-plugin/NSLogger.h"; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Curious-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Curious-Info.plist"; path = "../Curious-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+		8D55B89A5B3E4ECA8D1D8EAB /* DDTTYLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDTTYLogger.h; path = "org.nypr.cordova.nslogger-cocoalumberjack-connector-plugin/DDTTYLogger.h"; sourceTree = "<group>"; };
+		91AFE7DAA56A4CF3B072E753 /* CoreText.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		9BA3D31830AB4159A5F66B50 /* DDTTYLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDTTYLogger.m; path = "org.nypr.cordova.nslogger-cocoalumberjack-connector-plugin/DDTTYLogger.m"; sourceTree = "<group>"; };
+		9E77B24B36224E5784957D70 /* LoggerClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoggerClient.m; path = "org.nypr.cordova.nslogger-cocoalumberjack-connector-plugin/LoggerClient.m"; sourceTree = "<group>"; };
+		9E82ED656F074B50B34FFE0C /* DDAbstractDatabaseLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDAbstractDatabaseLogger.h; path = "org.nypr.cordova.nslogger-cocoalumberjack-connector-plugin/DDAbstractDatabaseLogger.h"; sourceTree = "<group>"; };
+		A1A1DDEE4F74469DB38CA40D /* DDAssert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDAssert.h; path = "org.nypr.cordova.nslogger-cocoalumberjack-connector-plugin/DDAssert.h"; sourceTree = "<group>"; };
+		A6E1F598D7D94BCB9638098B /* CDVStatusBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDVStatusBar.m; path = org.apache.cordova.statusbar/CDVStatusBar.m; sourceTree = "<group>"; };
+		A7FD12019D344E8B8D0D03AB /* DDNSLoggerLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDNSLoggerLogger.h; path = "org.nypr.cordova.nslogger-cocoalumberjack-connector-plugin/DDNSLoggerLogger.h"; sourceTree = "<group>"; };
+		AA697D2D8FFA48CA8399B5AC /* NSLoggerCocoaLumberjackConnectorPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSLoggerCocoaLumberjackConnectorPlugin.h; path = "org.nypr.cordova.nslogger-cocoalumberjack-connector-plugin/NSLoggerCocoaLumberjackConnectorPlugin.h"; sourceTree = "<group>"; };
+		B3746A2D9F874A7ABADEC4B1 /* AppDelegate+notification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "AppDelegate+notification.h"; path = "com.phonegap.plugins.PushPlugin/AppDelegate+notification.h"; sourceTree = "<group>"; };
+		B9AA80753A3F4FA7925AB866 /* LoggerClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoggerClient.h; path = "org.nypr.cordova.nslogger-cocoalumberjack-connector-plugin/LoggerClient.h"; sourceTree = "<group>"; };
+		BAC3DEBA769B4086B195E594 /* Foundation.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		BF08F94C9A8142BAAC8B669E /* CDVStatusBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVStatusBar.h; path = org.apache.cordova.statusbar/CDVStatusBar.h; sourceTree = "<group>"; };
+		C272C71F34F241F1B3A71B16 /* DDContextFilterLogFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDContextFilterLogFormatter.h; path = "org.nypr.cordova.nslogger-cocoalumberjack-connector-plugin/DDContextFilterLogFormatter.h"; sourceTree = "<group>"; };
+		C9F95F8D98BE41B48373474A /* DDNSLoggerLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDNSLoggerLogger.m; path = "org.nypr.cordova.nslogger-cocoalumberjack-connector-plugin/DDNSLoggerLogger.m"; sourceTree = "<group>"; };
+		CA8EF0A377B2432CB31B597C /* CFNetwork.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		CC44B656C492457185F12D2D /* DDASLLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDASLLogger.h; path = "org.nypr.cordova.nslogger-cocoalumberjack-connector-plugin/DDASLLogger.h"; sourceTree = "<group>"; };
+		CF2597D35DD047DEA4A64A22 /* DDMultiFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDMultiFormatter.h; path = "org.nypr.cordova.nslogger-cocoalumberjack-connector-plugin/DDMultiFormatter.h"; sourceTree = "<group>"; };
 		D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x~iphone.png"; sourceTree = "<group>"; };
+		D7426DBD5228406AB04E630F /* IonicKeyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IonicKeyboard.m; path = com.ionic.keyboard/IonicKeyboard.m; sourceTree = "<group>"; };
+		D74BC5498B954C2CBD8BF04F /* PushPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PushPlugin.h; path = com.phonegap.plugins.PushPlugin/PushPlugin.h; sourceTree = "<group>"; };
+		DB9C239551DF4B96AE59D8E1 /* DDLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DDLog.h; path = "org.nypr.cordova.nslogger-cocoalumberjack-connector-plugin/DDLog.h"; sourceTree = "<group>"; };
+		DB9D4B318A1A432FA03BD0F5 /* QuickLook.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = System/Library/Frameworks/QuickLook.framework; sourceTree = SDKROOT; };
+		E2ABB2239B1F45DEB79F8A94 /* DDFileLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDFileLogger.m; path = "org.nypr.cordova.nslogger-cocoalumberjack-connector-plugin/DDFileLogger.m"; sourceTree = "<group>"; };
+		E7B48AED8F7842F19513AFC0 /* HockeySDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = HockeySDKResources.bundle; sourceTree = "<group>"; };
+		E7E32D7D94264076A3BB14B4 /* DDAbstractDatabaseLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DDAbstractDatabaseLogger.m; path = "org.nypr.cordova.nslogger-cocoalumberjack-connector-plugin/DDAbstractDatabaseLogger.m"; sourceTree = "<group>"; };
 		EB87FDF21871DA7A0020F90C /* merges */ = {isa = PBXFileReference; lastKnownFileType = folder; name = merges; path = ../../merges; sourceTree = "<group>"; };
 		EB87FDF31871DA8E0020F90C /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; name = www; path = ../../www; sourceTree = "<group>"; };
 		EB87FDF41871DAF40020F90C /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = ../../config.xml; sourceTree = "<group>"; };
-		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = "Curious/config.xml"; sourceTree = "<group>"; };
-		D7426DBD5228406AB04E630F /* IonicKeyboard.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "IonicKeyboard.m"; path = "com.ionic.keyboard/IonicKeyboard.m"; sourceTree = "<group>"; fileEncoding = 4; };
-		3924519FB74E48C38E353006 /* UIWebViewExtension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "UIWebViewExtension.m"; path = "com.ionic.keyboard/UIWebViewExtension.m"; sourceTree = "<group>"; fileEncoding = 4; };
-		58344EE8F0594A6B840F4E0C /* IonicKeyboard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "IonicKeyboard.h"; path = "com.ionic.keyboard/IonicKeyboard.h"; sourceTree = "<group>"; fileEncoding = 4; };
-		52EA5E6E0757486A8CAAF5FC /* UIWebViewExtension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "UIWebViewExtension.h"; path = "com.ionic.keyboard/UIWebViewExtension.h"; sourceTree = "<group>"; fileEncoding = 4; };
-		F86CF538C62046ADAD7C2136 /* AppDelegate+notification.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "AppDelegate+notification.m"; path = "com.phonegap.plugins.PushPlugin/AppDelegate+notification.m"; sourceTree = "<group>"; fileEncoding = 4; };
-		5686165B652C4435B5D35FF9 /* PushPlugin.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "PushPlugin.m"; path = "com.phonegap.plugins.PushPlugin/PushPlugin.m"; sourceTree = "<group>"; fileEncoding = 4; };
-		B3746A2D9F874A7ABADEC4B1 /* AppDelegate+notification.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "AppDelegate+notification.h"; path = "com.phonegap.plugins.PushPlugin/AppDelegate+notification.h"; sourceTree = "<group>"; fileEncoding = 4; };
-		D74BC5498B954C2CBD8BF04F /* PushPlugin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "PushPlugin.h"; path = "com.phonegap.plugins.PushPlugin/PushPlugin.h"; sourceTree = "<group>"; fileEncoding = 4; };
-		5E6A2ED9D4414A12A5618A8E /* CDVLogger.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVLogger.m"; path = "org.apache.cordova.console/CDVLogger.m"; sourceTree = "<group>"; fileEncoding = 4; };
-		26D5DF72DE574E0CB44DBAB5 /* CDVLogger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVLogger.h"; path = "org.apache.cordova.console/CDVLogger.h"; sourceTree = "<group>"; fileEncoding = 4; };
-		88D678A74F904223BD096B35 /* CDVDevice.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVDevice.m"; path = "org.apache.cordova.device/CDVDevice.m"; sourceTree = "<group>"; fileEncoding = 4; };
-		5CA91C707C6A4B669359E9CA /* CDVDevice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVDevice.h"; path = "org.apache.cordova.device/CDVDevice.h"; sourceTree = "<group>"; fileEncoding = 4; };
-		A6E1F598D7D94BCB9638098B /* CDVStatusBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVStatusBar.m"; path = "org.apache.cordova.statusbar/CDVStatusBar.m"; sourceTree = "<group>"; fileEncoding = 4; };
-		BF08F94C9A8142BAAC8B669E /* CDVStatusBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVStatusBar.h"; path = "org.apache.cordova.statusbar/CDVStatusBar.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		EBBF315FA38A4A7C8CD534E3 /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HockeySDK.framework; path = Curious/Plugins/org.nypr.cordova.hockeyappplugin/HockeySDK.framework; sourceTree = "<group>"; };
+		F5302C74E2DD4816A9A53078 /* NSLoggerCocoaLumberjackConnectorPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSLoggerCocoaLumberjackConnectorPlugin.m; path = "org.nypr.cordova.nslogger-cocoalumberjack-connector-plugin/NSLoggerCocoaLumberjackConnectorPlugin.m"; sourceTree = "<group>"; };
+		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = Curious/config.xml; sourceTree = "<group>"; };
+		F86CF538C62046ADAD7C2136 /* AppDelegate+notification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "AppDelegate+notification.m"; path = "com.phonegap.plugins.PushPlugin/AppDelegate+notification.m"; sourceTree = "<group>"; };
+		FBF97A2F452C4B8F8C1E0DDE /* Security.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,6 +205,16 @@
 				301BF552109A68D80062928A /* libCordova.a in Frameworks */,
 				288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */,
 				305D5FD1115AB8F900A74A75 /* MobileCoreServices.framework in Frameworks */,
+				C0254A2E7FAA4AEA9743D346 /* CFNetwork.framework in Frameworks */,
+				E110D89FC4824439BF84B3B7 /* SystemConfiguration.framework in Frameworks */,
+				7AD2EC401AE6769E0033A19C /* HockeySDK.framework in Frameworks */,
+				ECB53D47B04A431EBA5C3078 /* HockeySDK.framework in Frameworks */,
+				9E335AB7BC7E457F852CA3A7 /* CoreText.framework in Frameworks */,
+				CBE84B6641BD44A3B56F2F2B /* Foundation.framework in Frameworks */,
+				6FAF56A7AC084B18AB3969F6 /* QuartzCore.framework in Frameworks */,
+				1E5744E631044A278270611A /* QuickLook.framework in Frameworks */,
+				C26BA40193DC41C4ADAAF530 /* Security.framework in Frameworks */,
+				487A94C7238B4531AE7BBD33 /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -152,7 +231,7 @@
 				1D3623250D0F684500981E51 /* AppDelegate.m */,
 			);
 			name = Classes;
-			path = "Curious/Classes";
+			path = Curious/Classes;
 			sourceTree = SOURCE_ROOT;
 		};
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
@@ -188,7 +267,7 @@
 				29B97316FDCFA39411CA2CEA /* main.m */,
 			);
 			name = "Other Sources";
-			path = "Curious";
+			path = Curious;
 			sourceTree = "<group>";
 		};
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
@@ -197,17 +276,29 @@
 				308D052D1370CCF300D202BF /* icons */,
 				308D05311370CCF300D202BF /* splash */,
 				8D1107310486CEB800E47090 /* Curious-Info.plist */,
+				E7B48AED8F7842F19513AFC0 /* HockeySDKResources.bundle */,
+				3DBC74AFDB5E43BA96FBF21C /* HockeySDK.xcconfig */,
 			);
 			name = Resources;
-			path = "Curious/Resources";
+			path = Curious/Resources;
 			sourceTree = "<group>";
 		};
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7AD2EC3B1AE6769E0033A19C /* HockeySDK.embeddedframework */,
 				5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */,
 				288765FC0DF74451002DB57D /* CoreGraphics.framework */,
 				305D5FD0115AB8F900A74A75 /* MobileCoreServices.framework */,
+				CA8EF0A377B2432CB31B597C /* CFNetwork.framework */,
+				4792B44CBDE344BA8C1DE6D6 /* SystemConfiguration.framework */,
+				EBBF315FA38A4A7C8CD534E3 /* HockeySDK.framework */,
+				91AFE7DAA56A4CF3B072E753 /* CoreText.framework */,
+				BAC3DEBA769B4086B195E594 /* Foundation.framework */,
+				450A38CE293C4C23A8BA8235 /* QuartzCore.framework */,
+				DB9D4B318A1A432FA03BD0F5 /* QuickLook.framework */,
+				FBF97A2F452C4B8F8C1E0DDE /* Security.framework */,
+				6BF2D026FF1B4EDFA1E7479E /* UIKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -237,9 +328,39 @@
 				5CA91C707C6A4B669359E9CA /* CDVDevice.h */,
 				A6E1F598D7D94BCB9638098B /* CDVStatusBar.m */,
 				BF08F94C9A8142BAAC8B669E /* CDVStatusBar.h */,
+				F5302C74E2DD4816A9A53078 /* NSLoggerCocoaLumberjackConnectorPlugin.m */,
+				7C4F5C2EB4984588BB48194A /* DDASLLogCapture.m */,
+				850AE38F5AEE492581FC6ACE /* DDASLLogger.m */,
+				E7E32D7D94264076A3BB14B4 /* DDAbstractDatabaseLogger.m */,
+				E2ABB2239B1F45DEB79F8A94 /* DDFileLogger.m */,
+				4C99F2F628A24C63AE37BDA8 /* DDLog.m */,
+				9BA3D31830AB4159A5F66B50 /* DDTTYLogger.m */,
+				6C716F11AF634385B7793D25 /* DDContextFilterLogFormatter.m */,
+				78AD4EE5F3CA4D11B0946A0A /* DDDispatchQueueLogFormatter.m */,
+				88EFA1ED72E74D1DAED76D01 /* DDMultiFormatter.m */,
+				9E77B24B36224E5784957D70 /* LoggerClient.m */,
+				C9F95F8D98BE41B48373474A /* DDNSLoggerLogger.m */,
+				AA697D2D8FFA48CA8399B5AC /* NSLoggerCocoaLumberjackConnectorPlugin.h */,
+				564E9E1935C943ACA8CACD3D /* DDASLLogCapture.h */,
+				CC44B656C492457185F12D2D /* DDASLLogger.h */,
+				9E82ED656F074B50B34FFE0C /* DDAbstractDatabaseLogger.h */,
+				A1A1DDEE4F74469DB38CA40D /* DDAssert.h */,
+				057DB91E132A4B1B8FE095D9 /* DDFileLogger.h */,
+				2A199EA717AA47F2A6A334C5 /* DDLog+LOGV.h */,
+				DB9C239551DF4B96AE59D8E1 /* DDLog.h */,
+				8D55B89A5B3E4ECA8D1D8EAB /* DDTTYLogger.h */,
+				C272C71F34F241F1B3A71B16 /* DDContextFilterLogFormatter.h */,
+				5F0A35AE73AC4565A5CDC3AF /* DDDispatchQueueLogFormatter.h */,
+				CF2597D35DD047DEA4A64A22 /* DDMultiFormatter.h */,
+				B9AA80753A3F4FA7925AB866 /* LoggerClient.h */,
+				25A8B57A24C74D52B0A7A9C6 /* LoggerCommon.h */,
+				8A117C17826546CE8DB128A1 /* NSLogger.h */,
+				A7FD12019D344E8B8D0D03AB /* DDNSLoggerLogger.h */,
+				60EB203695AE4006816BB7FE /* HockeyAppPlugin.m */,
+				5A8E574CC8B54C92BF72E617 /* HockeyAppPlugin.h */,
 			);
 			name = Plugins;
-			path = "Curious/Plugins";
+			path = Curious/Plugins;
 			sourceTree = SOURCE_ROOT;
 		};
 		308D052D1370CCF300D202BF /* icons */ = {
@@ -281,6 +402,25 @@
 			path = splash;
 			sourceTree = "<group>";
 		};
+		7AD2EC3B1AE6769E0033A19C /* HockeySDK.embeddedframework */ = {
+			isa = PBXGroup;
+			children = (
+				7AD2EC3C1AE6769E0033A19C /* HockeySDK.framework */,
+				7AD2EC3D1AE6769E0033A19C /* Resources */,
+			);
+			name = HockeySDK.embeddedframework;
+			path = "HockeySDK-iOS/HockeySDK.embeddedframework";
+			sourceTree = "<group>";
+		};
+		7AD2EC3D1AE6769E0033A19C /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				7AD2EC3E1AE6769E0033A19C /* HockeySDK.xcconfig */,
+				7AD2EC3F1AE6769E0033A19C /* HockeySDKResources.bundle */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		EB87FDF11871DA420020F90C /* Staging */ = {
 			isa = PBXGroup;
 			children = (
@@ -301,14 +441,15 @@
 				1D60588D0D05DD3D006BFB54 /* Resources */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
 				1D60588F0D05DD3D006BFB54 /* Frameworks */,
+				7AD2EC3A1AE675CF0033A19C /* ShellScript */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				301BF551109A68C00062928A /* PBXTargetDependency */,
 			);
-			name = "Curious";
-			productName = "Curious";
+			name = Curious;
+			productName = Curious;
 			productReference = 1D6058910D05DD3D006BFB54 /* Curious.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -320,7 +461,7 @@
 			attributes = {
 				LastUpgradeCheck = 510;
 			};
-			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "__CLI__" */;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Curious" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
@@ -372,6 +513,7 @@
 				308D05391370CCF300D202BF /* icon@2x.png in Resources */,
 				302D95F214D2391D003F00A1 /* MainViewController.xib in Resources */,
 				7E7966E01810823500FA85AD /* icon-50.png in Resources */,
+				7AD2EC411AE6769E0033A19C /* HockeySDK.xcconfig in Resources */,
 				7E7966E31810823500FA85AD /* icon-60@2x.png in Resources */,
 				7E7966E61810823500FA85AD /* icon-small.png in Resources */,
 				3088BBBD154F3926009F9C59 /* Default-Landscape@2x~ipad.png in Resources */,
@@ -380,6 +522,7 @@
 				7E7966E71810823500FA85AD /* icon-small@2x.png in Resources */,
 				3088BBC0154F3926009F9C59 /* Default-Portrait~ipad.png in Resources */,
 				30B4F30019D5E07200D9F7D8 /* Default-667h.png in Resources */,
+				7AD2EC421AE6769E0033A19C /* HockeySDKResources.bundle in Resources */,
 				7E7966DE1810823500FA85AD /* icon-40.png in Resources */,
 				3088BBC1154F3926009F9C59 /* Default@2x~iphone.png in Resources */,
 				7E7966E21810823500FA85AD /* icon-60.png in Resources */,
@@ -390,6 +533,8 @@
 				7E7966E11810823500FA85AD /* icon-50@2x.png in Resources */,
 				7E7966E51810823500FA85AD /* icon-76@2x.png in Resources */,
 				30FC414916E50CA1004E6F35 /* icon-72@2x.png in Resources */,
+				754380796E534163B577A37D /* HockeySDKResources.bundle in Resources */,
+				E936EE3A47B642F5B3137CCA /* HockeySDK.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -411,6 +556,19 @@
 			shellScript = "cordova/lib/copy-www-build-step.sh";
 			showEnvVarsInLog = 0;
 		};
+		7AD2EC3A1AE675CF0033A19C /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "FILE=\"${SRCROOT}/HockeySDK-iOS/BuildAgent\"\nif [ -f \"$FILE\" ]; then\n\"$FILE\"\nfi";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -428,6 +586,19 @@
 				D7B39B35972847679D43D80B /* CDVLogger.m in Sources */,
 				0CE1B773C0FA406CAC4551D8 /* CDVDevice.m in Sources */,
 				CEABE5E548154486A07A9CBB /* CDVStatusBar.m in Sources */,
+				B13D531555CF4CB8AB0C5B13 /* NSLoggerCocoaLumberjackConnectorPlugin.m in Sources */,
+				64CD0265591848E6BB331B84 /* DDASLLogCapture.m in Sources */,
+				A1220D2FC0C84F5E905CB3FB /* DDASLLogger.m in Sources */,
+				AD6EDF15F32F4CA3B3D41FEE /* DDAbstractDatabaseLogger.m in Sources */,
+				70DC76AD3BEE48C1BDC21810 /* DDFileLogger.m in Sources */,
+				6DEFCE3C678B4A3AB449B7D5 /* DDLog.m in Sources */,
+				E370EC8EF0DA49C8A3F58C77 /* DDTTYLogger.m in Sources */,
+				7FC99F4D87AD453F87F6859B /* DDContextFilterLogFormatter.m in Sources */,
+				C2D3AA5EC99D4591A4940648 /* DDDispatchQueueLogFormatter.m in Sources */,
+				862D73FDE8A64C3CA1756D99 /* DDMultiFormatter.m in Sources */,
+				1045EB600F644F7F9E3A3191 /* LoggerClient.m in Sources */,
+				B98B664D189E4F9189EDAE64 /* DDNSLoggerLogger.m in Sources */,
+				78C125A842AC4284BB7FD9AE /* HockeyAppPlugin.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -448,6 +619,11 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					Curious/Plugins/org.nypr.cordova.hockeyappplugin,
+					"$(PROJECT_DIR)/HockeySDK-iOS/HockeySDK.embeddedframework",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -468,7 +644,7 @@
 					"-weak-lSystem",
 					"-ObjC",
 				);
-				PRODUCT_NAME = "Curious";
+				PRODUCT_NAME = Curious;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -479,6 +655,11 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					Curious/Plugins/org.nypr.cordova.hockeyappplugin,
+					"$(PROJECT_DIR)/HockeySDK-iOS/HockeySDK.embeddedframework",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Curious/Curious-Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;
@@ -497,7 +678,7 @@
 					"-weak-lSystem",
 					"-ObjC",
 				);
-				PRODUCT_NAME = "Curious";
+				PRODUCT_NAME = Curious;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -601,7 +782,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "__CLI__" */ = {
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Curious" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,

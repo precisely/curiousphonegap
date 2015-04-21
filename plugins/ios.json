@@ -39,6 +39,84 @@
                         {
                             "xml": "<preference name=\"StatusBarStyle\" value=\"lightcontent\" />",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"NSLoggerCocoaLumberjackConnectorPlugin\"><param name=\"ios-package\" value=\"NSLoggerCocoaLumberjackConnectorPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"HockeyAppPlugin\"><param name=\"ios-package\" value=\"HockeyAppPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
+                        }
+                    ]
+                }
+            },
+            "framework": {
+                "parents": {
+                    "CFNetwork.framework": [
+                        {
+                            "xml": "false",
+                            "count": 1
+                        }
+                    ],
+                    "SystemConfiguration.framework": [
+                        {
+                            "xml": "false",
+                            "count": 2
+                        }
+                    ],
+                    "AssetsLibrary.framework": [
+                        {
+                            "xml": "false",
+                            "count": 1
+                        }
+                    ],
+                    "CoreText.framework": [
+                        {
+                            "xml": "false",
+                            "count": 1
+                        }
+                    ],
+                    "CoreGraphics.framework": [
+                        {
+                            "xml": "false",
+                            "count": 1
+                        }
+                    ],
+                    "Foundation.framework": [
+                        {
+                            "xml": "false",
+                            "count": 1
+                        }
+                    ],
+                    "MobileCoreServices.framework": [
+                        {
+                            "xml": "false",
+                            "count": 1
+                        }
+                    ],
+                    "QuartzCore.framework": [
+                        {
+                            "xml": "false",
+                            "count": 1
+                        }
+                    ],
+                    "QuickLook.framework": [
+                        {
+                            "xml": "false",
+                            "count": 2
+                        }
+                    ],
+                    "Security.framework": [
+                        {
+                            "xml": "false",
+                            "count": 1
+                        }
+                    ],
+                    "UIKit.framework": [
+                        {
+                            "xml": "false",
+                            "count": 1
                         }
                     ]
                 }
@@ -60,7 +138,14 @@
         },
         "org.apache.cordova.statusbar": {
             "PACKAGE_NAME": "us.wearecurio.app"
+        },
+        "org.nypr.cordova.hockeyappplugin": {
+            "PACKAGE_NAME": "us.wearecurio.app"
         }
     },
-    "dependent_plugins": {}
+    "dependent_plugins": {
+        "org.nypr.cordova.nslogger-cocoalumberjack-connector-plugin": {
+            "PACKAGE_NAME": "us.wearecurio.app"
+        }
+    }
 }
