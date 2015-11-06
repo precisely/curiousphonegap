@@ -9,23 +9,15 @@
                 "parents": {
                     "/*": [
                         {
-                            "xml": "<feature name=\"Keyboard\"><param name=\"ios-package\" onload=\"true\" value=\"IonicKeyboard\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"PushPlugin\"><param name=\"ios-package\" value=\"PushPlugin\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"Console\"><param name=\"ios-package\" value=\"CDVLogger\" /></feature>",
-                            "count": 1
-                        },
-                        {
                             "xml": "<feature name=\"Device\"><param name=\"ios-package\" value=\"CDVDevice\" /></feature>",
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"StatusBar\"><param name=\"ios-package\" onload=\"true\" value=\"CDVStatusBar\" /></feature>",
+                            "xml": "<feature name=\"Keyboard\"><param name=\"ios-package\" onload=\"true\" value=\"IonicKeyboard\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"StatusBar\"><param name=\"ios-package\" value=\"CDVStatusBar\" /><param name=\"onload\" value=\"true\" /></feature>",
                             "count": 1
                         },
                         {
@@ -33,19 +25,31 @@
                             "count": 1
                         },
                         {
-                            "xml": "<preference name=\"StatusBarBackgroundColor\" value=\"#000000\" />",
-                            "count": 1
-                        },
-                        {
                             "xml": "<preference name=\"StatusBarStyle\" value=\"lightcontent\" />",
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"NSLoggerCocoaLumberjackConnectorPlugin\"><param name=\"ios-package\" value=\"NSLoggerCocoaLumberjackConnectorPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "xml": "<feature name=\"NetworkStatus\"><param name=\"ios-package\" value=\"CDVConnection\" /></feature>",
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"HockeyAppPlugin\"><param name=\"ios-package\" value=\"HockeyAppPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "xml": "<feature name=\"PushPlugin\"><param name=\"ios-package\" value=\"PushPlugin\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"PushNotification\"><param name=\"ios-package\" value=\"PushPlugin\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"SpinnerDialog\"><param name=\"ios-package\" value=\"CDVSpinnerDialog\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"SocialSharing\"><param name=\"ios-package\" value=\"SocialSharing\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"InAppBrowser\"><param name=\"ios-package\" value=\"CDVInAppBrowser\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -53,69 +57,37 @@
             },
             "framework": {
                 "parents": {
-                    "CFNetwork.framework": [
-                        {
-                            "xml": "false",
-                            "count": 1
-                        }
-                    ],
                     "SystemConfiguration.framework": [
                         {
-                            "xml": "false",
-                            "count": 2
-                        }
-                    ],
-                    "AssetsLibrary.framework": [
-                        {
-                            "xml": "false",
+                            "xml": true,
                             "count": 1
                         }
                     ],
-                    "CoreText.framework": [
+                    "Social.framework": [
                         {
-                            "xml": "false",
+                            "xml": true,
+                            "count": 1
+                        }
+                    ],
+                    "MessageUI.framework": [
+                        {
+                            "xml": true,
                             "count": 1
                         }
                     ],
                     "CoreGraphics.framework": [
                         {
-                            "xml": "false",
+                            "xml": false,
                             "count": 1
                         }
-                    ],
-                    "Foundation.framework": [
+                    ]
+                }
+            },
+            "*-Info.plist": {
+                "parents": {
+                    "CFBundleURLTypes": [
                         {
-                            "xml": "false",
-                            "count": 1
-                        }
-                    ],
-                    "MobileCoreServices.framework": [
-                        {
-                            "xml": "false",
-                            "count": 1
-                        }
-                    ],
-                    "QuartzCore.framework": [
-                        {
-                            "xml": "false",
-                            "count": 1
-                        }
-                    ],
-                    "QuickLook.framework": [
-                        {
-                            "xml": "false",
-                            "count": 2
-                        }
-                    ],
-                    "Security.framework": [
-                        {
-                            "xml": "false",
-                            "count": 1
-                        }
-                    ],
-                    "UIKit.framework": [
-                        {
-                            "xml": "false",
+                            "xml": "<array><dict><key>CFBundleURLSchemes</key><array><string>curious</string></array></dict></array>",
                             "count": 1
                         }
                     ]
@@ -124,28 +96,37 @@
         }
     },
     "installed_plugins": {
-        "com.ionic.keyboard": {
+        "cordova-plugin-device": {
+            "PACKAGE_NAME": "us.wearecurio.app"
+        },
+        "ionic-plugin-keyboard": {
+            "PACKAGE_NAME": "us.wearecurio.app"
+        },
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "us.wearecurio.app"
+        },
+        "cordova-plugin-network-information": {
             "PACKAGE_NAME": "us.wearecurio.app"
         },
         "com.phonegap.plugins.PushPlugin": {
             "PACKAGE_NAME": "us.wearecurio.app"
         },
-        "org.apache.cordova.console": {
+        "phonegap-plugin-push": {
             "PACKAGE_NAME": "us.wearecurio.app"
         },
-        "org.apache.cordova.device": {
+        "hu.dpal.phonegap.plugins.SpinnerDialog": {
             "PACKAGE_NAME": "us.wearecurio.app"
         },
-        "org.apache.cordova.statusbar": {
+        "cordova-plugin-x-socialsharing": {
             "PACKAGE_NAME": "us.wearecurio.app"
         },
-        "org.nypr.cordova.hockeyappplugin": {
+        "cordova-plugin-customurlscheme": {
+            "URL_SCHEME": "curious",
+            "PACKAGE_NAME": "us.wearecurio.app"
+        },
+        "cordova-plugin-inappbrowser": {
             "PACKAGE_NAME": "us.wearecurio.app"
         }
     },
-    "dependent_plugins": {
-        "org.nypr.cordova.nslogger-cocoalumberjack-connector-plugin": {
-            "PACKAGE_NAME": "us.wearecurio.app"
-        }
-    }
+    "dependent_plugins": {}
 }

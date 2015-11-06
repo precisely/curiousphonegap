@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="us.wearecurio.app" version="1.1.03" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>We Are Curious</name>
+<widget id="us.wearecurio.app" version="1.1.20" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Curious</name>
     <description>Track Data, chart experience, find meaning.</description>
     <author email="support@wearecurio.us" href="http://dev.wearecurio.us">Curious Inc</author>
     <icon src="icon.png" />
