@@ -1,0 +1,26 @@
+{
+  "serverDir": "/Users/vishesh/.taco_home/remote-builds",
+  "port": 3000,
+  "secure": true,
+  "pinTimeout": 10,
+  "hostname": "Visheshs-MBP",
+  "writePidToFile": false,
+  "lang": "en-US",
+  "suppressSetupMessage": false,
+  "type": "literal",
+  "config": "remote-config.json",
+  "modules": {
+    "taco-remote": {
+      "mountPath": "cordova",
+      "maxBuildsInQueue": 10,
+      "maxBuildsToKeep": 20,
+      "deleteBuildsOnShutdown": true,
+      "allowsEmulate": true,
+      "appLaunchStepTimeout": 10000,
+      "nativeDebugProxyPort": 3001,
+      "webDebugProxyDevicePort": 9221,
+      "webDebugProxyRangeMin": 9222,
+      "webDebugProxyRangeMax": 9322
+    }
+  }
+}

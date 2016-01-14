@@ -1,0 +1,919 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		045364D845E448B1A0247813 /* libGTM_core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B39A5D9B1C164B96B4702345 /* libGTM_core.a */; };
+		0500BCC962FC40F9B2B94C25 /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B2B373D0D854E7DA625CDD4 /* QuickLook.framework */; };
+		0631CA4A7DFC4D189C2FA2F4 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B951A55D96DA463481696398 /* libz.tbd */; };
+		09064A1FD77C448EB72EB908 /* libGTM_NSData+zlib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D3576DB02B4458EA23605E3 /* libGTM_NSData+zlib.a */; };
+		0B548F9D80E6458EA92DF76E /* IonicKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = FBB585D9FD4C4FBAB0FA2BCF /* IonicKeyboard.m */; };
+		0E7F945132E644F49935AA50 /* libGTM_NSDictionary+URLArguments.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F5B05EC99674EEB805BC4AA /* libGTM_NSDictionary+URLArguments.a */; };
+		1D3623260D0F684500981E51 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* AppDelegate.m */; };
+		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
+		1F3C2BCC375F4C22AFF34FDA /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6AEAF1961CE044E1A355AF53 /* libstdc++.dylib */; };
+		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
+		289290D8763A44908AD5105A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28F7FCF3F4A341489D447E96 /* Security.framework */; };
+		301BF552109A68D80062928A /* libCordova.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 301BF535109A57CC0062928A /* libCordova.a */; };
+		302D95F114D2391D003F00A1 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 302D95EF14D2391D003F00A1 /* MainViewController.m */; };
+		302D95F214D2391D003F00A1 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 302D95F014D2391D003F00A1 /* MainViewController.xib */; };
+		305D5FD1115AB8F900A74A75 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 305D5FD0115AB8F900A74A75 /* MobileCoreServices.framework */; };
+		3088BBBD154F3926009F9C59 /* Default-Landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 3088BBB7154F3926009F9C59 /* Default-Landscape@2x~ipad.png */; };
+		3088BBBE154F3926009F9C59 /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 3088BBB8154F3926009F9C59 /* Default-Landscape~ipad.png */; };
+		3088BBBF154F3926009F9C59 /* Default-Portrait@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 3088BBB9154F3926009F9C59 /* Default-Portrait@2x~ipad.png */; };
+		3088BBC0154F3926009F9C59 /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 3088BBBA154F3926009F9C59 /* Default-Portrait~ipad.png */; };
+		3088BBC1154F3926009F9C59 /* Default@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 3088BBBB154F3926009F9C59 /* Default@2x~iphone.png */; };
+		3088BBC2154F3926009F9C59 /* Default~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = 3088BBBC154F3926009F9C59 /* Default~iphone.png */; };
+		308D05371370CCF300D202BF /* icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 308D052E1370CCF300D202BF /* icon-72.png */; };
+		308D05381370CCF300D202BF /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 308D052F1370CCF300D202BF /* icon.png */; };
+		308D05391370CCF300D202BF /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 308D05301370CCF300D202BF /* icon@2x.png */; };
+		30B4F30019D5E07200D9F7D8 /* Default-667h.png in Resources */ = {isa = PBXBuildFile; fileRef = 30B4F2FD19D5E07200D9F7D8 /* Default-667h.png */; };
+		30B4F30119D5E07200D9F7D8 /* Default-736h.png in Resources */ = {isa = PBXBuildFile; fileRef = 30B4F2FE19D5E07200D9F7D8 /* Default-736h.png */; };
+		30B4F30219D5E07200D9F7D8 /* Default-Landscape-736h.png in Resources */ = {isa = PBXBuildFile; fileRef = 30B4F2FF19D5E07200D9F7D8 /* Default-Landscape-736h.png */; };
+		30C1856619D5FC0A00212699 /* icon-60@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30C1856519D5FC0A00212699 /* icon-60@3x.png */; };
+		30FC414916E50CA1004E6F35 /* icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30FC414816E50CA1004E6F35 /* icon-72@2x.png */; };
+		336C081DD47541938BCFCFE4 /* HockeySDK.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 6EA45477F2D74FEAA51F4F3A /* HockeySDK.xcconfig */; };
+		3886A22FAFA74DC5B7D89F9D /* libProtocolBuffers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 76285A54620E473A80871305 /* libProtocolBuffers.a */; };
+		4288C104D1DB469CBD57BEC0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CE7C4D82BF94D55BA6243C9 /* SystemConfiguration.framework */; };
+		4A2BD975235246279CB43818 /* libGSDK_Overload.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C3FB0DBC2B9C49E29616346D /* libGSDK_Overload.a */; };
+		578AEBD268814DBD94639FD9 /* libGTM_AddressBook.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F924E81C915E427D8909CECE /* libGTM_AddressBook.a */; };
+		5B1594DD16A7569C00FEF299 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */; };
+		5C47C27129ED49CE8B65E632 /* libGTM_NSStringXML.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F4D0F47D04247E1AD7A1F3E /* libGTM_NSStringXML.a */; };
+		633FF2C12CC8495B9A65421B /* libGTMStackTrace.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D03B0CAC0C2247B7870BF8CA /* libGTMStackTrace.a */; };
+		63D54986ED9A4E7E8D1EE76A /* CDVInAppBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = A9820998171F48F5B4F85A9F /* CDVInAppBrowser.m */; };
+		6627BD49B52B4111AB0A6149 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A0286D5337B41F997FDA4FB /* Foundation.framework */; };
+		676F5BC56947442D971F2DAC /* CDVSpinnerDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = AAD0DCC0956B42D18D64A092 /* CDVSpinnerDialog.m */; };
+		68DEC1C7B35049FFA2C8AFDA /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4104553254B64AB6971C1976 /* HockeySDK.framework */; };
+		7210B70B6DBF45A49A1A4F78 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2955D61A3EE249BD9AF78EE5 /* CoreText.framework */; };
+		76AEFFABEED948A5A1F1E25D /* libGGLCloudMessaging.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 61CF84DAA5F44BB78B3207AF /* libGGLCloudMessaging.a */; };
+		794A098DACF64971A71594F4 /* libGTM_SystemVersion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 241F58052234438285082570 /* libGTM_SystemVersion.a */; };
+		79B710CC9C504073B693DA68 /* CDVReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = E3A53DC7CC97473297FD5CD5 /* CDVReachability.m */; };
+		7AE44BDED8CE47F99373D319 /* CDVStatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 43832E7873964F55BA46F3F3 /* CDVStatusBar.m */; };
+		7DFCFAC6A9CB4549B348638A /* libGTM_StringEncoding.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BD2C5FA55DBA465D9CDBF5F1 /* libGTM_StringEncoding.a */; };
+		7E7966DE1810823500FA85AD /* icon-40.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966D41810823500FA85AD /* icon-40.png */; };
+		7E7966DF1810823500FA85AD /* icon-40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966D51810823500FA85AD /* icon-40@2x.png */; };
+		7E7966E01810823500FA85AD /* icon-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966D61810823500FA85AD /* icon-50.png */; };
+		7E7966E11810823500FA85AD /* icon-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966D71810823500FA85AD /* icon-50@2x.png */; };
+		7E7966E21810823500FA85AD /* icon-60.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966D81810823500FA85AD /* icon-60.png */; };
+		7E7966E31810823500FA85AD /* icon-60@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966D91810823500FA85AD /* icon-60@2x.png */; };
+		7E7966E41810823500FA85AD /* icon-76.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966DA1810823500FA85AD /* icon-76.png */; };
+		7E7966E51810823500FA85AD /* icon-76@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966DB1810823500FA85AD /* icon-76@2x.png */; };
+		7E7966E61810823500FA85AD /* icon-small.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966DC1810823500FA85AD /* icon-small.png */; };
+		7E7966E71810823500FA85AD /* icon-small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966DD1810823500FA85AD /* icon-small@2x.png */; };
+		7EAB1F5E4C9B42F598938DF0 /* libGTMSessionFetcher_core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4300F6AEAF4A42E0ADA040C0 /* libGTMSessionFetcher_core.a */; };
+		839087E4FB594C3CBD797F03 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 342E8407E4144059A7E6CA50 /* AddressBook.framework */; };
+		8814E887173E4E5EBA5A8348 /* libGTM_UIFont+LineHeight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E16C0FF2EBC143728B3A37BD /* libGTM_UIFont+LineHeight.a */; };
+		8B7993EF4B8A47E3B9DC1828 /* libGTM_GTMURLBuilder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 70C4F7A1CED44BBA85F4C0EA /* libGTM_GTMURLBuilder.a */; };
+		8F987B7F2B904AB3B049C181 /* UIWebViewExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 12E3C07974634F8C815E4FBD /* UIWebViewExtension.m */; };
+		92BDEC54A2414EFFB001E0E9 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FCADFBE7CFE42C4B41A6825 /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		967D27DA88A046C59B79EAD9 /* libGTM_Regex.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D792A000B9F74F369B438986 /* libGTM_Regex.a */; };
+		A25B6E319A09432DB7FC284D /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BC9FC2D7F9944D1BFFC5768 /* libc++.dylib */; };
+		A4FE5280228540A28E62E3AA /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 44777BD096FF4E01B7B9035C /* libsqlite3.tbd */; };
+		A67E5AC578E5499B87082C98 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C7638F18DCA458E8D168180 /* MessageUI.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		A74E4C20928743F095E6DC25 /* libGcmLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 84B7390F90644705B5E49D85 /* libGcmLib.a */; };
+		B091295A0670422D9FB5768E /* PushPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B6B889611484A9D949B98F6 /* PushPlugin.m */; };
+		B314EEFAB8D1426CB7408FAA /* HockeySDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 60F193A5B5BB4F6092051D61 /* HockeySDKResources.bundle */; };
+		BA8850823D8B459FB82FA83B /* libGGLCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A7245C6F958C4A3B8C333434 /* libGGLCore.a */; };
+		BAB91625314F4AFAB2470072 /* libGTMSessionFetcher_full.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CBF4FB61B6B4517A26B979F /* libGTMSessionFetcher_full.a */; };
+		C125F794FF2D4A689710E2AD /* libGTM_NSStringHTML.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A2E2EA778504299A8412393 /* libGTM_NSStringHTML.a */; };
+		C40DB6210F31437EB7999D05 /* CDVConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = F9CE61D4C21A46C28B588BE9 /* CDVConnection.m */; };
+		C6AA9ACFEFDD4767939E3351 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8B0C33B3B8A4A9FBB6EE2F7 /* UIKit.framework */; };
+		C71929C19A2540C18334F154 /* libGTM_RoundedRectPath.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7D5A8D826DE4687B4312005 /* libGTM_RoundedRectPath.a */; };
+		CCCEF904DC1E4371918C2757 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8692D87E8124F68A2D3DD85 /* QuartzCore.framework */; };
+		CE696632DF794600851F744F /* CDVDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 96AB0329E4B54383AEFC06F5 /* CDVDevice.m */; };
+		D470B19199524BE388AA94E4 /* libGTM_KVO.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9423981EF47E4B5FA82A21AD /* libGTM_KVO.a */; };
+		D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */; };
+		DDA548C41623407B89B80C44 /* libGTM_iPhone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 655695578ECD435090A50B91 /* libGTM_iPhone.a */; };
+		E1AD5260A5E84D6298823CE0 /* libGGLInstanceIDLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F888A21F1C040879A474780 /* libGGLInstanceIDLib.a */; };
+		EF26080C6A104687BBEA708E /* libGIP_Reachability.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F1BE1857E6EA4D07A078E283 /* libGIP_Reachability.a */; };
+		F43A824634844577BAD9396E /* SocialSharing.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A7E3D9A60DC4507945DDEEB /* SocialSharing.m */; };
+		F70B60F73F0D48AABF5EF34A /* HockeyApp.m in Sources */ = {isa = PBXBuildFile; fileRef = F2CC1330983E4E68AAFC3AC5 /* HockeyApp.m */; };
+		FA8B805E3B1E427C8D8FD213 /* AppDelegate+notification.m in Sources */ = {isa = PBXBuildFile; fileRef = 861A93CD4A574282B28E2039 /* AppDelegate+notification.m */; };
+		FEC484182B294342ACC4F58F /* libGTM_DebugUtils.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3032D206FF434B8B8215E9E3 /* libGTM_DebugUtils.a */; };
+		FEE836357AD44BE598CE9563 /* libGTM_NSScannerJSON.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 342FEBAC8FE74B5492E4E71D /* libGTM_NSScannerJSON.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		301BF534109A57CC0062928A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 301BF52D109A57CC0062928A /* CordovaLib.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2AAC07E0554694100DB518D;
+			remoteInfo = CordovaLib;
+		};
+		301BF550109A68C00062928A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 301BF52D109A57CC0062928A /* CordovaLib.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC07D0554694100DB518D;
+			remoteInfo = CordovaLib;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		04E1AD04B9D7435998EF768A /* GoogleCloudMessaging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GoogleCloudMessaging.h; path = "phonegap-plugin-push/GCM/Headers/GoogleCloudMessaging.h"; sourceTree = "<group>"; };
+		0BC9FC2D7F9944D1BFFC5768 /* libc++.dylib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
+		0CE7C4D82BF94D55BA6243C9 /* SystemConfiguration.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		0D3576DB02B4458EA23605E3 /* libGTM_NSData+zlib.a */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = archive.ar; name = "libGTM_NSData+zlib.a"; path = "We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries/libGTM_NSData+zlib.a"; sourceTree = "<group>"; };
+		12E3C07974634F8C815E4FBD /* UIWebViewExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIWebViewExtension.m; path = "ionic-plugin-keyboard/UIWebViewExtension.m"; sourceTree = "<group>"; };
+		1D3623240D0F684500981E51 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		1D3623250D0F684500981E51 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		1D6058910D05DD3D006BFB54 /* We Are Curious.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "We Are Curious.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1DA9A253CD4C40CDA8A9574C /* Core.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Core.h; path = "phonegap-plugin-push/GCM/Headers/Core.h"; sourceTree = "<group>"; };
+		23757727BC054593A78ED3A6 /* GGLInstanceIDHeaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GGLInstanceIDHeaders.h; path = "phonegap-plugin-push/GCM/Headers/GGLInstanceIDHeaders.h"; sourceTree = "<group>"; };
+		23F146D8AE5B4552A76037BF /* GGLContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GGLContext.h; path = "phonegap-plugin-push/GCM/Headers/GGLContext.h"; sourceTree = "<group>"; };
+		241F58052234438285082570 /* libGTM_SystemVersion.a */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = archive.ar; name = libGTM_SystemVersion.a; path = "We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries/libGTM_SystemVersion.a"; sourceTree = "<group>"; };
+		288765FC0DF74451002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		28F7FCF3F4A341489D447E96 /* Security.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		2955D61A3EE249BD9AF78EE5 /* CoreText.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		301BF52D109A57CC0062928A /* CordovaLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CordovaLib.xcodeproj; path = CordovaLib/CordovaLib.xcodeproj; sourceTree = "<group>"; };
+		301BF56E109A69640062928A /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; path = www; sourceTree = SOURCE_ROOT; };
+		302D95EE14D2391D003F00A1 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		302D95EF14D2391D003F00A1 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		302D95F014D2391D003F00A1 /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
+		3032D206FF434B8B8215E9E3 /* libGTM_DebugUtils.a */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = archive.ar; name = libGTM_DebugUtils.a; path = "We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries/libGTM_DebugUtils.a"; sourceTree = "<group>"; };
+		305D5FD0115AB8F900A74A75 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		3088BBB7154F3926009F9C59 /* Default-Landscape@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape@2x~ipad.png"; sourceTree = "<group>"; };
+		3088BBB8154F3926009F9C59 /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape~ipad.png"; sourceTree = "<group>"; };
+		3088BBB9154F3926009F9C59 /* Default-Portrait@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait@2x~ipad.png"; sourceTree = "<group>"; };
+		3088BBBA154F3926009F9C59 /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait~ipad.png"; sourceTree = "<group>"; };
+		3088BBBB154F3926009F9C59 /* Default@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x~iphone.png"; sourceTree = "<group>"; };
+		3088BBBC154F3926009F9C59 /* Default~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default~iphone.png"; sourceTree = "<group>"; };
+		308D052E1370CCF300D202BF /* icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-72.png"; sourceTree = "<group>"; };
+		308D052F1370CCF300D202BF /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		308D05301370CCF300D202BF /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
+		30B4F2FD19D5E07200D9F7D8 /* Default-667h.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-667h.png"; sourceTree = "<group>"; };
+		30B4F2FE19D5E07200D9F7D8 /* Default-736h.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-736h.png"; sourceTree = "<group>"; };
+		30B4F2FF19D5E07200D9F7D8 /* Default-Landscape-736h.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape-736h.png"; sourceTree = "<group>"; };
+		30C1856519D5FC0A00212699 /* icon-60@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-60@3x.png"; sourceTree = "<group>"; };
+		30FC414816E50CA1004E6F35 /* icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-72@2x.png"; sourceTree = "<group>"; };
+		32CA4F630368D1EE00C91783 /* We Are Curious-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "We Are Curious-Prefix.pch"; sourceTree = "<group>"; };
+		342E8407E4144059A7E6CA50 /* AddressBook.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		342FEBAC8FE74B5492E4E71D /* libGTM_NSScannerJSON.a */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = archive.ar; name = libGTM_NSScannerJSON.a; path = "We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries/libGTM_NSScannerJSON.a"; sourceTree = "<group>"; };
+		3A0286D5337B41F997FDA4FB /* Foundation.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		3A49E9FC96CD47E1B9F3BA2D /* HockeyApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HockeyApp.h; path = "cordova-plugin-hockeyapp/HockeyApp.h"; sourceTree = "<group>"; };
+		3FCADFBE7CFE42C4B41A6825 /* Social.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		408A72C6AD46447B98E518ED /* CDVConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVConnection.h; path = "cordova-plugin-network-information/CDVConnection.h"; sourceTree = "<group>"; };
+		4104553254B64AB6971C1976 /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HockeySDK.framework; path = "We Are Curious/Plugins/cordova-plugin-hockeyapp/HockeySDK.framework"; sourceTree = "<group>"; };
+		416DD5BCC26F4A0A82495261 /* SocialSharing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SocialSharing.h; path = "cordova-plugin-x-socialsharing/SocialSharing.h"; sourceTree = "<group>"; };
+		4300F6AEAF4A42E0ADA040C0 /* libGTMSessionFetcher_core.a */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = archive.ar; name = libGTMSessionFetcher_core.a; path = "We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries/libGTMSessionFetcher_core.a"; sourceTree = "<group>"; };
+		43832E7873964F55BA46F3F3 /* CDVStatusBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDVStatusBar.m; path = "cordova-plugin-statusbar/CDVStatusBar.m"; sourceTree = "<group>"; };
+		44777BD096FF4E01B7B9035C /* libsqlite3.tbd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = unknown; path = libsqlite3.tbd; sourceTree = "<group>"; };
+		4A2E2EA778504299A8412393 /* libGTM_NSStringHTML.a */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = archive.ar; name = libGTM_NSStringHTML.a; path = "We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries/libGTM_NSStringHTML.a"; sourceTree = "<group>"; };
+		4CBF4FB61B6B4517A26B979F /* libGTMSessionFetcher_full.a */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = archive.ar; name = libGTMSessionFetcher_full.a; path = "We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries/libGTMSessionFetcher_full.a"; sourceTree = "<group>"; };
+		4E70A0D1737A45E9A6C4F3BE /* PushPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PushPlugin.h; path = "phonegap-plugin-push/PushPlugin.h"; sourceTree = "<group>"; };
+		4F4D0F47D04247E1AD7A1F3E /* libGTM_NSStringXML.a */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = archive.ar; name = libGTM_NSStringXML.a; path = "We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries/libGTM_NSStringXML.a"; sourceTree = "<group>"; };
+		536CD119A71241968A061B67 /* GGLErrorCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GGLErrorCode.h; path = "phonegap-plugin-push/GCM/Headers/GGLErrorCode.h"; sourceTree = "<group>"; };
+		5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		5B2B373D0D854E7DA625CDD4 /* QuickLook.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = System/Library/Frameworks/QuickLook.framework; sourceTree = SDKROOT; };
+		60F193A5B5BB4F6092051D61 /* HockeySDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = HockeySDKResources.bundle; sourceTree = "<group>"; };
+		61CF84DAA5F44BB78B3207AF /* libGGLCloudMessaging.a */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = archive.ar; name = libGGLCloudMessaging.a; path = "We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries/libGGLCloudMessaging.a"; sourceTree = "<group>"; };
+		655695578ECD435090A50B91 /* libGTM_iPhone.a */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = archive.ar; name = libGTM_iPhone.a; path = "We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries/libGTM_iPhone.a"; sourceTree = "<group>"; };
+		6AEAF1961CE044E1A355AF53 /* libstdc++.dylib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
+		6EA45477F2D74FEAA51F4F3A /* HockeySDK.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = unknown; path = HockeySDK.xcconfig; sourceTree = "<group>"; };
+		70C4F7A1CED44BBA85F4C0EA /* libGTM_GTMURLBuilder.a */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = archive.ar; name = libGTM_GTMURLBuilder.a; path = "We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries/libGTM_GTMURLBuilder.a"; sourceTree = "<group>"; };
+		7180850FCB05452AAFB6DBF6 /* GCMConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GCMConfig.h; path = "phonegap-plugin-push/GCM/Headers/GCMConfig.h"; sourceTree = "<group>"; };
+		76285A54620E473A80871305 /* libProtocolBuffers.a */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = archive.ar; name = libProtocolBuffers.a; path = "We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries/libProtocolBuffers.a"; sourceTree = "<group>"; };
+		7C7638F18DCA458E8D168180 /* MessageUI.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		7E7966D41810823500FA85AD /* icon-40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-40.png"; sourceTree = "<group>"; };
+		7E7966D51810823500FA85AD /* icon-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-40@2x.png"; sourceTree = "<group>"; };
+		7E7966D61810823500FA85AD /* icon-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-50.png"; sourceTree = "<group>"; };
+		7E7966D71810823500FA85AD /* icon-50@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-50@2x.png"; sourceTree = "<group>"; };
+		7E7966D81810823500FA85AD /* icon-60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-60.png"; sourceTree = "<group>"; };
+		7E7966D91810823500FA85AD /* icon-60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-60@2x.png"; sourceTree = "<group>"; };
+		7E7966DA1810823500FA85AD /* icon-76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-76.png"; sourceTree = "<group>"; };
+		7E7966DB1810823500FA85AD /* icon-76@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-76@2x.png"; sourceTree = "<group>"; };
+		7E7966DC1810823500FA85AD /* icon-small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-small.png"; sourceTree = "<group>"; };
+		7E7966DD1810823500FA85AD /* icon-small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-small@2x.png"; sourceTree = "<group>"; };
+		84B7390F90644705B5E49D85 /* libGcmLib.a */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = archive.ar; name = libGcmLib.a; path = "We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries/libGcmLib.a"; sourceTree = "<group>"; };
+		859A987062CD4B469ED8CEAB /* CDVStatusBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVStatusBar.h; path = "cordova-plugin-statusbar/CDVStatusBar.h"; sourceTree = "<group>"; };
+		861A93CD4A574282B28E2039 /* AppDelegate+notification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "AppDelegate+notification.m"; path = "phonegap-plugin-push/AppDelegate+notification.m"; sourceTree = "<group>"; };
+		8A7E3D9A60DC4507945DDEEB /* SocialSharing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SocialSharing.m; path = "cordova-plugin-x-socialsharing/SocialSharing.m"; sourceTree = "<group>"; };
+		8B6B889611484A9D949B98F6 /* PushPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PushPlugin.m; path = "phonegap-plugin-push/PushPlugin.m"; sourceTree = "<group>"; };
+		8D1107310486CEB800E47090 /* We Are Curious-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "We Are Curious-Info.plist"; path = "../We Are Curious-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+		8F5B05EC99674EEB805BC4AA /* libGTM_NSDictionary+URLArguments.a */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = archive.ar; name = "libGTM_NSDictionary+URLArguments.a"; path = "We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries/libGTM_NSDictionary+URLArguments.a"; sourceTree = "<group>"; };
+		9423981EF47E4B5FA82A21AD /* libGTM_KVO.a */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = archive.ar; name = libGTM_KVO.a; path = "We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries/libGTM_KVO.a"; sourceTree = "<group>"; };
+		95406A5FBBED4AA2AB50204B /* GGLConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GGLConfiguration.h; path = "phonegap-plugin-push/GCM/Headers/GGLConfiguration.h"; sourceTree = "<group>"; };
+		96AB0329E4B54383AEFC06F5 /* CDVDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDVDevice.m; path = "cordova-plugin-device/CDVDevice.m"; sourceTree = "<group>"; };
+		972C9F21C4FD4CA884C06F43 /* CDVDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVDevice.h; path = "cordova-plugin-device/CDVDevice.h"; sourceTree = "<group>"; };
+		9B577714D76D4258A6C3E130 /* GGLInstanceIDDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GGLInstanceIDDelegate.h; path = "phonegap-plugin-push/GCM/Headers/GGLInstanceIDDelegate.h"; sourceTree = "<group>"; };
+		9B6B6C2AF84540089BA51A27 /* GGLInstanceIDConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GGLInstanceIDConfig.h; path = "phonegap-plugin-push/GCM/Headers/GGLInstanceIDConfig.h"; sourceTree = "<group>"; };
+		9F888A21F1C040879A474780 /* libGGLInstanceIDLib.a */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = archive.ar; name = libGGLInstanceIDLib.a; path = "We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries/libGGLInstanceIDLib.a"; sourceTree = "<group>"; };
+		A6C1E06FBF134C9A9B5FC6E0 /* GGLInstanceID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GGLInstanceID.h; path = "phonegap-plugin-push/GCM/Headers/GGLInstanceID.h"; sourceTree = "<group>"; };
+		A7245C6F958C4A3B8C333434 /* libGGLCore.a */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = archive.ar; name = libGGLCore.a; path = "We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries/libGGLCore.a"; sourceTree = "<group>"; };
+		A9820998171F48F5B4F85A9F /* CDVInAppBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDVInAppBrowser.m; path = "cordova-plugin-inappbrowser/CDVInAppBrowser.m"; sourceTree = "<group>"; };
+		AA4369E27D8F4E6088C8A686 /* CDVSpinnerDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVSpinnerDialog.h; path = hu.dpal.phonegap.plugins.SpinnerDialog/CDVSpinnerDialog.h; sourceTree = "<group>"; };
+		AAD0DCC0956B42D18D64A092 /* CDVSpinnerDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDVSpinnerDialog.m; path = hu.dpal.phonegap.plugins.SpinnerDialog/CDVSpinnerDialog.m; sourceTree = "<group>"; };
+		B11445FE530746F498754662 /* CDVInAppBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVInAppBrowser.h; path = "cordova-plugin-inappbrowser/CDVInAppBrowser.h"; sourceTree = "<group>"; };
+		B1C9ADC6C52346FF90E6DA6F /* UIWebViewExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIWebViewExtension.h; path = "ionic-plugin-keyboard/UIWebViewExtension.h"; sourceTree = "<group>"; };
+		B39A5D9B1C164B96B4702345 /* libGTM_core.a */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = archive.ar; name = libGTM_core.a; path = "We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries/libGTM_core.a"; sourceTree = "<group>"; };
+		B7D5A8D826DE4687B4312005 /* libGTM_RoundedRectPath.a */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = archive.ar; name = libGTM_RoundedRectPath.a; path = "We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries/libGTM_RoundedRectPath.a"; sourceTree = "<group>"; };
+		B8692D87E8124F68A2D3DD85 /* QuartzCore.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		B8B0C33B3B8A4A9FBB6EE2F7 /* UIKit.framework */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		B951A55D96DA463481696398 /* libz.tbd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = unknown; path = libz.tbd; sourceTree = "<group>"; };
+		BD2C5FA55DBA465D9CDBF5F1 /* libGTM_StringEncoding.a */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = archive.ar; name = libGTM_StringEncoding.a; path = "We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries/libGTM_StringEncoding.a"; sourceTree = "<group>"; };
+		C3FB0DBC2B9C49E29616346D /* libGSDK_Overload.a */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = archive.ar; name = libGSDK_Overload.a; path = "We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries/libGSDK_Overload.a"; sourceTree = "<group>"; };
+		CA77668513CA44B5976253FF /* CDVReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVReachability.h; path = "cordova-plugin-network-information/CDVReachability.h"; sourceTree = "<group>"; };
+		CB4005FBD6DF4CB2815E122B /* GCMService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GCMService.h; path = "phonegap-plugin-push/GCM/Headers/GCMService.h"; sourceTree = "<group>"; };
+		CD0FE07A9D734282931F4B7E /* CloudMessaging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CloudMessaging.h; path = "phonegap-plugin-push/GCM/Headers/CloudMessaging.h"; sourceTree = "<group>"; };
+		D03B0CAC0C2247B7870BF8CA /* libGTMStackTrace.a */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = archive.ar; name = libGTMStackTrace.a; path = "We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries/libGTMStackTrace.a"; sourceTree = "<group>"; };
+		D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x~iphone.png"; sourceTree = "<group>"; };
+		D792A000B9F74F369B438986 /* libGTM_Regex.a */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = archive.ar; name = libGTM_Regex.a; path = "We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries/libGTM_Regex.a"; sourceTree = "<group>"; };
+		DEE06E9C5068460CBDE1F0AE /* GCMPubSub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GCMPubSub.h; path = "phonegap-plugin-push/GCM/Headers/GCMPubSub.h"; sourceTree = "<group>"; };
+		E16C0FF2EBC143728B3A37BD /* libGTM_UIFont+LineHeight.a */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = archive.ar; name = "libGTM_UIFont+LineHeight.a"; path = "We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries/libGTM_UIFont+LineHeight.a"; sourceTree = "<group>"; };
+		E3A53DC7CC97473297FD5CD5 /* CDVReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDVReachability.m; path = "cordova-plugin-network-information/CDVReachability.m"; sourceTree = "<group>"; };
+		EB87FDF21871DA7A0020F90C /* merges */ = {isa = PBXFileReference; lastKnownFileType = folder; name = merges; path = ../../merges; sourceTree = "<group>"; };
+		EB87FDF31871DA8E0020F90C /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; name = www; path = ../../www; sourceTree = "<group>"; };
+		EB87FDF41871DAF40020F90C /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = ../../config.xml; sourceTree = "<group>"; };
+		F16FCE5FC6DE4D0CB0109B66 /* GGLContext+CloudMessaging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "GGLContext+CloudMessaging.h"; path = "phonegap-plugin-push/GCM/Headers/GGLContext+CloudMessaging.h"; sourceTree = "<group>"; };
+		F1BE1857E6EA4D07A078E283 /* libGIP_Reachability.a */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = archive.ar; name = libGIP_Reachability.a; path = "We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries/libGIP_Reachability.a"; sourceTree = "<group>"; };
+		F2CC1330983E4E68AAFC3AC5 /* HockeyApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HockeyApp.m; path = "cordova-plugin-hockeyapp/HockeyApp.m"; sourceTree = "<group>"; };
+		F47F456657B042CD89EA06DB /* IonicKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IonicKeyboard.h; path = "ionic-plugin-keyboard/IonicKeyboard.h"; sourceTree = "<group>"; };
+		F75A5AD5CC694A22905A9055 /* AppDelegate+notification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "AppDelegate+notification.h"; path = "phonegap-plugin-push/AppDelegate+notification.h"; sourceTree = "<group>"; };
+		F834966D20D1488887B5C68A /* GCMReceiverDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GCMReceiverDelegate.h; path = "phonegap-plugin-push/GCM/Headers/GCMReceiverDelegate.h"; sourceTree = "<group>"; };
+		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = "We Are Curious/config.xml"; sourceTree = "<group>"; };
+		F924E81C915E427D8909CECE /* libGTM_AddressBook.a */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = archive.ar; name = libGTM_AddressBook.a; path = "We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries/libGTM_AddressBook.a"; sourceTree = "<group>"; };
+		F9CE61D4C21A46C28B588BE9 /* CDVConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDVConnection.m; path = "cordova-plugin-network-information/CDVConnection.m"; sourceTree = "<group>"; };
+		FBB585D9FD4C4FBAB0FA2BCF /* IonicKeyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IonicKeyboard.m; path = "ionic-plugin-keyboard/IonicKeyboard.m"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1D60588F0D05DD3D006BFB54 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5B1594DD16A7569C00FEF299 /* AssetsLibrary.framework in Frameworks */,
+				301BF552109A68D80062928A /* libCordova.a in Frameworks */,
+				288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */,
+				305D5FD1115AB8F900A74A75 /* MobileCoreServices.framework in Frameworks */,
+				68DEC1C7B35049FFA2C8AFDA /* HockeySDK.framework in Frameworks */,
+				1F3C2BCC375F4C22AFF34FDA /* libstdc++.dylib in Frameworks */,
+				A25B6E319A09432DB7FC284D /* libc++.dylib in Frameworks */,
+				7210B70B6DBF45A49A1A4F78 /* CoreText.framework in Frameworks */,
+				6627BD49B52B4111AB0A6149 /* Foundation.framework in Frameworks */,
+				CCCEF904DC1E4371918C2757 /* QuartzCore.framework in Frameworks */,
+				0500BCC962FC40F9B2B94C25 /* QuickLook.framework in Frameworks */,
+				289290D8763A44908AD5105A /* Security.framework in Frameworks */,
+				4288C104D1DB469CBD57BEC0 /* SystemConfiguration.framework in Frameworks */,
+				C6AA9ACFEFDD4767939E3351 /* UIKit.framework in Frameworks */,
+				92BDEC54A2414EFFB001E0E9 /* Social.framework in Frameworks */,
+				A67E5AC578E5499B87082C98 /* MessageUI.framework in Frameworks */,
+				839087E4FB594C3CBD797F03 /* AddressBook.framework in Frameworks */,
+				A4FE5280228540A28E62E3AA /* libsqlite3.tbd in Frameworks */,
+				0631CA4A7DFC4D189C2FA2F4 /* libz.tbd in Frameworks */,
+				76AEFFABEED948A5A1F1E25D /* libGGLCloudMessaging.a in Frameworks */,
+				BA8850823D8B459FB82FA83B /* libGGLCore.a in Frameworks */,
+				E1AD5260A5E84D6298823CE0 /* libGGLInstanceIDLib.a in Frameworks */,
+				EF26080C6A104687BBEA708E /* libGIP_Reachability.a in Frameworks */,
+				4A2BD975235246279CB43818 /* libGSDK_Overload.a in Frameworks */,
+				7EAB1F5E4C9B42F598938DF0 /* libGTMSessionFetcher_core.a in Frameworks */,
+				BAB91625314F4AFAB2470072 /* libGTMSessionFetcher_full.a in Frameworks */,
+				633FF2C12CC8495B9A65421B /* libGTMStackTrace.a in Frameworks */,
+				578AEBD268814DBD94639FD9 /* libGTM_AddressBook.a in Frameworks */,
+				FEC484182B294342ACC4F58F /* libGTM_DebugUtils.a in Frameworks */,
+				8B7993EF4B8A47E3B9DC1828 /* libGTM_GTMURLBuilder.a in Frameworks */,
+				D470B19199524BE388AA94E4 /* libGTM_KVO.a in Frameworks */,
+				09064A1FD77C448EB72EB908 /* libGTM_NSData+zlib.a in Frameworks */,
+				0E7F945132E644F49935AA50 /* libGTM_NSDictionary+URLArguments.a in Frameworks */,
+				FEE836357AD44BE598CE9563 /* libGTM_NSScannerJSON.a in Frameworks */,
+				C125F794FF2D4A689710E2AD /* libGTM_NSStringHTML.a in Frameworks */,
+				5C47C27129ED49CE8B65E632 /* libGTM_NSStringXML.a in Frameworks */,
+				967D27DA88A046C59B79EAD9 /* libGTM_Regex.a in Frameworks */,
+				C71929C19A2540C18334F154 /* libGTM_RoundedRectPath.a in Frameworks */,
+				7DFCFAC6A9CB4549B348638A /* libGTM_StringEncoding.a in Frameworks */,
+				794A098DACF64971A71594F4 /* libGTM_SystemVersion.a in Frameworks */,
+				8814E887173E4E5EBA5A8348 /* libGTM_UIFont+LineHeight.a in Frameworks */,
+				045364D845E448B1A0247813 /* libGTM_core.a in Frameworks */,
+				DDA548C41623407B89B80C44 /* libGTM_iPhone.a in Frameworks */,
+				A74E4C20928743F095E6DC25 /* libGcmLib.a in Frameworks */,
+				3886A22FAFA74DC5B7D89F9D /* libProtocolBuffers.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		080E96DDFE201D6D7F000001 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				302D95EE14D2391D003F00A1 /* MainViewController.h */,
+				302D95EF14D2391D003F00A1 /* MainViewController.m */,
+				302D95F014D2391D003F00A1 /* MainViewController.xib */,
+				1D3623240D0F684500981E51 /* AppDelegate.h */,
+				1D3623250D0F684500981E51 /* AppDelegate.m */,
+			);
+			name = Classes;
+			path = "We Are Curious/Classes";
+			sourceTree = SOURCE_ROOT;
+		};
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1D6058910D05DD3D006BFB54 /* We Are Curious.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
+			isa = PBXGroup;
+			children = (
+				EB87FDF41871DAF40020F90C /* config.xml */,
+				EB87FDF31871DA8E0020F90C /* www */,
+				EB87FDF21871DA7A0020F90C /* merges */,
+				EB87FDF11871DA420020F90C /* Staging */,
+				301BF52D109A57CC0062928A /* CordovaLib.xcodeproj */,
+				080E96DDFE201D6D7F000001 /* Classes */,
+				307C750510C5A3420062BCA9 /* Plugins */,
+				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+			);
+			name = CustomTemplate;
+			sourceTree = "<group>";
+		};
+		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				32CA4F630368D1EE00C91783 /* We Are Curious-Prefix.pch */,
+				29B97316FDCFA39411CA2CEA /* main.m */,
+			);
+			name = "Other Sources";
+			path = "We Are Curious";
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				308D052D1370CCF300D202BF /* icons */,
+				308D05311370CCF300D202BF /* splash */,
+				8D1107310486CEB800E47090 /* We Are Curious-Info.plist */,
+				60F193A5B5BB4F6092051D61 /* HockeySDKResources.bundle */,
+				6EA45477F2D74FEAA51F4F3A /* HockeySDK.xcconfig */,
+			);
+			name = Resources;
+			path = "We Are Curious/Resources";
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */,
+				288765FC0DF74451002DB57D /* CoreGraphics.framework */,
+				305D5FD0115AB8F900A74A75 /* MobileCoreServices.framework */,
+				4104553254B64AB6971C1976 /* HockeySDK.framework */,
+				6AEAF1961CE044E1A355AF53 /* libstdc++.dylib */,
+				0BC9FC2D7F9944D1BFFC5768 /* libc++.dylib */,
+				2955D61A3EE249BD9AF78EE5 /* CoreText.framework */,
+				3A0286D5337B41F997FDA4FB /* Foundation.framework */,
+				B8692D87E8124F68A2D3DD85 /* QuartzCore.framework */,
+				5B2B373D0D854E7DA625CDD4 /* QuickLook.framework */,
+				28F7FCF3F4A341489D447E96 /* Security.framework */,
+				0CE7C4D82BF94D55BA6243C9 /* SystemConfiguration.framework */,
+				B8B0C33B3B8A4A9FBB6EE2F7 /* UIKit.framework */,
+				3FCADFBE7CFE42C4B41A6825 /* Social.framework */,
+				7C7638F18DCA458E8D168180 /* MessageUI.framework */,
+				342E8407E4144059A7E6CA50 /* AddressBook.framework */,
+				44777BD096FF4E01B7B9035C /* libsqlite3.tbd */,
+				B951A55D96DA463481696398 /* libz.tbd */,
+				61CF84DAA5F44BB78B3207AF /* libGGLCloudMessaging.a */,
+				A7245C6F958C4A3B8C333434 /* libGGLCore.a */,
+				9F888A21F1C040879A474780 /* libGGLInstanceIDLib.a */,
+				F1BE1857E6EA4D07A078E283 /* libGIP_Reachability.a */,
+				C3FB0DBC2B9C49E29616346D /* libGSDK_Overload.a */,
+				4300F6AEAF4A42E0ADA040C0 /* libGTMSessionFetcher_core.a */,
+				4CBF4FB61B6B4517A26B979F /* libGTMSessionFetcher_full.a */,
+				D03B0CAC0C2247B7870BF8CA /* libGTMStackTrace.a */,
+				F924E81C915E427D8909CECE /* libGTM_AddressBook.a */,
+				3032D206FF434B8B8215E9E3 /* libGTM_DebugUtils.a */,
+				70C4F7A1CED44BBA85F4C0EA /* libGTM_GTMURLBuilder.a */,
+				9423981EF47E4B5FA82A21AD /* libGTM_KVO.a */,
+				0D3576DB02B4458EA23605E3 /* libGTM_NSData+zlib.a */,
+				8F5B05EC99674EEB805BC4AA /* libGTM_NSDictionary+URLArguments.a */,
+				342FEBAC8FE74B5492E4E71D /* libGTM_NSScannerJSON.a */,
+				4A2E2EA778504299A8412393 /* libGTM_NSStringHTML.a */,
+				4F4D0F47D04247E1AD7A1F3E /* libGTM_NSStringXML.a */,
+				D792A000B9F74F369B438986 /* libGTM_Regex.a */,
+				B7D5A8D826DE4687B4312005 /* libGTM_RoundedRectPath.a */,
+				BD2C5FA55DBA465D9CDBF5F1 /* libGTM_StringEncoding.a */,
+				241F58052234438285082570 /* libGTM_SystemVersion.a */,
+				E16C0FF2EBC143728B3A37BD /* libGTM_UIFont+LineHeight.a */,
+				B39A5D9B1C164B96B4702345 /* libGTM_core.a */,
+				655695578ECD435090A50B91 /* libGTM_iPhone.a */,
+				84B7390F90644705B5E49D85 /* libGcmLib.a */,
+				76285A54620E473A80871305 /* libProtocolBuffers.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		301BF52E109A57CC0062928A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				301BF535109A57CC0062928A /* libCordova.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		307C750510C5A3420062BCA9 /* Plugins */ = {
+			isa = PBXGroup;
+			children = (
+				96AB0329E4B54383AEFC06F5 /* CDVDevice.m */,
+				972C9F21C4FD4CA884C06F43 /* CDVDevice.h */,
+				F2CC1330983E4E68AAFC3AC5 /* HockeyApp.m */,
+				3A49E9FC96CD47E1B9F3BA2D /* HockeyApp.h */,
+				A9820998171F48F5B4F85A9F /* CDVInAppBrowser.m */,
+				B11445FE530746F498754662 /* CDVInAppBrowser.h */,
+				F9CE61D4C21A46C28B588BE9 /* CDVConnection.m */,
+				E3A53DC7CC97473297FD5CD5 /* CDVReachability.m */,
+				408A72C6AD46447B98E518ED /* CDVConnection.h */,
+				CA77668513CA44B5976253FF /* CDVReachability.h */,
+				43832E7873964F55BA46F3F3 /* CDVStatusBar.m */,
+				859A987062CD4B469ED8CEAB /* CDVStatusBar.h */,
+				8A7E3D9A60DC4507945DDEEB /* SocialSharing.m */,
+				416DD5BCC26F4A0A82495261 /* SocialSharing.h */,
+				AAD0DCC0956B42D18D64A092 /* CDVSpinnerDialog.m */,
+				AA4369E27D8F4E6088C8A686 /* CDVSpinnerDialog.h */,
+				FBB585D9FD4C4FBAB0FA2BCF /* IonicKeyboard.m */,
+				12E3C07974634F8C815E4FBD /* UIWebViewExtension.m */,
+				F47F456657B042CD89EA06DB /* IonicKeyboard.h */,
+				B1C9ADC6C52346FF90E6DA6F /* UIWebViewExtension.h */,
+				861A93CD4A574282B28E2039 /* AppDelegate+notification.m */,
+				8B6B889611484A9D949B98F6 /* PushPlugin.m */,
+				F75A5AD5CC694A22905A9055 /* AppDelegate+notification.h */,
+				4E70A0D1737A45E9A6C4F3BE /* PushPlugin.h */,
+				A6C1E06FBF134C9A9B5FC6E0 /* GGLInstanceID.h */,
+				9B6B6C2AF84540089BA51A27 /* GGLInstanceIDConfig.h */,
+				9B577714D76D4258A6C3E130 /* GGLInstanceIDDelegate.h */,
+				23757727BC054593A78ED3A6 /* GGLInstanceIDHeaders.h */,
+				CD0FE07A9D734282931F4B7E /* CloudMessaging.h */,
+				F16FCE5FC6DE4D0CB0109B66 /* GGLContext+CloudMessaging.h */,
+				1DA9A253CD4C40CDA8A9574C /* Core.h */,
+				95406A5FBBED4AA2AB50204B /* GGLConfiguration.h */,
+				23F146D8AE5B4552A76037BF /* GGLContext.h */,
+				536CD119A71241968A061B67 /* GGLErrorCode.h */,
+				7180850FCB05452AAFB6DBF6 /* GCMConfig.h */,
+				DEE06E9C5068460CBDE1F0AE /* GCMPubSub.h */,
+				F834966D20D1488887B5C68A /* GCMReceiverDelegate.h */,
+				CB4005FBD6DF4CB2815E122B /* GCMService.h */,
+				04E1AD04B9D7435998EF768A /* GoogleCloudMessaging.h */,
+			);
+			name = Plugins;
+			path = "We Are Curious/Plugins";
+			sourceTree = SOURCE_ROOT;
+		};
+		308D052D1370CCF300D202BF /* icons */ = {
+			isa = PBXGroup;
+			children = (
+				30C1856519D5FC0A00212699 /* icon-60@3x.png */,
+				7E7966D41810823500FA85AD /* icon-40.png */,
+				7E7966D51810823500FA85AD /* icon-40@2x.png */,
+				7E7966D61810823500FA85AD /* icon-50.png */,
+				7E7966D71810823500FA85AD /* icon-50@2x.png */,
+				7E7966D81810823500FA85AD /* icon-60.png */,
+				7E7966D91810823500FA85AD /* icon-60@2x.png */,
+				7E7966DA1810823500FA85AD /* icon-76.png */,
+				7E7966DB1810823500FA85AD /* icon-76@2x.png */,
+				7E7966DC1810823500FA85AD /* icon-small.png */,
+				7E7966DD1810823500FA85AD /* icon-small@2x.png */,
+				30FC414816E50CA1004E6F35 /* icon-72@2x.png */,
+				308D052E1370CCF300D202BF /* icon-72.png */,
+				308D052F1370CCF300D202BF /* icon.png */,
+				308D05301370CCF300D202BF /* icon@2x.png */,
+			);
+			path = icons;
+			sourceTree = "<group>";
+		};
+		308D05311370CCF300D202BF /* splash */ = {
+			isa = PBXGroup;
+			children = (
+				30B4F2FD19D5E07200D9F7D8 /* Default-667h.png */,
+				30B4F2FE19D5E07200D9F7D8 /* Default-736h.png */,
+				30B4F2FF19D5E07200D9F7D8 /* Default-Landscape-736h.png */,
+				D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */,
+				3088BBB7154F3926009F9C59 /* Default-Landscape@2x~ipad.png */,
+				3088BBB8154F3926009F9C59 /* Default-Landscape~ipad.png */,
+				3088BBB9154F3926009F9C59 /* Default-Portrait@2x~ipad.png */,
+				3088BBBA154F3926009F9C59 /* Default-Portrait~ipad.png */,
+				3088BBBB154F3926009F9C59 /* Default@2x~iphone.png */,
+				3088BBBC154F3926009F9C59 /* Default~iphone.png */,
+			);
+			path = splash;
+			sourceTree = "<group>";
+		};
+		EB87FDF11871DA420020F90C /* Staging */ = {
+			isa = PBXGroup;
+			children = (
+				F840E1F0165FE0F500CFE078 /* config.xml */,
+				301BF56E109A69640062928A /* www */,
+			);
+			name = Staging;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1D6058900D05DD3D006BFB54 /* We Are Curious */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "We Are Curious" */;
+			buildPhases = (
+				304B58A110DAC018002A0835 /* Copy www directory */,
+				1D60588D0D05DD3D006BFB54 /* Resources */,
+				1D60588E0D05DD3D006BFB54 /* Sources */,
+				1D60588F0D05DD3D006BFB54 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				301BF551109A68C00062928A /* PBXTargetDependency */,
+			);
+			name = "We Are Curious";
+			productName = "We Are Curious";
+			productReference = 1D6058910D05DD3D006BFB54 /* We Are Curious.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 510;
+			};
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "We Are Curious" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+				en,
+				es,
+				de,
+				se,
+			);
+			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 301BF52E109A57CC0062928A /* Products */;
+					ProjectRef = 301BF52D109A57CC0062928A /* CordovaLib.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				1D6058900D05DD3D006BFB54 /* We Are Curious */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		301BF535109A57CC0062928A /* libCordova.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libCordova.a;
+			remoteRef = 301BF534109A57CC0062928A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1D60588D0D05DD3D006BFB54 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7E7966E41810823500FA85AD /* icon-76.png in Resources */,
+				7E7966DF1810823500FA85AD /* icon-40@2x.png in Resources */,
+				308D05371370CCF300D202BF /* icon-72.png in Resources */,
+				30B4F30119D5E07200D9F7D8 /* Default-736h.png in Resources */,
+				308D05381370CCF300D202BF /* icon.png in Resources */,
+				308D05391370CCF300D202BF /* icon@2x.png in Resources */,
+				302D95F214D2391D003F00A1 /* MainViewController.xib in Resources */,
+				7E7966E01810823500FA85AD /* icon-50.png in Resources */,
+				7E7966E31810823500FA85AD /* icon-60@2x.png in Resources */,
+				7E7966E61810823500FA85AD /* icon-small.png in Resources */,
+				3088BBBD154F3926009F9C59 /* Default-Landscape@2x~ipad.png in Resources */,
+				3088BBBE154F3926009F9C59 /* Default-Landscape~ipad.png in Resources */,
+				3088BBBF154F3926009F9C59 /* Default-Portrait@2x~ipad.png in Resources */,
+				7E7966E71810823500FA85AD /* icon-small@2x.png in Resources */,
+				3088BBC0154F3926009F9C59 /* Default-Portrait~ipad.png in Resources */,
+				30B4F30019D5E07200D9F7D8 /* Default-667h.png in Resources */,
+				7E7966DE1810823500FA85AD /* icon-40.png in Resources */,
+				3088BBC1154F3926009F9C59 /* Default@2x~iphone.png in Resources */,
+				7E7966E21810823500FA85AD /* icon-60.png in Resources */,
+				3088BBC2154F3926009F9C59 /* Default~iphone.png in Resources */,
+				D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */,
+				30B4F30219D5E07200D9F7D8 /* Default-Landscape-736h.png in Resources */,
+				30C1856619D5FC0A00212699 /* icon-60@3x.png in Resources */,
+				7E7966E11810823500FA85AD /* icon-50@2x.png in Resources */,
+				7E7966E51810823500FA85AD /* icon-76@2x.png in Resources */,
+				30FC414916E50CA1004E6F35 /* icon-72@2x.png in Resources */,
+				B314EEFAB8D1426CB7408FAA /* HockeySDKResources.bundle in Resources */,
+				336C081DD47541938BCFCFE4 /* HockeySDK.xcconfig in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		304B58A110DAC018002A0835 /* Copy www directory */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy www directory";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "NODEJS_PATH=/usr/local/bin; NVM_NODE_PATH=~/.nvm/versions/node/`nvm version 2>/dev/null`/bin; N_NODE_PATH=`find /usr/local/n/versions/node/* -maxdepth 0 -type d 2>/dev/null | tail -1`/bin; XCODE_NODE_PATH=`xcode-select --print-path`/usr/share/xcs/Node/bin; PATH=$NODEJS_PATH:$NVM_NODE_PATH:$N_NODE_PATH:$XCODE_NODE_PATH:$PATH && node cordova/lib/copy-www-build-step.js";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1D60588E0D05DD3D006BFB54 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
+				1D3623260D0F684500981E51 /* AppDelegate.m in Sources */,
+				302D95F114D2391D003F00A1 /* MainViewController.m in Sources */,
+				CE696632DF794600851F744F /* CDVDevice.m in Sources */,
+				F70B60F73F0D48AABF5EF34A /* HockeyApp.m in Sources */,
+				63D54986ED9A4E7E8D1EE76A /* CDVInAppBrowser.m in Sources */,
+				C40DB6210F31437EB7999D05 /* CDVConnection.m in Sources */,
+				79B710CC9C504073B693DA68 /* CDVReachability.m in Sources */,
+				7AE44BDED8CE47F99373D319 /* CDVStatusBar.m in Sources */,
+				F43A824634844577BAD9396E /* SocialSharing.m in Sources */,
+				676F5BC56947442D971F2DAC /* CDVSpinnerDialog.m in Sources */,
+				0B548F9D80E6458EA92DF76E /* IonicKeyboard.m in Sources */,
+				8F987B7F2B904AB3B049C181 /* UIWebViewExtension.m in Sources */,
+				FA8B805E3B1E427C8D8FD213 /* AppDelegate+notification.m in Sources */,
+				B091295A0670422D9FB5768E /* PushPlugin.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		301BF551109A68C00062928A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CordovaLib;
+			targetProxy = 301BF550109A68C00062928A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		1D6058940D05DD3E006BFB54 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"We Are Curious/Plugins/cordova-plugin-hockeyapp\"",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "We Are Curious/We Are Curious-Prefix.pch";
+				GCC_THUMB_SUPPORT = NO;
+				GCC_VERSION = "";
+				INFOPLIST_FILE = "We Are Curious/We Are Curious-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+				);
+				OTHER_LDFLAGS = (
+					"-weak_framework",
+					CoreFoundation,
+					"-weak_framework",
+					UIKit,
+					"-weak_framework",
+					AVFoundation,
+					"-weak_framework",
+					CoreMedia,
+					"-weak-lSystem",
+					"-ObjC",
+				);
+				PRODUCT_NAME = "We Are Curious";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		1D6058950D05DD3E006BFB54 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"We Are Curious/Plugins/cordova-plugin-hockeyapp\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "We Are Curious/We Are Curious-Prefix.pch";
+				GCC_THUMB_SUPPORT = NO;
+				GCC_VERSION = "";
+				INFOPLIST_FILE = "We Are Curious/We Are Curious-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+					"\"$(SRCROOT)/We Are Curious/Plugins/phonegap-plugin-push/GCM/Libraries\"",
+				);
+				OTHER_LDFLAGS = (
+					"-weak_framework",
+					CoreFoundation,
+					"-weak_framework",
+					UIKit,
+					"-weak_framework",
+					AVFoundation,
+					"-weak_framework",
+					CoreMedia,
+					"-weak-lSystem",
+					"-ObjC",
+				);
+				PRODUCT_NAME = "We Are Curious";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		C01FCF4F08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_THUMB_SUPPORT = NO;
+				GCC_VERSION = "";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"\"$(TARGET_BUILD_DIR)/usr/local/lib/include\"",
+					"\"$(OBJROOT)/UninstalledProducts/include\"",
+					"\"$(BUILT_PRODUCTS_DIR)\"",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"-weak_framework",
+					CoreFoundation,
+					"-weak_framework",
+					UIKit,
+					"-weak_framework",
+					AVFoundation,
+					"-weak_framework",
+					CoreMedia,
+					"-weak-lSystem",
+					"-ObjC",
+				);
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = NO;
+				USER_HEADER_SEARCH_PATHS = "";
+			};
+			name = Debug;
+		};
+		C01FCF5008A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_THUMB_SUPPORT = NO;
+				GCC_VERSION = "";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"\"$(TARGET_BUILD_DIR)/usr/local/lib/include\"",
+					"\"$(OBJROOT)/UninstalledProducts/include\"",
+					"\"$(BUILT_PRODUCTS_DIR)\"",
+					"\"$(OBJROOT)/UninstalledProducts/$(PLATFORM_NAME)/include\"",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				New_Setting = "";
+				OTHER_LDFLAGS = (
+					"-weak_framework",
+					CoreFoundation,
+					"-weak_framework",
+					UIKit,
+					"-weak_framework",
+					AVFoundation,
+					"-weak_framework",
+					CoreMedia,
+					"-weak-lSystem",
+					"-ObjC",
+				);
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = NO;
+				USER_HEADER_SEARCH_PATHS = "";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "We Are Curious" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D6058940D05DD3E006BFB54 /* Debug */,
+				1D6058950D05DD3E006BFB54 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "We Are Curious" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4F08A954540054247B /* Debug */,
+				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}
