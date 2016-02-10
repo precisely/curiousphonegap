@@ -226,6 +226,18 @@ iOS Quirks:
 <button onclick="window.plugins.socialsharing.shareViaWhatsApp('Message via WhatsApp', null /* img */, null /* url */, function() {console.log('share ok')}, function(errormsg){alert(errormsg)})">msg via WhatsApp (with errcallback)</button>
 ```
 
+##### Experimental feature: sharing directly to someone
+Available in 5.0.8 and up - please let me know if this works for your device! Open an issue if not..
+
+```html
+<button onclick="window.plugins.socialsharing.shareViaWhatsAppToReceiver(receiver, 'Message via WhatsApp', null /* img */, null /* url */, function() {console.log('share ok')})">msg via WhatsApp for Addressbook ID 101</button>
+```
+For `receiver` on iOS pass in the Addressbook ID (or 'abid'). You can find those abid's by using the [Cordova Contacts Plugin](https://github.com/apache/cordova-plugin-contacts).
+The result in the success callback of the `find` function is a JSON array of contact objects, use the 'id' you find in those objects.
+Don't pass in an image on iOS because that can't be sent to someone directly unfortunately. Message and URL are fine though.
+
+On Android pass in the phone number of the person you want to send a message to (untested at the moment).
+
 ####SMS
 Note that on Android, SMS via Hangouts may not behave correctly
 ```html
@@ -381,7 +393,7 @@ Here's the list of available activities you can disable :
 
 
 ## 4b. Usage on Windows Phone
-The available methods on WP8 are: `available`, `canShareViaEmail`, `share` and `shareViaEmail`.
+The available methods on WP8 are: `available`, `canShareViaEmail`, `share`, `shareViaEmail` and `shareViaSMS`.
 Currently the first two always return true, but this may change in the future in case I can find a way to truly detect the availability.
 
 The `share` function on WP8 supports two flavours: message only, or a combination of message, title and link.

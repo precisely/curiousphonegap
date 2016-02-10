@@ -6,8 +6,11 @@
   - [Common errors](#common-errors)
     - [minSdkVersion === 14](#minsdkversion--14)
 	- [Multidex](#multidex)
+- [iOS details](#ios-details)
+  - [XCode](#xcode)
+  - [Bitcode](#bitcode)
 
-This requires phonegap/cordova CLI 5.0+ ( current stable v1.5.2 )
+This requires phonegap/cordova CLI 5.0+ ( current stable v1.5.3 )
 
 ```
 phonegap plugin add phonegap-plugin-push
@@ -46,6 +49,12 @@ You will need to ensure that you have installed the following items through the 
 ![android support library](https://cloud.githubusercontent.com/assets/353180/10230226/0627931e-684a-11e5-9a6b-72d72997f655.png)
 
 For more detailed instructions on how to install the Android Support Library visit [Google's documentation](https://developer.android.com/tools/support-library/setup.html).
+
+*Note:* if you are using an IDE to like Eclipse, Xamarin, etc. then the Android SDK installed by those tools may not be the same version as the one used by the Cordova/PhoneGap CLI while building. Please make sure your command line tooling is up to date with the software versions above. An easy way to make sure you up to date is to run the following command:
+
+```
+android update sdk --no-ui --filter "extra"
+```
 
 ### Co-existing with Facebook Plugin
 
@@ -116,3 +125,23 @@ This causes gradle to fail, and you'll need to identify which plugin is causing 
 See [this for the reference on the cordova plugin specification](https://cordova.apache.org/docs/en/5.4.0/plugin_ref/spec.html#link-18), it'll be usefull to mention it when creating an issue or requesting that plugin to be updated.
 
 Common plugins to suffer from this outdated dependency management are plugins related to *facebook*, *google+*, *notifications*, *crosswalk* and *google maps*.
+
+## iOS details
+
+### XCode
+
+XCode version 7.0 or greater is required for building this plugin.
+
+### Bitcode
+
+If you are running into a problem where the linker is complaining about bit code. For instance:
+
+```
+ld: '<file.o>' does not contain bitcode. You must rebuild it with bitcode enabled (Xcode setting ENABLE_BITCODE), obtain an updated library from the vendor, or disable bitcode for this target. for architecture arm64 clang: error: linker command failed with exit code 1 (use -v to see invocation)
+```
+
+You have two options. The first is to [disable bitcode as per this StackOverflow answer](http://stackoverflow.com/a/32466484/41679) or [upgrade to cordova-ios 4 or greater](https://cordova.apache.org/announcements/2015/12/08/cordova-ios-4.0.0.html).
+
+```
+cordova platform update ios@4.0.0
+```

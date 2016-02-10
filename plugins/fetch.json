@@ -1,36 +1,16 @@
 {
-    "ionic-plugin-keyboard": {
-        "source": {
-            "type": "git",
-            "url": "https://github.com/driftyco/ionic-plugin-keyboard.git",
-            "subdir": "."
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
     "cordova-plugin-device": {
         "source": {
-            "type": "git",
-            "url": "https://github.com/apache/cordova-plugin-device.git",
-            "subdir": "."
+            "type": "registry",
+            "id": "cordova-plugin-device"
         },
         "is_top_level": true,
         "variables": {}
     },
-    "cordova-plugin-statusbar": {
+    "cordova-plugin-inappbrowser": {
         "source": {
-            "type": "git",
-            "url": "https://github.com/apache/cordova-plugin-statusbar",
-            "subdir": "."
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "cordova-plugin-whitelist": {
-        "source": {
-            "type": "git",
-            "url": "https://github.com/apache/cordova-plugin-whitelist",
-            "subdir": "."
+            "type": "registry",
+            "id": "cordova-plugin-inappbrowser"
         },
         "is_top_level": true,
         "variables": {}
@@ -43,11 +23,18 @@
         "is_top_level": true,
         "variables": {}
     },
-    "hu.dpal.phonegap.plugins.SpinnerDialog": {
+    "cordova-plugin-statusbar": {
         "source": {
-            "type": "git",
-            "url": "https://github.com/Paldom/SpinnerDialog.git",
-            "subdir": "."
+            "type": "registry",
+            "id": "cordova-plugin-statusbar"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-whitelist": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-whitelist"
         },
         "is_top_level": true,
         "variables": {}
@@ -56,6 +43,30 @@
         "source": {
             "type": "registry",
             "id": "cordova-plugin-x-socialsharing"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-spinner-dialog": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-spinner-dialog"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "ionic-plugin-keyboard": {
+        "source": {
+            "type": "registry",
+            "id": "ionic-plugin-keyboard"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "phonegap-plugin-push": {
+        "source": {
+            "type": "registry",
+            "id": "phonegap-plugin-push"
         },
         "is_top_level": true,
         "variables": {}
@@ -70,26 +81,10 @@
             "URL_SCHEME": "curious"
         }
     },
-    "cordova-plugin-inappbrowser": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-inappbrowser"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
     "cordova-plugin-hockeyapp": {
         "source": {
             "type": "registry",
             "id": "cordova-plugin-hockeyapp"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "phonegap-plugin-push": {
-        "source": {
-            "type": "registry",
-            "id": "phonegap-plugin-push"
         },
         "is_top_level": true,
         "variables": {}

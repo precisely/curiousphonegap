@@ -1,27 +1,11 @@
 cordova.define('cordova/plugin_list', function(require, exports, module) {
 module.exports = [
     {
-        "file": "plugins/cordova-plugin-customurlscheme/www/ios/LaunchMyApp.js",
-        "id": "cordova-plugin-customurlscheme.LaunchMyApp",
-        "pluginId": "cordova-plugin-customurlscheme",
-        "clobbers": [
-            "window.plugins.launchmyapp"
-        ]
-    },
-    {
         "file": "plugins/cordova-plugin-device/www/device.js",
         "id": "cordova-plugin-device.device",
         "pluginId": "cordova-plugin-device",
         "clobbers": [
             "device"
-        ]
-    },
-    {
-        "file": "plugins/cordova-plugin-hockeyapp/www/hockeyapp.js",
-        "id": "cordova-plugin-hockeyapp.HockeyApp",
-        "pluginId": "cordova-plugin-hockeyapp",
-        "clobbers": [
-            "hockeyapp"
         ]
     },
     {
@@ -67,9 +51,9 @@ module.exports = [
         ]
     },
     {
-        "file": "plugins/hu.dpal.phonegap.plugins.SpinnerDialog/www/spinner.js",
-        "id": "hu.dpal.phonegap.plugins.SpinnerDialog.SpinnerDialog",
-        "pluginId": "hu.dpal.phonegap.plugins.SpinnerDialog",
+        "file": "plugins/cordova-plugin-spinner-dialog/www/spinner.js",
+        "id": "cordova-plugin-spinner-dialog.SpinnerDialog",
+        "pluginId": "cordova-plugin-spinner-dialog",
         "merges": [
             "window.plugins.spinnerDialog"
         ]
@@ -90,21 +74,38 @@ module.exports = [
         "clobbers": [
             "PushNotification"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-customurlscheme/www/ios/LaunchMyApp.js",
+        "id": "cordova-plugin-customurlscheme.LaunchMyApp",
+        "pluginId": "cordova-plugin-customurlscheme",
+        "clobbers": [
+            "window.plugins.launchmyapp"
+        ]
+    },
+    {
+        "file": "plugins/cordova-plugin-hockeyapp/www/hockeyapp.js",
+        "id": "cordova-plugin-hockeyapp.HockeyApp",
+        "pluginId": "cordova-plugin-hockeyapp",
+        "clobbers": [
+            "hockeyapp"
+        ]
     }
 ];
 module.exports.metadata = 
 // TOP OF METADATA
 {
-    "cordova-plugin-customurlscheme": "4.0.0",
-    "cordova-plugin-device": "1.0.2-dev",
-    "cordova-plugin-hockeyapp": "1.3.0",
-    "cordova-plugin-inappbrowser": "1.0.1",
-    "cordova-plugin-network-information": "1.0.1",
-    "cordova-plugin-statusbar": "2.0.0-dev",
-    "cordova-plugin-x-socialsharing": "5.0.5",
-    "hu.dpal.phonegap.plugins.SpinnerDialog": "1.3.1",
-    "ionic-plugin-keyboard": "1.0.6",
-    "phonegap-plugin-push": "1.5.2"
+    "cordova-plugin-device": "1.1.0",
+    "cordova-plugin-inappbrowser": "1.1.1",
+    "cordova-plugin-network-information": "1.1.0",
+    "cordova-plugin-statusbar": "2.0.0",
+    "cordova-plugin-whitelist": "1.2.0",
+    "cordova-plugin-x-socialsharing": "5.0.9",
+    "cordova-plugin-spinner-dialog": "1.3.1",
+    "ionic-plugin-keyboard": "1.0.8",
+    "phonegap-plugin-push": "1.5.3",
+    "cordova-plugin-customurlscheme": "4.1.1",
+    "cordova-plugin-hockeyapp": "2.0.0"
 }
 // BOTTOM OF METADATA
 });
