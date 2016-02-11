@@ -25,5 +25,6 @@
 
 CODE_SIGN_IDENTITY = iPhone Distribution
 CODE_SIGN_IDENTITY[sdk=iphoneos*] = iPhone Distribution
+ENABLE_BITCODE = false
 
 #include "build-extras.xcconfig"

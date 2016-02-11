@@ -47,7 +47,9 @@ public class SocialSharing extends CordovaPlugin {
   private static final String ACTION_SHARE_VIA_SMS_EVENT = "shareViaSMS";
   private static final String ACTION_SHARE_VIA_EMAIL_EVENT = "shareViaEmail";
 
+  private static final int ACTIVITY_CODE_SEND = 1;
   private static final int ACTIVITY_CODE_SENDVIAEMAIL = 2;
+  private static final int ACTIVITY_CODE_SENDVIAWHATSAPP = 3;
 
   private CallbackContext _callbackContext;
 
@@ -77,7 +79,11 @@ public class SocialSharing extends CordovaPlugin {
       this.pasteMessage = args.getString(4);
       return doSendIntent(callbackContext, args.getString(0), args.getString(1), args.getJSONArray(2), args.getString(3), "com.facebook.katana", false);
     } else if (ACTION_SHARE_VIA_WHATSAPP_EVENT.equals(action)) {
-      return doSendIntent(callbackContext, args.getString(0), args.getString(1), args.getJSONArray(2), args.getString(3), "whatsapp", false);
+      if (notEmpty(args.getString(4))) {
+        return shareViaWhatsAppDirectly(callbackContext, args.getString(0), args.getString(1), args.getJSONArray(2), args.getString(3), args.getString(4));
+      } else {
+        return doSendIntent(callbackContext, args.getString(0), args.getString(1), args.getJSONArray(2), args.getString(3), "whatsapp", false);
+      }
     } else if (ACTION_SHARE_VIA_INSTAGRAM_EVENT.equals(action)) {
       if (notEmpty(args.getString(0))) {
         copyHintToClipboard(args.getString(0), "Instagram paste message");
@@ -222,6 +228,7 @@ public class SocialSharing extends CordovaPlugin {
         if (notEmpty(subject)) {
           sendIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
         }
+
         // add the URL to the message, as there seems to be no separate field
         if (notEmpty(url)) {
           if (notEmpty(message)) {
@@ -232,7 +239,10 @@ public class SocialSharing extends CordovaPlugin {
         }
         if (notEmpty(message)) {
           sendIntent.putExtra(android.content.Intent.EXTRA_TEXT, message);
-          sendIntent.putExtra("sms_body", message); // sometimes required when the user picks share via sms
+          // sometimes required when the user picks share via sms
+          if (Build.VERSION.SDK_INT < 21) { // LOLLIPOP
+            sendIntent.putExtra("sms_body", message);
+          }
         }
 
         if (appPackageName != null) {
@@ -272,7 +282,7 @@ public class SocialSharing extends CordovaPlugin {
           if (peek) {
             callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK));
           } else {
-            mycordova.startActivityForResult(plugin, Intent.createChooser(sendIntent, null), 1);
+            mycordova.startActivityForResult(plugin, Intent.createChooser(sendIntent, null), ACTIVITY_CODE_SEND);
           }
         }
       }
@@ -316,6 +326,10 @@ public class SocialSharing extends CordovaPlugin {
           Matcher matcher = dispositionPattern.matcher(disposition);
           if (matcher.find()) {
             filename = matcher.group(1).replaceAll("[^a-zA-Z0-9._-]", "");
+            if (filename.length() == 0) {
+              // in this case we can't determine a filetype so some targets (gmail) may not render it correctly
+              filename = "file";
+            }
             localImage = "file://" + dir + "/" + filename;
           }
         }
@@ -347,10 +361,78 @@ public class SocialSharing extends CordovaPlugin {
       }
       saveFile(Base64.decode(encodedImg, Base64.DEFAULT), dir, fileName);
       localImage = "file://" + dir + "/" + fileName;
+    } else if (image.startsWith("df:")) {
+      // safeguard for https://code.google.com/p/android/issues/detail?id=7901#c43
+      if (!image.contains(";base64,")) {
+        sendIntent.setType("text/plain");
+        return null;
+      }
+      // format looks like this :  df:filename.txt;data:image/png;base64,R0lGODlhDAA...
+      final String fileName = image.substring(image.indexOf("df:") + 3, image.indexOf(";data:"));
+      final String fileType = image.substring(image.indexOf(";data:") + 6, image.indexOf(";base64,"));
+      final String encodedImg = image.substring(image.indexOf(";base64,") + 8);
+      sendIntent.setType(fileType);
+      saveFile(Base64.decode(encodedImg, Base64.DEFAULT), dir, sanitizeFilename(fileName));
+      localImage = "file://" + dir + "/" + fileName;
     } else if (!image.startsWith("file://")) {
       throw new IllegalArgumentException("URL_NOT_SUPPORTED");
     }
     return Uri.parse(localImage);
+  }
+
+  private boolean shareViaWhatsAppDirectly(final CallbackContext callbackContext, String message, final String subject, final JSONArray files, final String url, final String number) {
+    // add the URL to the message, as there seems to be no separate field
+    if (notEmpty(url)) {
+      if (notEmpty(message)) {
+        message += " " + url;
+      } else {
+        message = url;
+      }
+    }
+    final String shareMessage = message;
+    final SocialSharing plugin = this;
+    cordova.getThreadPool().execute(new SocialSharingRunnable(callbackContext) {
+      public void run() {
+        Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.setData(Uri.parse("smsto:" + number));
+
+        intent.putExtra("sms_body", shareMessage);
+        intent.putExtra("sms_subject", subject);
+        intent.setPackage("com.whatsapp");
+
+        try {
+          if (files.length() > 0 && !"".equals(files.getString(0))) {
+            final boolean hasMultipleAttachments = files.length() > 1;
+            final String dir = getDownloadDir();
+            if (dir != null) {
+              ArrayList<Uri> fileUris = new ArrayList<Uri>();
+              Uri fileUri = null;
+              for (int i = 0; i < files.length(); i++) {
+                fileUri = getFileUriAndSetType(intent, dir, files.getString(i), subject, i);
+                if (fileUri != null) {
+                  fileUris.add(fileUri);
+                }
+              }
+              if (!fileUris.isEmpty()) {
+                if (hasMultipleAttachments) {
+                  intent.putExtra(Intent.EXTRA_STREAM, fileUris);
+                } else {
+                  intent.putExtra(Intent.EXTRA_STREAM, fileUri);
+                }
+              }
+            }
+          }
+        } catch (Exception e) {
+          callbackContext.error(e.getMessage());
+        }
+        try {
+          cordova.startActivityForResult(plugin, intent, ACTIVITY_CODE_SENDVIAWHATSAPP);
+        } catch (Exception e) {
+          callbackContext.error(e.getMessage());
+        }
+      }
+    });
+    return true;
   }
 
   private boolean invokeSMSIntent(final CallbackContext callbackContext, JSONObject options, String p_phonenumbers) {
@@ -455,13 +537,16 @@ public class SocialSharing extends CordovaPlugin {
   }
 
   private static String getFileName(String url) {
+    if (url.endsWith("/")) {
+      url = url.substring(0, url.length()-1);
+    }
     final String pattern = ".*/([^?#]+)?";
     Pattern r = Pattern.compile(pattern);
     Matcher m = r.matcher(url);
     if (m.find()) {
       return m.group(1);
     } else {
-      return null;
+      return "file";
     }
   }
 

@@ -7,14 +7,7 @@
         "files": {}
     },
     "installed_plugins": {
-        "cordova-plugin-customurlscheme": {
-            "URL_SCHEME": "curious",
-            "PACKAGE_NAME": "us.wearecurio.app"
-        },
         "cordova-plugin-device": {
-            "PACKAGE_NAME": "us.wearecurio.app"
-        },
-        "cordova-plugin-hockeyapp": {
             "PACKAGE_NAME": "us.wearecurio.app"
         },
         "cordova-plugin-inappbrowser": {
@@ -26,16 +19,26 @@
         "cordova-plugin-statusbar": {
             "PACKAGE_NAME": "us.wearecurio.app"
         },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "us.wearecurio.app"
+        },
         "cordova-plugin-x-socialsharing": {
             "PACKAGE_NAME": "us.wearecurio.app"
         },
-        "hu.dpal.phonegap.plugins.SpinnerDialog": {
+        "cordova-plugin-spinner-dialog": {
             "PACKAGE_NAME": "us.wearecurio.app"
         },
         "ionic-plugin-keyboard": {
             "PACKAGE_NAME": "us.wearecurio.app"
         },
         "phonegap-plugin-push": {
+            "PACKAGE_NAME": "us.wearecurio.app"
+        },
+        "cordova-plugin-customurlscheme": {
+            "URL_SCHEME": "curious",
+            "PACKAGE_NAME": "us.wearecurio.app"
+        },
+        "cordova-plugin-hockeyapp": {
             "PACKAGE_NAME": "us.wearecurio.app"
         }
     },

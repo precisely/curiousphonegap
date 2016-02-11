@@ -1,16 +1,16 @@
 {
-    "libstdc++.dylib": 1,
-    "libc++.dylib": 1,
-    "CoreText.framework": 1,
-    "Foundation.framework": 1,
-    "QuartzCore.framework": 1,
-    "QuickLook.framework": 1,
-    "Security.framework": 1,
+    "libstdc++.dylib": 2,
+    "libc++.dylib": 2,
+    "CoreText.framework": 2,
+    "Foundation.framework": 2,
+    "QuartzCore.framework": 2,
+    "QuickLook.framework": 2,
+    "Security.framework": 2,
     "SystemConfiguration.framework": 2,
-    "UIKit.framework": 1,
+    "UIKit.framework": 2,
     "Social.framework": 1,
     "MessageUI.framework": 1,
-    "AddressBook.framework": 2,
-    "libsqlite3.tbd": 2,
-    "libz.tbd": 2
+    "AddressBook.framework": 1,
+    "libsqlite3.tbd": 1,
+    "libz.tbd": 1
 }
