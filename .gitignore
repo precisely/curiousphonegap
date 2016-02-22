@@ -11,3 +11,5 @@ www/res_old/*
 www
 .project
 dropbox-link
+node_modules
+.idea

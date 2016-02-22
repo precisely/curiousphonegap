@@ -1,0 +1,27 @@
+{
+  "name": "curiousphonegap",
+  "version": "1.4.0",
+  "description": "",
+  "main": "main.js",
+  "dependencies": {
+    "node-gcm": "^0.9.6"
+  },
+  "devDependencies": {
+    "json-loader": "^0.5.4",
+    "text-loader": "0.0.1",
+    "webpack": "^1.12.13"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/syntheticzero/curiousphonegap.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/syntheticzero/curiousphonegap/issues"
+  },
+  "homepage": "https://github.com/syntheticzero/curiousphonegap"
+}
